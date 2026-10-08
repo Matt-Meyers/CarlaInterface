@@ -83,7 +83,7 @@ QSpinBox::down-button
     subcontrol-origin: border;
     subcontrol-position: top right; /* position at the top right corner */
     background-color: #151515;
-    image: url(icons:/dn_arrow_sml.png) 1;
+    image: url(icons:dn_arrow_sml.png) 1;
     width: 40px;
     height: 40px;
     margin-top:3px;
@@ -105,4 +105,3 @@ QSpinBox::selection
 background-color: #101010;
 color: #101010;
 }
-

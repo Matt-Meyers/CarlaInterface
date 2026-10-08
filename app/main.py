@@ -1,12 +1,27 @@
 import sys
+from pathlib import Path
+
 from PyQt6.QtWidgets import QApplication
-from gui import CarlaInterface
-from structures import Patch
+
+from carla_interface import AppConfig, CarlaInterface, Patch
 
 if __name__ == '__main__':
     categories = ['Piano', 'Keys', 'Synth-Keys', 'Pad']
     patches = []
-    split_start_idx = 12
+
+    # Carla rack indexes and I/O. Split bank is main index + split_start_idx.
+    config = AppConfig(
+        assets_dir=Path(__file__).resolve().parent / 'assets',
+        osc_port='22752',
+        midi_port='Midi Through Port-0',
+        split_start_idx=12,   # duplicated instruments start here
+        split_lo_idx=8,       # MIDI Key-Range Filter (low)
+        split_hi_idx=9,       # MIDI Key-Range Filter (high)
+        octave_lo_idx=10,     # MIDI Transpose (low / unsplit)
+        octave_hi_idx=11,     # MIDI Transpose (high / split)
+        split_key_idx=60,     # default split note (C4)
+        cols=4,
+    )
 
     # This is a single plugin/patch in Carla. Each '.add' stands for a preset.
     # Without supplying indexes, presets are assumed sequential.
@@ -62,8 +77,6 @@ if __name__ == '__main__':
     patches.append(patch6)
 
     app = QApplication(['Carla Interface'])
-    carla_interface = CarlaInterface(patches, categories, split_start_idx)
-    carla_interface.showMaximized()    # TODO uncomment
-    carla_interface.show()
-    carla_interface.resize(800, 500)
+    carla_interface = CarlaInterface(patches, categories, config)
+    carla_interface.showMaximized()
     sys.exit(app.exec())

@@ -2,7 +2,7 @@ from PyQt6.QtGui import QPalette, QColor, QColorConstants
 
 
 def set_full_dark():
-    """Set darkmode palette for PyQt6"""
+    """Set darkmode palette for PyQt6."""
     palette = QPalette()
     palette.setColor(QPalette.ColorRole.Window, QColor(45, 45, 45))
     palette.setColor(QPalette.ColorRole.WindowText, QColorConstants.White)
@@ -17,21 +17,18 @@ def set_full_dark():
     palette.setColor(QPalette.ColorRole.Link, QColor(42, 130, 218))
     palette.setColor(QPalette.ColorRole.Highlight, QColor(42, 130, 218))
     palette.setColor(QPalette.ColorRole.HighlightedText, QColorConstants.Black)
-
     return palette
 
 
 def set_active(palette):
-    """Adjust palette for active item"""
+    """Adjust palette for active item."""
     palette.setColor(QPalette.ColorRole.Button, QColor(23, 23, 23))
     palette.setColor(QPalette.ColorRole.ButtonText, QColorConstants.White)
     return palette
 
 
 def set_alt_active(palette):
-    """Adjust palette for alt-active item"""
-    # palette.setColor(QPalette.ColorRole.Button, QColor(15, 15, 40))
+    """Adjust palette for alt-active item."""
     palette.setColor(QPalette.ColorRole.Button, QColor(20, 20, 60))
     palette.setColor(QPalette.ColorRole.ButtonText, QColorConstants.White)
     return palette
-

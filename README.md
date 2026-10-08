@@ -1,0 +1,31 @@
+# Carla Interface
+
+Touchscreen PyQt6 front-end for a fixed [Carla](https://kx.studio/Applications:Carla) rack: preset buttons, keyboard split, and octave shift. It talks to Carla over OSC (`oscsend`) and sends MIDI program changes with a bundled `sendmidi` binary.
+
+Python **3.10**, Linux. The piano-PC overlay (autostart, JACK, Carla project) lives in [`os/`](os/) and is not required to edit the app.
+
+## Setup
+
+System package (Linux):
+
+```bash
+sudo apt install liblo-tools   # provides oscsend
+```
+
+App venv (from `app/`):
+
+```bash
+python3.10 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python main.py
+```
+
+Edit [`app/main.py`](app/main.py) to change patches, categories, and Carla rack indexes. Everything else lives under `app/carla_interface/`.
+
+## Runtime notes
+
+- OSC: `oscsend` to `localhost:22752` (Carla’s OSC port).
+- MIDI: `app/assets/sendmidi` (Linux ELF) to `Midi Through Port-0`.
+- `app/assets/sendosc.exe` is an unused Windows leftover; the app is Linux-only.
+- The XFCE autostart script [`os/home/startup_scripts/audio/carlaInterface.sh`](os/home/startup_scripts/audio/carlaInterface.sh) still points at an old PycharmProjects path. Update it to this repo’s `app/.venv` and `app/main.py` when deploying.

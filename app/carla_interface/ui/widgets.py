@@ -1,14 +1,13 @@
-import os
 from math import floor
-from PyQt6.QtWidgets import QSpinBox, QTabWidget, QTabBar, QWidget, QStyleOption, QStyle, QPushButton
-from PyQt6.QtGui import QFocusEvent, QFont, QPalette, QColor, QPainter
-from PyQt6.QtCore import Qt, QSize
+
+from PyQt6.QtCore import QSize
+from PyQt6.QtGui import QColor, QFocusEvent, QFont, QPalette
+from PyQt6.QtWidgets import QPushButton, QSpinBox, QTabBar, QTabWidget
 
 
 class NoteSpinBox(QSpinBox):
     def __init__(self):
         super().__init__()
-
         self.NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F',
                       'F#', 'G', 'G#', 'A', 'A#', 'B']
 
@@ -23,9 +22,6 @@ class NoteSpinBox(QSpinBox):
 
 
 class OctaveSpinBox(QSpinBox):
-    def __init__(self):
-        super().__init__()
-
     def focusInEvent(self, e: QFocusEvent) -> None:
         self.clearFocus()
 
@@ -41,7 +37,7 @@ class TouchTabWidget(QTabWidget):
 
     def resizeEvent(self, event):
         self.tabBar().setFixedWidth(self.width())
-        super(TouchTabWidget, self).resizeEvent(event)
+        super().resizeEvent(event)
 
 
 class TouchTabBar(QTabBar):
@@ -49,12 +45,11 @@ class TouchTabBar(QTabBar):
         super().__init__()
         palette = QPalette()
         palette.setColor(QPalette.ColorRole.Button, QColor(55, 55, 55))
-        # palette.setColor(QPalette.ColorRole.WindowText, QColor(200, 200, 250))
         self.setPalette(palette)
         self.setDrawBase(False)
-        self.font = QFont()
-        self.font.setPointSize(14)
-        self.setFont(self.font)
+        font = QFont()
+        font.setPointSize(14)
+        self.setFont(font)
 
     def tabSizeHint(self, index):
         width = QTabBar.tabSizeHint(self, index).width()
