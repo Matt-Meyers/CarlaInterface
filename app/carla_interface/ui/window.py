@@ -1,3 +1,5 @@
+"""Main kiosk window: layout and signal wiring only (no OSC/MIDI strings)."""
+
 from functools import partial
 
 from PyQt6.QtCore import QDir, Qt
@@ -23,6 +25,14 @@ from carla_interface.ui.widgets import (
 
 
 class CarlaInterface(QWidget):
+    """
+    Touch UI for the Carla rack.
+
+    Each category tab has two stacked grids: main presets (index 0) and the
+    split-bank copy (index 1). Clicks go to PatchController; this class only
+    updates palettes and which grid is visible.
+    """
+
     def __init__(self, patches, categories, config):
         super().__init__()
         self.patches = patches
@@ -35,10 +45,12 @@ class CarlaInterface(QWidget):
             MidiService(config.sendmidi_path, config.midi_port),
         )
 
+        # stylesheet.css uses url(icons:up_arrow_sml.png) etc.
         QDir.addSearchPath('icons', str(config.assets_dir))
         self.setWindowIcon(QIcon(str(config.logo_path)))
-        self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
+        self.setWindowFlag(Qt.WindowType.FramelessWindowHint)  # kiosk
 
+        # Buttons use QPalette (Linux). Spinboxes get the CSS below.
         self.palette = palettes.set_full_dark()
         self.palette_active = palettes.set_active(palettes.set_full_dark())
         self.palette_alt_active = palettes.set_alt_active(
@@ -52,6 +64,7 @@ class CarlaInterface(QWidget):
         font.setPointSize(12)
         self.setFont(font)
 
+        # Header: Split toggle, split-note spinner, octave spinner.
         self.outer_layout = QGridLayout(self)
         self.header_container = QWidget()
         self.header_layout = QGridLayout(self.header_container)
@@ -82,6 +95,7 @@ class CarlaInterface(QWidget):
         self.header_layout.addWidget(self.octave_box, 0, 3)
         self.outer_layout.addWidget(self.header_container, 0, 0, 1, 3)
 
+        # One stacked pair of grids per category tab.
         self.stack_layouts = []
         self.main_btns = []
         self.split_btns = []
@@ -122,12 +136,13 @@ class CarlaInterface(QWidget):
                 self._on_split_clicked,
                 split_grid_layout,
             )
-            stack_layout.addWidget(main_grid_container)
-            stack_layout.addWidget(split_grid_container)
+            stack_layout.addWidget(main_grid_container)   # index 0
+            stack_layout.addWidget(split_grid_container)  # index 1
             self.tab_container.addTab(stack_container, cat)
         self.outer_layout.addWidget(self.tab_container, 1, 0, 1, 3)
 
     def _on_splitter_clicked(self):
+        """Toggle split mode: swap grids, highlight Split, restore octave."""
         enabled = not self.controller.split_enabled
         self.controller.set_split_enabled(enabled)
         curr_tab = self.tab_container.currentIndex()
@@ -138,9 +153,11 @@ class CarlaInterface(QWidget):
             self.splitter_btn.setPalette(self.palette)
             self.stack_layouts[curr_tab].setCurrentIndex(0)
             self._reset_button_palettes(self.split_btns)
+        # Low and high keyboards keep separate octave offsets.
         self.octave_box.setValue(self.controller.octave_value)
 
     def _on_tab_changed(self):
+        # New tab's stack should match current split/main mode.
         curr_tab = self.tab_container.currentIndex()
         stack_index = 1 if self.controller.split_enabled else 0
         self.stack_layouts[curr_tab].setCurrentIndex(stack_index)
@@ -162,6 +179,7 @@ class CarlaInterface(QWidget):
         self.controller.set_octave(self.octave_box.value())
 
     def _add_buttons(self, btn_store, presets, click_handler, layout):
+        """Fill a grid left-to-right. Row starts at 1 for a bit of top gap."""
         x = 0
         y = 1
         for preset in presets:

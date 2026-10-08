@@ -27,4 +27,5 @@ class CarlaOsc:
         try:
             subprocess.run(cmd, check=False)
         except OSError:
+            # oscsend missing (e.g. developing off the piano PC).
             pass

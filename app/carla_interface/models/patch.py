@@ -19,7 +19,8 @@ class Patch:
         self.name = name
         self.presets = []
         self.carla_idx = carla_idx
-        self.i = 0
+        self.i = 0  # next sequential preset index for add()
+        # True: MIDI program change instead of Carla /set_program (Pigments).
         self.preset_over_midi = preset_over_midi
 
     def add(self, preset, category, idx=None):

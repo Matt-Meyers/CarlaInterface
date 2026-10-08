@@ -27,4 +27,5 @@ class MidiService:
                 check=False,
             )
         except OSError:
+            # sendmidi missing or not executable (e.g. Windows host).
             pass

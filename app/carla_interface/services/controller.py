@@ -4,6 +4,7 @@ from PyQt6.QtCore import QTimer
 class PatchController:
     """Preset selection, split, and octave — talks to Carla OSC and MIDI."""
 
+    # Pigments needs a short gap after set_active before a MIDI program change.
     MIDI_PC_DELAY_MS = 250
     MIDI_RESTORE_DELAY_MS = 100
 
@@ -17,6 +18,7 @@ class PatchController:
         self.octave_lo = 0
         self.octave_hi = 0
         self.curr_main_carla_idx = 0
+        # Bumped to ignore QTimer callbacks from a previous MIDI program change.
         self._midi_seq = 0
 
     @property
@@ -30,13 +32,14 @@ class PatchController:
         self._apply_preset(preset, preset.carla_idx, for_split=False)
 
     def select_split(self, preset):
+        # Split instruments are a second copy of the rack (see split_start_idx).
         carla_idx = preset.carla_idx + self.config.split_start_idx
         self.deactivate_bank(self.config.split_start_idx)
         self.osc.set_active(carla_idx, True)
         self._apply_preset(preset, carla_idx, for_split=True)
 
     def set_split_enabled(self, enabled):
-        self._midi_seq += 1
+        self._midi_seq += 1  # cancel in-flight MIDI PC / restore timeouts
         self.split_enabled = enabled
         self._apply_split_key()
         if not enabled:
@@ -53,7 +56,7 @@ class PatchController:
         else:
             self.octave_lo = value
             plugin_idx = self.config.octave_lo_idx
-        self.osc.set_parameter(plugin_idx, 0, value)
+        self.osc.set_parameter(plugin_idx, 0, value)  # param 0 = Octaves
 
     def deactivate_bank(self, offset=0):
         for patch in self.patches:
@@ -66,6 +69,7 @@ class PatchController:
             self.osc.set_program(carla_idx, preset.idx)
             return
         if for_split:
+            # Mute the main instance so the PC hits only the split plugin.
             self.osc.set_active(self.curr_main_carla_idx, False)
 
             def send_pc():
@@ -93,6 +97,8 @@ class PatchController:
         self.midi.send_program_change(program)
 
     def _apply_split_key(self):
+        # Carla MIDI Key-Range Filter: param 3 = high note (low plugin),
+        # param 2 = low note (high plugin). 127/127 effectively disables.
         if self.split_enabled:
             lo = self.split_key_idx
             hi = self.split_key_idx + 1

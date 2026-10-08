@@ -1,3 +1,5 @@
+"""Dark QPalette helpers. Active = selected preset; alt_active = Split on."""
+
 from PyQt6.QtGui import QPalette, QColor, QColorConstants
 
 
