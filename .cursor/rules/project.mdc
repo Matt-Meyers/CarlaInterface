@@ -1,0 +1,12 @@
+---
+description: Keep main.py human-editable; Linux kiosk layout
+alwaysApply: true
+---
+
+# Project intent
+
+`app/main.py` is the file a human edits: categories, `Patch(...).add(...)` lists, and `AppConfig` rack indexes. Do not move that catalog into the package. Keep the sequential `.add` style and the existing explanatory comments.
+
+Implementation lives under `app/carla_interface/`. `os/` is the piano-PC overlay (autostart, JACK, Carla project) — leave it alone unless asked.
+
+Runtime is Linux (`oscsend`, bundled `app/assets/sendmidi`). Do not reintroduce Windows code paths.

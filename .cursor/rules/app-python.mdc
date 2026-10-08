@@ -1,0 +1,20 @@
+---
+description: UI vs services split; comment only non-obvious Python
+globs: app/**/*.py
+alwaysApply: false
+---
+
+# App Python
+
+Window and widgets do layout and signal wiring only. Carla I/O belongs in `services/` (`PatchController`, `CarlaOsc`, `MidiService`). Future MIDI recording goes in `services/midi.py`, not the UI.
+
+Comment *why*, not the next line. Good targets: Carla param/rack indexes, MIDI program-change delays, touch `clearFocus`, stacked main vs split grids. Skip narration like “create a button”.
+
+```python
+# ❌ BAD
+self.osc.set_active(idx, True)  # activate the plugin
+
+# ✅ GOOD
+# Mute the main instance so the PC hits only the split plugin.
+self.osc.set_active(self.curr_main_carla_idx, False)
+```
