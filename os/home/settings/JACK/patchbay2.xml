@@ -1,0 +1,51 @@
+<!DOCTYPE patchbay>
+<patchbay name="patchbay2" version="0.9.6">
+ <output-sockets>
+  <socket name="PulseAudio\ JACK\ Sink 1" type="jack-audio" exclusive="off" client="PulseAudio\ JACK\ Sink">
+   <plug>front\-left</plug>
+  </socket>
+  <socket name="PulseAudio\ JACK\ Sink 2" type="jack-audio" exclusive="off" client="PulseAudio\ JACK\ Sink">
+   <plug>front\-right</plug>
+  </socket>
+  <socket name="system 1" type="jack-audio" exclusive="off" client="system">
+   <plug>capture_1</plug>
+  </socket>
+  <socket name="a2j casio cap" type="jack-midi" exclusive="off" client="a2j">
+   <plug>Keyboard\ \(capture\)\:\ Keyboard\ CASIO\ USB\ IN</plug>
+  </socket>
+  <socket name="a2j Impulse cap 1" type="jack-midi" exclusive="off" client="a2j">
+   <plug>Impulse\ \(capture\)\:\ Impulse\ \ Impulse\ </plug>
+  </socket>
+  <socket name="a2j KX8 1 cap" type="jack-midi" exclusive="off" client="a2j">
+   <plug>YAMAHA\ KX\ \(capture\)\:\ YAMAHA\ KX\ MIDI\ 1</plug>
+  </socket>
+  <socket name="carla audio out 1" type="jack-audio" exclusive="off" client="Carla">
+   <plug>audio\-out1</plug>
+  </socket>
+  <socket name="carla audio out 2" type="jack-audio" exclusive="off" client="Carla">
+   <plug>audio\-out2</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket name="Carla 1" type="jack-midi" exclusive="off" client="Carla">
+   <plug>events\-in</plug>
+  </socket>
+  <socket name="system playback 1" type="jack-audio" exclusive="off" client="system">
+   <plug>playback_1</plug>
+  </socket>
+  <socket name="system playback 2" type="jack-audio" exclusive="off" client="system">
+   <plug>playback_2</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable input="system playback 1" type="jack-audio" output="PulseAudio\ JACK\ Sink 1"/>
+  <cable input="system playback 2" type="jack-audio" output="PulseAudio\ JACK\ Sink 2"/>
+  <cable input="Carla 1" type="jack-midi" output="a2j casio cap"/>
+  <cable input="Carla 1" type="jack-midi" output="a2j Impulse cap 1"/>
+  <cable input="Carla 1" type="jack-midi" output="a2j KX8 1 cap"/>
+  <cable input="system playback 1" type="jack-audio" output="carla audio out 1"/>
+  <cable input="system playback 2" type="jack-audio" output="carla audio out 2"/>
+ </cables>
+</patchbay>
+

@@ -1,0 +1,55 @@
+<!DOCTYPE patchbay>
+<patchbay version="0.9.6" name="patchbay3">
+ <output-sockets>
+  <socket type="jack-audio" name="PulseAudio\ JACK\ Sink 1" client="PulseAudio\ JACK\ Sink" exclusive="off">
+   <plug>front\-left</plug>
+  </socket>
+  <socket type="jack-audio" name="PulseAudio\ JACK\ Sink 2" client="PulseAudio\ JACK\ Sink" exclusive="off">
+   <plug>front\-right</plug>
+  </socket>
+  <socket type="jack-audio" name="system 1" client="system" exclusive="off">
+   <plug>capture_1</plug>
+  </socket>
+  <socket type="jack-midi" name="a2j casio cap" client="a2j" exclusive="off">
+   <plug>Keyboard\ \(capture\)\:\ Keyboard\ CASIO\ USB\ IN</plug>
+  </socket>
+  <socket type="jack-midi" name="Korg nanoKONTROL" client="a2j" exclusive="off">
+   <plug>nanoKONTROL\ \(capture\)\:\ nanoKONTROL\ nanoKONTROL\ _\ CTRL</plug>
+  </socket>
+  <socket type="jack-midi" name="a2j Impulse cap 1" client="a2j" exclusive="off">
+   <plug>Impulse\ \(capture\)\:\ Impulse\ \ Impulse\ </plug>
+  </socket>
+  <socket type="jack-midi" name="a2j KX8 1 cap" client="a2j" exclusive="off">
+   <plug>YAMAHA\ KX\ \(capture\)\:\ YAMAHA\ KX\ MIDI\ 1</plug>
+  </socket>
+  <socket type="jack-audio" name="carla audio out 1" client="Carla" exclusive="off">
+   <plug>audio\-out1</plug>
+  </socket>
+  <socket type="jack-audio" name="carla audio out 2" client="Carla" exclusive="off">
+   <plug>audio\-out2</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket type="jack-midi" name="Carla 1" client="Carla" exclusive="off">
+   <plug>events\-in</plug>
+  </socket>
+  <socket type="jack-audio" name="system playback 1" client="system" exclusive="off">
+   <plug>playback_1</plug>
+  </socket>
+  <socket type="jack-audio" name="system playback 2" client="system" exclusive="off">
+   <plug>playback_2</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable type="jack-audio" output="PulseAudio\ JACK\ Sink 1" input="system playback 1"/>
+  <cable type="jack-audio" output="PulseAudio\ JACK\ Sink 2" input="system playback 2"/>
+  <cable type="jack-midi" output="a2j casio cap" input="Carla 1"/>
+  <cable type="jack-midi" output="a2j Impulse cap 1" input="Carla 1"/>
+  <cable type="jack-midi" output="a2j KX8 1 cap" input="Carla 1"/>
+  <cable type="jack-audio" output="carla audio out 1" input="system playback 1"/>
+  <cable type="jack-audio" output="carla audio out 2" input="system playback 2"/>
+  <cable type="jack-midi" output="Korg nanoKONTROL" input="Carla 1"/>
+ </cables>
+</patchbay>
+

@@ -1,0 +1,52 @@
+<!DOCTYPE qjackctlSession>
+<session name="JACK">
+ <client name="system">
+  <port type="out" name="capture_1">
+   <connect client="Carla" port="audio-in1"/>
+  </port>
+  <port type="out" name="capture_2">
+   <connect client="Carla" port="audio-in2"/>
+  </port>
+  <port type="in" name="playback_1">
+   <connect client="Carla" port="audio-out1"/>
+  </port>
+  <port type="in" name="playback_2">
+   <connect client="Carla" port="audio-out2"/>
+  </port>
+  <port type="out" name="midi_capture_1"/>
+  <port type="in" name="midi_playback_1"/>
+  <port type="out" name="midi_capture_2">
+   <connect client="Carla" port="events-in"/>
+  </port>
+  <port type="out" name="midi_capture_3">
+   <connect client="Carla" port="events-in"/>
+  </port>
+  <port type="out" name="midi_capture_4">
+   <connect client="Carla" port="events-in"/>
+  </port>
+  <port type="in" name="midi_playback_2"/>
+  <port type="in" name="midi_playback_3"/>
+  <port type="in" name="midi_playback_4"/>
+ </client>
+ <client name="Carla">
+  <port type="in" name="audio-in1">
+   <connect client="system" port="capture_1"/>
+  </port>
+  <port type="in" name="audio-in2">
+   <connect client="system" port="capture_2"/>
+  </port>
+  <port type="out" name="audio-out1">
+   <connect client="system" port="playback_1"/>
+  </port>
+  <port type="out" name="audio-out2">
+   <connect client="system" port="playback_2"/>
+  </port>
+  <port type="in" name="events-in">
+   <connect client="system" port="midi_capture_2"/>
+   <connect client="system" port="midi_capture_3"/>
+   <connect client="system" port="midi_capture_4"/>
+  </port>
+  <port type="out" name="events-out"/>
+ </client>
+</session>
+

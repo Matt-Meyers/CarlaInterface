@@ -1,0 +1,92 @@
+<!DOCTYPE patchbay>
+<patchbay version="0.9.6" name="patchbay">
+ <output-sockets>
+  <socket exclusive="off" client="system" name="system midi cap 1" type="jack-midi">
+   <plug>midi_capture_1</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 2" type="jack-midi">
+   <plug>midi_capture_2</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 3" type="jack-midi">
+   <plug>midi_capture_3</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 4" type="jack-midi">
+   <plug>midi_capture_4</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 5" type="jack-midi">
+   <plug>midi_capture_5</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 6" type="jack-midi">
+   <plug>midi_capture_6</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 7" type="jack-midi">
+   <plug>midi_capture_7</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system 1" type="jack-midi">
+   <plug>midi_capture_*</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 8" type="jack-midi">
+   <plug>midi_capture_8</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 9" type="jack-midi">
+   <plug>midi_capture_9</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 10" type="jack-midi">
+   <plug>midi_capture_10</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 11" type="jack-midi">
+   <plug>midi_capture_11</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 12" type="jack-midi">
+   <plug>midi_capture_12</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 13" type="jack-midi">
+   <plug>midi_capture_13</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 14" type="jack-midi">
+   <plug>midi_capture_14</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system midi cap 15" type="jack-midi">
+   <plug>midi_capture_15</plug>
+  </socket>
+  <socket exclusive="off" client="Carla" name="carla audio out 1" type="jack-audio">
+   <plug>audio\-out1</plug>
+  </socket>
+  <socket exclusive="off" client="Carla" name="carla audio out 2" type="jack-audio">
+   <plug>audio\-out2</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket exclusive="off" client="Carla" name="Carla 1" type="jack-midi">
+   <plug>events\-in</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system playback 1" type="jack-audio">
+   <plug>playback_1</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system playback 2" type="jack-audio">
+   <plug>playback_2</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable output="system midi cap 1" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 2" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 3" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 4" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 5" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 6" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 7" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 8" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 9" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 10" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 11" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 12" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 13" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 14" type="jack-midi" input="Carla 1"/>
+  <cable output="system midi cap 15" type="jack-midi" input="Carla 1"/>
+  <cable output="carla audio out 1" type="jack-audio" input="system playback 1"/>
+  <cable output="carla audio out 2" type="jack-audio" input="system playback 2"/>
+  <cable output="system 1" type="jack-midi" input="Carla 1"/>
+ </cables>
+</patchbay>
+
