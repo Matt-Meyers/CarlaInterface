@@ -2,7 +2,7 @@
 
 from math import floor
 
-from PyQt6.QtCore import QSize
+from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QColor, QFocusEvent, QFont, QPalette
 from PyQt6.QtWidgets import QPushButton, QSpinBox, QTabBar, QTabWidget
 
@@ -12,6 +12,8 @@ class NoteSpinBox(QSpinBox):
 
     def __init__(self):
         super().__init__()
+        # Patch/tab shortcuts live on CarlaInterface; don't steal 1-8 / arrows.
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F',
                       'F#', 'G', 'G#', 'A', 'A#', 'B']
 
@@ -30,6 +32,10 @@ class NoteSpinBox(QSpinBox):
 class OctaveSpinBox(QSpinBox):
     """Octave offset spinner; same no-focus behavior as NoteSpinBox."""
 
+    def __init__(self):
+        super().__init__()
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+
     def focusInEvent(self, e: QFocusEvent) -> None:
         self.clearFocus()
 
@@ -39,6 +45,7 @@ class TouchTabWidget(QTabWidget):
 
     def __init__(self):
         super().__init__()
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.setTabBar(TouchTabBar())
         # QTabWidget paints its pane with ColorRole.Button; keep it slightly
         # darker than the tab buttons themselves.
@@ -56,6 +63,7 @@ class TouchTabBar(QTabBar):
 
     def __init__(self):
         super().__init__()
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         palette = QPalette()
         palette.setColor(QPalette.ColorRole.Button, QColor(55, 55, 55))
         self.setPalette(palette)
@@ -76,6 +84,7 @@ class TouchButton(QPushButton):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         palette = QPalette()
         palette.setColor(QPalette.ColorRole.Button, QColor(55, 55, 55))
         self.setPalette(palette)

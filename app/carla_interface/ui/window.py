@@ -24,6 +24,27 @@ from carla_interface.ui.widgets import (
 )
 
 
+# Top-row and numpad 1-8 → slot index on the current tab's visible grid.
+_SLOT_KEYS = {
+    Qt.Key.Key_1: 0,
+    Qt.Key.Key_2: 1,
+    Qt.Key.Key_3: 2,
+    Qt.Key.Key_4: 3,
+    Qt.Key.Key_5: 4,
+    Qt.Key.Key_6: 5,
+    Qt.Key.Key_7: 6,
+    Qt.Key.Key_8: 7,
+    Qt.Key.Key_Keypad1: 0,
+    Qt.Key.Key_Keypad2: 1,
+    Qt.Key.Key_Keypad3: 2,
+    Qt.Key.Key_Keypad4: 3,
+    Qt.Key.Key_Keypad5: 4,
+    Qt.Key.Key_Keypad6: 5,
+    Qt.Key.Key_Keypad7: 6,
+    Qt.Key.Key_Keypad8: 7,
+}
+
+
 class CarlaInterface(QWidget):
     """
     Touch UI for the Carla rack.
@@ -31,6 +52,9 @@ class CarlaInterface(QWidget):
     Each category tab has two stacked grids: main presets (index 0) and the
     split-bank copy (index 1). Clicks go to PatchController; this class only
     updates palettes and which grid is visible.
+
+    Keys 1-8 select slots on the current tab; left/right change tabs; up/down
+    step through that tab's slots.
     """
 
     def __init__(self, patches, categories, config):
@@ -49,6 +73,8 @@ class CarlaInterface(QWidget):
         QDir.addSearchPath('icons', str(config.assets_dir))
         self.setWindowIcon(QIcon(str(config.logo_path)))
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)  # kiosk
+        # Children are NoFocus; this widget must keep keys for patch/tab nav.
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
         # Buttons use QPalette (Linux). Spinboxes get the CSS below.
         self.palette = palettes.set_full_dark()
@@ -72,6 +98,7 @@ class CarlaInterface(QWidget):
         self.header_layout.setContentsMargins(30, 15, 30, 10)
 
         self.splitter_btn = QPushButton('Split')
+        self.splitter_btn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.splitter_btn.setMinimumHeight(46)
         self.splitter_btn.clicked.connect(self._on_splitter_clicked)
 
@@ -99,6 +126,11 @@ class CarlaInterface(QWidget):
         self.stack_layouts = []
         self.main_btns = []
         self.split_btns = []
+        # Per-tab (btn, preset) lists so keys 1-8 / up/down index the visible grid.
+        self.main_bank_by_tab = []
+        self.split_bank_by_tab = []
+        self.main_sel_by_tab = []
+        self.split_sel_by_tab = []
         self.tab_container = TouchTabWidget()
         self.tab_container.currentChanged.connect(self._on_tab_changed)
         for cat in self.categories:
@@ -124,18 +156,24 @@ class CarlaInterface(QWidget):
                     if preset.category == cat:
                         main_presets.append(preset)
                         split_presets.append(preset)
-            self._add_buttons(
-                self.main_btns,
-                main_presets,
-                self._on_main_clicked,
-                main_grid_layout,
+            self.main_bank_by_tab.append(
+                self._add_buttons(
+                    self.main_btns,
+                    main_presets,
+                    self._on_main_clicked,
+                    main_grid_layout,
+                )
             )
-            self._add_buttons(
-                self.split_btns,
-                split_presets,
-                self._on_split_clicked,
-                split_grid_layout,
+            self.split_bank_by_tab.append(
+                self._add_buttons(
+                    self.split_btns,
+                    split_presets,
+                    self._on_split_clicked,
+                    split_grid_layout,
+                )
             )
+            self.main_sel_by_tab.append(-1)
+            self.split_sel_by_tab.append(-1)
             stack_layout.addWidget(main_grid_container)   # index 0
             stack_layout.addWidget(split_grid_container)  # index 1
             self.tab_container.addTab(stack_container, cat)
@@ -166,11 +204,89 @@ class CarlaInterface(QWidget):
         self._reset_button_palettes(self.main_btns)
         self.controller.select_main(preset)
         btn.setPalette(self.palette_active)
+        self._remember_selection(
+            self.main_bank_by_tab, self.main_sel_by_tab, btn
+        )
 
     def _on_split_clicked(self, btn, preset):
         self._reset_button_palettes(self.split_btns)
         self.controller.select_split(preset)
         btn.setPalette(self.palette_active)
+        self._remember_selection(
+            self.split_bank_by_tab, self.split_sel_by_tab, btn
+        )
+
+    def showEvent(self, event):
+        super().showEvent(event)
+        self.setFocus(Qt.FocusReason.OtherFocusReason)
+
+    def keyPressEvent(self, event):
+        key = event.key()
+        slot = _SLOT_KEYS.get(key)
+        if slot is not None:
+            # Hold-repeat would retrigger OSC/MIDI for the same preset.
+            if not event.isAutoRepeat():
+                self._activate_slot(slot)
+            event.accept()
+            return
+        if key == Qt.Key.Key_Left:
+            self._step_tab(-1)
+        elif key == Qt.Key.Key_Right:
+            self._step_tab(1)
+        elif key == Qt.Key.Key_Down:
+            self._step_slot(1)
+        elif key == Qt.Key.Key_Up:
+            self._step_slot(-1)
+        else:
+            super().keyPressEvent(event)
+            return
+        event.accept()
+
+    def _visible_bank(self):
+        if self.controller.split_enabled:
+            return (
+                self.split_bank_by_tab,
+                self.split_sel_by_tab,
+                self._on_split_clicked,
+            )
+        return self.main_bank_by_tab, self.main_sel_by_tab, self._on_main_clicked
+
+    def _activate_slot(self, index):
+        banks, _sel, handler = self._visible_bank()
+        entries = banks[self.tab_container.currentIndex()]
+        if 0 <= index < len(entries):
+            btn, preset = entries[index]
+            handler(btn, preset)
+
+    def _step_slot(self, delta):
+        banks, sel_by_tab, handler = self._visible_bank()
+        tab = self.tab_container.currentIndex()
+        entries = banks[tab]
+        n = len(entries)
+        if n == 0:
+            return
+        current = sel_by_tab[tab]
+        if current < 0:
+            index = 0 if delta > 0 else n - 1
+        else:
+            index = (current + delta) % n
+        btn, preset = entries[index]
+        handler(btn, preset)
+
+    def _step_tab(self, delta):
+        n = self.tab_container.count()
+        if n == 0:
+            return
+        self.tab_container.setCurrentIndex(
+            (self.tab_container.currentIndex() + delta) % n
+        )
+
+    def _remember_selection(self, banks, sel_by_tab, btn):
+        for tab_idx, entries in enumerate(banks):
+            for i, (b, _preset) in enumerate(entries):
+                if b is btn:
+                    sel_by_tab[tab_idx] = i
+                    return
 
     def _on_split_key_changed(self):
         self.controller.set_split_key(self.split_key_box.value())
@@ -182,16 +298,19 @@ class CarlaInterface(QWidget):
         """Fill a grid left-to-right. Row starts at 1 for a bit of top gap."""
         x = 0
         y = 1
+        bank = []
         for preset in presets:
             btn = TouchButton(preset.parent_name + '\n' + preset.name)
             btn.setSizePolicy(self.policy, self.policy)
             btn.clicked.connect(partial(click_handler, btn, preset))
             layout.addWidget(btn, y, x)
             btn_store.append(btn)
+            bank.append((btn, preset))
             x += 1
             if x >= self.config.cols:
                 x = 0
                 y += 1
+        return bank
 
     def _reset_button_palettes(self, buttons):
         for btn in buttons:
