@@ -4,7 +4,7 @@ from functools import partial
 
 from PyQt6.QtCore import QDir, Qt
 from PyQt6.QtGui import QFont, QIcon
-from PyQt6.QtWidgets import (
+from PyQt6.QtWidgets import (  
     QGridLayout,
     QPushButton,
     QSizePolicy,
