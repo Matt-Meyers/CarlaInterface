@@ -24,7 +24,7 @@ from carla_interface.ui.widgets import (
 )
 
 
-# Key_1..8 covers the top row and the numpad (NumLock on). Qt has no Key_KeypadN.
+# Top row / numpad (NumLock on); Qt has no Key_KeypadN. 0 is the tenth slot.
 _SLOT_KEYS = {
     Qt.Key.Key_1: 0,
     Qt.Key.Key_2: 1,
@@ -34,6 +34,8 @@ _SLOT_KEYS = {
     Qt.Key.Key_6: 5,
     Qt.Key.Key_7: 6,
     Qt.Key.Key_8: 7,
+    Qt.Key.Key_9: 8,
+    Qt.Key.Key_0: 9,
 }
 
 
@@ -45,8 +47,8 @@ class CarlaInterface(QWidget):
     split-bank copy (index 1). Clicks go to PatchController; this class only
     updates palettes and which grid is visible.
 
-    Keys 1-8 select slots on the current tab; left/right change tabs; up/down
-    step through that tab's slots.
+    Keys 1-9 and 0 select slots on the current tab; left/right change tabs;
+    up/down step through that tab's slots.
     """
 
     def __init__(self, patches, categories, config, windowed=False):
@@ -121,7 +123,7 @@ class CarlaInterface(QWidget):
         self.stack_layouts = []
         self.main_btns = []
         self.split_btns = []
-        # Per-tab (btn, preset) lists so keys 1-8 / up/down index the visible grid.
+        # Per-tab (btn, preset) lists so keys 1-9 / 0 / up/down index the visible grid.
         self.main_bank_by_tab = []
         self.split_bank_by_tab = []
         self.main_sel_by_tab = []

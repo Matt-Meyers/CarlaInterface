@@ -12,7 +12,7 @@ class NoteSpinBox(QSpinBox):
 
     def __init__(self):
         super().__init__()
-        # Patch/tab shortcuts live on CarlaInterface; don't steal 1-8 / arrows.
+        # Patch/tab shortcuts live on CarlaInterface; don't steal 1-9 / 0 / arrows.
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F',
                       'F#', 'G', 'G#', 'A', 'A#', 'B']
