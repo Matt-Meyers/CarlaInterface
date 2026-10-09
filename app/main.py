@@ -15,6 +15,8 @@ if __name__ == '__main__':
         assets_dir=Path(__file__).resolve().parent / 'assets',
         osc_port='22752',
         midi_port='Midi Through Port-0',
+        midi_record_dir=Path.home() / 'midi',
+        midi_record_name_chars=20,
         split_start_idx=12,   # duplicated instruments start here
         split_lo_idx=8,       # MIDI Key-Range Filter (low)
         split_hi_idx=9,       # MIDI Key-Range Filter (high)

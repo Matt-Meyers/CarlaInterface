@@ -61,7 +61,11 @@ class CarlaInterface(QWidget):
             patches,
             config,
             CarlaOsc(config.osc_port, config.osc_host),
-            MidiService(config.sendmidi_path, config.midi_port),
+            MidiService(
+                config.sendmidi_path,
+                config.midi_port,
+                config.midi_record_dir,
+            ),
         )
 
         # stylesheet.css uses url(icons:up_arrow_sml.png) etc.
@@ -79,6 +83,9 @@ class CarlaInterface(QWidget):
         self.palette_alt_active = palettes.set_alt_active(
             palettes.set_full_dark()
         )
+        self.palette_recording = palettes.set_recording(
+            palettes.set_full_dark()
+        )
         self.setPalette(self.palette)
         self.custom_css = config.stylesheet_path.read_text(encoding='utf-8')
 
@@ -87,12 +94,17 @@ class CarlaInterface(QWidget):
         font.setPointSize(12)
         self.setFont(font)
 
-        # Header: Split toggle, split-note spinner, octave spinner.
+        # Header: Record/Stop, Split toggle, split-note spinner, octave spinner.
         self.outer_layout = QGridLayout(self)
         self.header_container = QWidget()
         self.header_layout = QGridLayout(self.header_container)
         self.header_layout.setHorizontalSpacing(70)
         self.header_layout.setContentsMargins(30, 15, 30, 10)
+
+        self.record_btn = QPushButton('Record')
+        self.record_btn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.record_btn.setMinimumHeight(46)
+        self.record_btn.clicked.connect(self._on_record_clicked)
 
         self.splitter_btn = QPushButton('Split')
         self.splitter_btn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
@@ -114,9 +126,14 @@ class CarlaInterface(QWidget):
         self.octave_box.setValue(0)
         self.octave_box.valueChanged.connect(self._on_octave_changed)
 
-        self.header_layout.addWidget(self.splitter_btn, 0, 0, 1, 2)
+        self.header_layout.addWidget(self.record_btn, 0, 0)
+        self.header_layout.addWidget(self.splitter_btn, 0, 1)
         self.header_layout.addWidget(self.split_key_box, 0, 2)
         self.header_layout.addWidget(self.octave_box, 0, 3)
+        self.header_layout.setColumnStretch(0, 1)
+        self.header_layout.setColumnStretch(1, 2)
+        self.header_layout.setColumnStretch(2, 2)
+        self.header_layout.setColumnStretch(3, 2)
         self.outer_layout.addWidget(self.header_container, 0, 0, 1, 3)
 
         # One stacked pair of grids per category tab.
@@ -182,6 +199,21 @@ class CarlaInterface(QWidget):
             self.show()
         else:
             self.showMaximized()
+
+    def _on_record_clicked(self):
+        if self.controller.is_recording:
+            self.controller.stop_recording()
+            self.record_btn.setText('Record')
+            self.record_btn.setPalette(self.palette)
+            return
+        self.controller.start_recording()
+        self.record_btn.setText('Stop')
+        self.record_btn.setPalette(self.palette_recording)
+
+    def closeEvent(self, event):
+        if self.controller.is_recording:
+            self.controller.stop_recording()
+        super().closeEvent(event)
 
     def _on_splitter_clicked(self):
         """Toggle split mode: swap grids, highlight Split, restore octave."""

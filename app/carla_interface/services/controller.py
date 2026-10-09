@@ -1,8 +1,16 @@
+import time
+
 from PyQt6.QtCore import QTimer
+
+from carla_interface.services.midi import (
+    format_duration,
+    unique_midi_path,
+    voice_slug,
+)
 
 
 class PatchController:
-    """Preset selection, split, and octave — talks to Carla OSC and MIDI."""
+    """Preset selection, split, octave, and MIDI record — OSC/MIDI I/O."""
 
     # Pigments needs a short gap after set_active before a MIDI program change.
     MIDI_PC_DELAY_MS = 250
@@ -18,17 +26,29 @@ class PatchController:
         self.octave_lo = 0
         self.octave_hi = 0
         self.curr_main_carla_idx = 0
+        self.curr_main_preset = None
+        self.curr_split_preset = None
         # Bumped to ignore QTimer callbacks from a previous MIDI program change.
         self._midi_seq = 0
+        self._recording = False
+        self._record_main_name = None
+        self._record_split_name = None
+        self._record_split_enabled = False
+        self._record_started_at = None
 
     @property
     def octave_value(self):
         return self.octave_hi if self.split_enabled else self.octave_lo
 
+    @property
+    def is_recording(self):
+        return self._recording
+
     def select_main(self, preset):
         self.deactivate_bank(0)
         self.osc.set_active(preset.carla_idx, True)
         self.curr_main_carla_idx = preset.carla_idx
+        self.curr_main_preset = preset
         self._apply_preset(preset, preset.carla_idx, for_split=False)
 
     def select_split(self, preset):
@@ -36,7 +56,42 @@ class PatchController:
         carla_idx = preset.carla_idx + self.config.split_start_idx
         self.deactivate_bank(self.config.split_start_idx)
         self.osc.set_active(carla_idx, True)
+        self.curr_split_preset = preset
         self._apply_preset(preset, carla_idx, for_split=True)
+
+    def start_recording(self):
+        if self._recording:
+            return False
+        self._record_main_name = (
+            self.curr_main_preset.name if self.curr_main_preset else 'Untitled'
+        )
+        self._record_split_name = (
+            self.curr_split_preset.name if self.curr_split_preset else 'Untitled'
+        )
+        # Names are frozen here so a mid-take patch change does not rename.
+        self._record_split_enabled = self.split_enabled
+        self._record_started_at = time.monotonic()
+        self._recording = True
+        self.midi.start_recording()
+        return True
+
+    def stop_recording(self):
+        if not self._recording:
+            return None
+        elapsed = time.monotonic() - self._record_started_at
+        self._recording = False
+        stem = (
+            voice_slug(
+                self._record_main_name,
+                self._record_split_name,
+                self._record_split_enabled,
+                self.config.midi_record_name_chars,
+            )
+            + '-'
+            + format_duration(elapsed)
+        )
+        dest = unique_midi_path(self.config.midi_record_dir, stem)
+        return self.midi.stop_recording(dest)
 
     def set_split_enabled(self, enabled):
         self._midi_seq += 1  # cancel in-flight MIDI PC / restore timeouts

@@ -1,4 +1,4 @@
-"""Dark QPalette helpers. Active = selected preset; alt_active = Split on."""
+"""Dark QPalette helpers. Active = preset; alt_active = Split; recording = Stop."""
 
 from PyQt6.QtGui import QPalette, QColor, QColorConstants
 
@@ -32,5 +32,12 @@ def set_active(palette):
 def set_alt_active(palette):
     """Adjust palette for alt-active item."""
     palette.setColor(QPalette.ColorRole.Button, QColor(20, 20, 60))
+    palette.setColor(QPalette.ColorRole.ButtonText, QColorConstants.White)
+    return palette
+
+
+def set_recording(palette):
+    """Adjust palette for the Record button while capture is armed."""
+    palette.setColor(QPalette.ColorRole.Button, QColor(140, 24, 24))
     palette.setColor(QPalette.ColorRole.ButtonText, QColorConstants.White)
     return palette
