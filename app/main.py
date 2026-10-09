@@ -3,7 +3,7 @@ from pathlib import Path
 
 from PyQt6.QtWidgets import QApplication
 
-from carla_interface import AppConfig, CarlaInterface, Patch
+from carla_interface import AppConfig, CarlaInterface, Patch, run_app
 
 if __name__ == '__main__':
     categories = ['Piano', 'Keys', 'Synth-Keys', 'Pad']
@@ -79,4 +79,4 @@ if __name__ == '__main__':
     app = QApplication(['Carla Interface'])
     carla_interface = CarlaInterface(patches, categories, config)
     carla_interface.showMaximized()
-    sys.exit(app.exec())
+    sys.exit(run_app(app))

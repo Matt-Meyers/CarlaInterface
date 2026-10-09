@@ -214,6 +214,15 @@ class CarlaInterface(QWidget):
 
     def keyPressEvent(self, event):
         key = event.key()
+        # Terminal SIGINT never arrives while this window has focus.
+        if (
+            event.modifiers() & Qt.KeyboardModifier.ControlModifier
+            and key == Qt.Key.Key_C
+            and not event.isAutoRepeat()
+        ):
+            self.close()
+            event.accept()
+            return
         slot = _SLOT_KEYS.get(key)
         if slot is not None:
             # Hold-repeat would retrigger OSC/MIDI for the same preset.
