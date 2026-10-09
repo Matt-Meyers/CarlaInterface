@@ -24,7 +24,7 @@ from carla_interface.ui.widgets import (
 )
 
 
-# Top-row and numpad 1-8 → slot index on the current tab's visible grid.
+# Key_1..8 covers the top row and the numpad (NumLock on). Qt has no Key_KeypadN.
 _SLOT_KEYS = {
     Qt.Key.Key_1: 0,
     Qt.Key.Key_2: 1,
@@ -34,14 +34,6 @@ _SLOT_KEYS = {
     Qt.Key.Key_6: 5,
     Qt.Key.Key_7: 6,
     Qt.Key.Key_8: 7,
-    Qt.Key.Key_Keypad1: 0,
-    Qt.Key.Key_Keypad2: 1,
-    Qt.Key.Key_Keypad3: 2,
-    Qt.Key.Key_Keypad4: 3,
-    Qt.Key.Key_Keypad5: 4,
-    Qt.Key.Key_Keypad6: 5,
-    Qt.Key.Key_Keypad7: 6,
-    Qt.Key.Key_Keypad8: 7,
 }
 
 
