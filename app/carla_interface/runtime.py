@@ -1,8 +1,19 @@
-"""Qt event-loop helpers."""
+"""Launch helpers: CLI flags and the Qt event loop."""
 
+import argparse
 import signal
 
 from PyQt6.QtCore import QTimer
+
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description='Carla Interface')
+    parser.add_argument(
+        '--windowed',
+        action='store_true',
+        help='Open a framed window instead of the fullscreen kiosk',
+    )
+    return parser.parse_args(argv)
 
 
 def run_app(app):

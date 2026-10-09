@@ -49,11 +49,12 @@ class CarlaInterface(QWidget):
     step through that tab's slots.
     """
 
-    def __init__(self, patches, categories, config):
+    def __init__(self, patches, categories, config, windowed=False):
         super().__init__()
         self.patches = patches
         self.categories = categories
         self.config = config
+        self._windowed = windowed
         self.controller = PatchController(
             patches,
             config,
@@ -64,7 +65,9 @@ class CarlaInterface(QWidget):
         # stylesheet.css uses url(icons:up_arrow_sml.png) etc.
         QDir.addSearchPath('icons', str(config.assets_dir))
         self.setWindowIcon(QIcon(str(config.logo_path)))
-        self.setWindowFlag(Qt.WindowType.FramelessWindowHint)  # kiosk
+        self.setWindowTitle('Carla Interface')
+        if not windowed:
+            self.setWindowFlag(Qt.WindowType.FramelessWindowHint)  # kiosk
         # Children are NoFocus; this widget must keep keys for patch/tab nav.
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
@@ -170,6 +173,13 @@ class CarlaInterface(QWidget):
             stack_layout.addWidget(split_grid_container)  # index 1
             self.tab_container.addTab(stack_container, cat)
         self.outer_layout.addWidget(self.tab_container, 1, 0, 1, 3)
+
+    def show_app(self):
+        if self._windowed:
+            self.resize(1600, 900)
+            self.show()
+        else:
+            self.showMaximized()
 
     def _on_splitter_clicked(self):
         """Toggle split mode: swap grids, highlight Split, restore octave."""
