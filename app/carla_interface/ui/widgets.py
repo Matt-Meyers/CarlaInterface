@@ -2,8 +2,15 @@
 
 from math import floor
 
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QColor, QFocusEvent, QFont, QPalette
+from PyQt6.QtCore import QRectF, QSize, Qt
+from PyQt6.QtGui import (
+    QColor,
+    QColorConstants,
+    QFocusEvent,
+    QFont,
+    QPainter,
+    QPalette,
+)
 from PyQt6.QtWidgets import QPushButton, QSpinBox, QTabBar, QTabWidget
 
 
@@ -77,6 +84,35 @@ class TouchTabBar(QTabBar):
         if width < 80:
             width = 80
         return QSize(width + 25, 70)
+
+
+class RecordButton(QPushButton):
+    """Transport mark instead of Record/Stop text: circle idle, square armed."""
+
+    def __init__(self):
+        super().__init__()
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self._recording = False
+
+    def set_recording(self, recording):
+        self._recording = recording
+        self.update()
+
+    def paintEvent(self, event):
+        super().paintEvent(event)
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.setPen(Qt.PenStyle.NoPen)
+        side = min(self.width(), self.height()) * 0.52
+        cx = self.width() / 2
+        cy = self.height() / 2
+        if self._recording:
+            painter.setBrush(QColor(220, 36, 36))
+            half = side * 0.42
+            painter.drawRect(QRectF(cx - half, cy - half, half * 2, half * 2))
+        else:
+            painter.setBrush(QColorConstants.White)
+            painter.drawEllipse(QRectF(cx - side / 2, cy - side / 2, side, side))
 
 
 class TouchButton(QPushButton):

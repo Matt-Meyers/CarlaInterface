@@ -19,6 +19,7 @@ from carla_interface.ui import palettes
 from carla_interface.ui.widgets import (
     NoteSpinBox,
     OctaveSpinBox,
+    RecordButton,
     TouchButton,
     TouchTabWidget,
 )
@@ -83,9 +84,6 @@ class CarlaInterface(QWidget):
         self.palette_alt_active = palettes.set_alt_active(
             palettes.set_full_dark()
         )
-        self.palette_recording = palettes.set_recording(
-            palettes.set_full_dark()
-        )
         self.setPalette(self.palette)
         self.custom_css = config.stylesheet_path.read_text(encoding='utf-8')
 
@@ -94,15 +92,14 @@ class CarlaInterface(QWidget):
         font.setPointSize(12)
         self.setFont(font)
 
-        # Header: Record/Stop, Split toggle, split-note spinner, octave spinner.
+        # Header: record mark, Split toggle, split-note spinner, octave spinner.
         self.outer_layout = QGridLayout(self)
         self.header_container = QWidget()
         self.header_layout = QGridLayout(self.header_container)
-        self.header_layout.setHorizontalSpacing(70)
-        self.header_layout.setContentsMargins(30, 15, 30, 10)
+        self.header_layout.setHorizontalSpacing(45)
+        self.header_layout.setContentsMargins(25, 15, 25, 10)
 
-        self.record_btn = QPushButton('Record')
-        self.record_btn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.record_btn = RecordButton()
         self.record_btn.setMinimumHeight(46)
         self.record_btn.clicked.connect(self._on_record_clicked)
 
@@ -131,7 +128,7 @@ class CarlaInterface(QWidget):
         self.header_layout.addWidget(self.split_key_box, 0, 2)
         self.header_layout.addWidget(self.octave_box, 0, 3)
         self.header_layout.setColumnStretch(0, 1)
-        self.header_layout.setColumnStretch(1, 2)
+        self.header_layout.setColumnStretch(1, 3)
         self.header_layout.setColumnStretch(2, 2)
         self.header_layout.setColumnStretch(3, 2)
         self.outer_layout.addWidget(self.header_container, 0, 0, 1, 3)
@@ -203,12 +200,10 @@ class CarlaInterface(QWidget):
     def _on_record_clicked(self):
         if self.controller.is_recording:
             self.controller.stop_recording()
-            self.record_btn.setText('Record')
-            self.record_btn.setPalette(self.palette)
+            self.record_btn.set_recording(False)
             return
         self.controller.start_recording()
-        self.record_btn.setText('Stop')
-        self.record_btn.setPalette(self.palette_recording)
+        self.record_btn.set_recording(True)
 
     def closeEvent(self, event):
         if self.controller.is_recording:
