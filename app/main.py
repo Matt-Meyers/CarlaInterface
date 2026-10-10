@@ -24,6 +24,7 @@ if __name__ == '__main__':
         octave_hi_idx=11,     # MIDI Transpose (high / split)
         split_key_idx=60,     # default split note (C4)
         cols=4,
+        rows=2,
     )
 
     # This is a single plugin/patch in Carla. Each '.add' stands for a preset.

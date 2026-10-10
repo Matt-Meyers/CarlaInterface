@@ -19,6 +19,7 @@ class AppConfig:
     octave_hi_idx: int = 11                 # Transpose, high / split
     split_key_idx: int = 60                 # default split note (C4)
     cols: int = 4                           # preset button columns
+    rows: int = 2                           # preset button rows
 
     @property
     def sendmidi_path(self) -> Path:

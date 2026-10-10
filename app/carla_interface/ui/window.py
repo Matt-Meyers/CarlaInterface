@@ -338,6 +338,7 @@ class CarlaInterface(QWidget):
         """Fill a grid left-to-right. Row starts at 1 for a bit of top gap."""
         x = 0
         y = 1
+        last_row = 1
         bank = []
         for preset in presets:
             btn = TouchButton(preset.parent_name + '\n' + preset.name)
@@ -346,10 +347,14 @@ class CarlaInterface(QWidget):
             layout.addWidget(btn, y, x)
             btn_store.append(btn)
             bank.append((btn, preset))
+            last_row = y
             x += 1
             if x >= self.config.cols:
                 x = 0
                 y += 1
+        # Keep empty cells so a sparse tab still matches the configured grid.
+        for row in range(1, max(self.config.rows, last_row) + 1):
+            layout.setRowStretch(row, 1)
         return bank
 
     def _reset_button_palettes(self, buttons):
