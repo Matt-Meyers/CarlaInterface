@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Project intent
 
-`app/main.py` is the file a human edits: categories, `Patch(...).add(...)` lists, and `AppConfig` rack indexes. Do not move that catalog into the package. Keep the sequential `.add` style and the existing explanatory comments.
+`app/main.py` is designed to be user friendly and novice editable: categories, `Patch(...).add(...)` lists, and `AppConfig` rack indexes. Do not move that catalog into the package. Keep the sequential `.add` style and the existing explanatory comments.
 
 Implementation lives under `app/carla_interface/`. Avoid giant god files; split modules by responsibility when a file grows unwieldy. `os/` is the piano-PC overlay (autostart, JACK, Carla project) — leave it alone unless asked.
 
