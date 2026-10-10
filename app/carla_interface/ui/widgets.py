@@ -2,7 +2,7 @@
 
 from math import floor
 
-from PyQt6.QtCore import QRectF, QSize, Qt, pyqtSignal
+from PyQt6.QtCore import QRectF, QSize, Qt, QTimer, pyqtSignal
 from PyQt6.QtGui import (
     QColor,
     QColorConstants,
@@ -33,6 +33,10 @@ class TouchStepper(QWidget):
     """Horizontal − value + control. Same chrome as the header buttons."""
 
     valueChanged = pyqtSignal(int)
+    # Wider than the 56px arrow widgets so a finger can miss the icon.
+    _ZONE = 0.4
+    _REPEAT_DELAY_MS = 400
+    _REPEAT_INTERVAL_MS = 80
 
     def __init__(self):
         super().__init__()
@@ -41,33 +45,34 @@ class TouchStepper(QWidget):
         # QWidget ignores stylesheet fills unless this is set.
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.setObjectName('TouchStepper')
+        self.setMouseTracking(True)
         self._value = 0
         self._minimum = 0
         self._maximum = 99
+        self._press_zone = 0
+        self._repeat_ready = False
 
         self._down = QPushButton()
         self._down.setObjectName('stepDown')
         self._down.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self._down.setIcon(QIcon('icons:dn_arrow_sml.png'))
         self._down.setIconSize(QSize(28, 28))
-        self._down.setAutoRepeat(True)
-        self._down.setAutoRepeatDelay(400)
-        self._down.setAutoRepeatInterval(80)
-        self._down.clicked.connect(self._step_down)
 
         self._up = QPushButton()
         self._up.setObjectName('stepUp')
         self._up.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self._up.setIcon(QIcon('icons:up_arrow_sml.png'))
         self._up.setIconSize(QSize(28, 28))
-        self._up.setAutoRepeat(True)
-        self._up.setAutoRepeatDelay(400)
-        self._up.setAutoRepeatInterval(80)
-        self._up.clicked.connect(self._step_up)
 
         self._label = QLabel()
         self._label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._label.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+
+        # Layout size stays 56px; this widget hit-tests the wider end zones.
+        for child in (self._down, self._up, self._label):
+            child.setAttribute(
+                Qt.WidgetAttribute.WA_TransparentForMouseEvents, True
+            )
 
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -75,6 +80,8 @@ class TouchStepper(QWidget):
         layout.addWidget(self._down, 0)
         layout.addWidget(self._label, 1)
         layout.addWidget(self._up, 0)
+        self._repeat = QTimer(self)
+        self._repeat.timeout.connect(self._on_repeat)
         self._refresh_label()
 
     def textFromValue(self, value):
@@ -110,6 +117,84 @@ class TouchStepper(QWidget):
 
     def _refresh_label(self):
         self._label.setText(self.textFromValue(self._value))
+
+    def _zone_at(self, pos):
+        width = self.width()
+        if width <= 0:
+            return 0
+        if pos.x() < width * self._ZONE:
+            return -1
+        if pos.x() > width * (1.0 - self._ZONE):
+            return 1
+        return 0
+
+    def _set_hot(self, zone):
+        set_style_property(self._down, 'hot', zone < 0)
+        set_style_property(self._up, 'hot', zone > 0)
+
+    def _apply_zone(self, zone):
+        if zone < 0:
+            self._step_down()
+        elif zone > 0:
+            self._step_up()
+
+    def _stop_repeat(self):
+        self._repeat.stop()
+        self._repeat_ready = False
+        self._press_zone = 0
+
+    def _on_repeat(self):
+        if not self._repeat_ready:
+            self._repeat_ready = True
+            self._repeat.start(self._REPEAT_INTERVAL_MS)
+        self._apply_zone(self._press_zone)
+
+    def mousePressEvent(self, event):
+        if event.button() != Qt.MouseButton.LeftButton:
+            return
+        zone = self._zone_at(event.position())
+        if not zone:
+            return
+        self.grabMouse()
+        self._press_zone = zone
+        self._repeat_ready = False
+        self._set_hot(zone)
+        self._apply_zone(zone)
+        self._repeat.start(self._REPEAT_DELAY_MS)
+
+    def mouseMoveEvent(self, event):
+        zone = self._zone_at(event.position())
+        if event.buttons() & Qt.MouseButton.LeftButton:
+            if zone == self._press_zone:
+                return
+            self._press_zone = zone
+            self._set_hot(zone)
+            if not zone:
+                self._repeat.stop()
+                self._repeat_ready = False
+                return
+            if not self._repeat.isActive():
+                self._apply_zone(zone)
+                self._repeat_ready = False
+                self._repeat.start(self._REPEAT_DELAY_MS)
+            return
+        self._set_hot(zone)
+
+    def mouseReleaseEvent(self, event):
+        if event.button() != Qt.MouseButton.LeftButton:
+            return
+        if QWidget.mouseGrabber() is self:
+            self.releaseMouse()
+        self._stop_repeat()
+        if self.rect().contains(event.position().toPoint()):
+            self._set_hot(self._zone_at(event.position()))
+        else:
+            self._set_hot(0)
+
+    def leaveEvent(self, event):
+        if QWidget.mouseGrabber() is not self:
+            self._set_hot(0)
+        super().leaveEvent(event)
 
 
 class NoteSpinBox(TouchStepper):

@@ -74,10 +74,11 @@ QTabBar::tab:hover {
     border: none;
     border-radius: 0;
     padding: 0;
-    min-width: 56px;
+    min-width: 48px;
+    margin: 0px 4px;
 }
 
-#TouchStepper QPushButton:hover
+#TouchStepper QPushButton[hot="true"]
 {
     background-color: #404040;
 }
