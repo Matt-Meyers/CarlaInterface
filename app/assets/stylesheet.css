@@ -58,8 +58,6 @@ QTabBar::tab:hover {
     background-color: #404040;
 }
 
-/* Match QPushButton chrome. Inner buttons stay square so they do not
-   fight the pill radius; end-cap radii cover hover at the corners. */
 #TouchStepper
 {
     background-color: #242424;
