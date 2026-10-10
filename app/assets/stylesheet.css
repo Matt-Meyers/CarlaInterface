@@ -5,9 +5,11 @@ QPushButton
 {
     background-color: #373737;
     color: white;
-    border: 1px solid #222222;
+    border: 1px solid #202020;
+    padding: 10px;
     /* Stylesheet chrome ignores QWidget.setFont; match the window's 12pt. */
     font-size: 12pt;
+    border-radius: 10%;
 }
 
 QPushButton:hover
@@ -29,8 +31,8 @@ QPushButton[altActive="true"]:hover
 
 QTabWidget::pane
 {
-    background-color: #2a2a2a;
-    border: 1px solid #222222;
+    background-color: #232323;
+    border: 1px solid #202020;
     border-top: none;
 }
 
@@ -44,6 +46,8 @@ QTabBar::tab {
     background-color: #373737;
     color: white;
     border: 1px solid #222222;
+    border-top-left-radius: 15%;
+    border-top-right-radius: 15%;
 }
 
 QTabBar::tab:selected {
