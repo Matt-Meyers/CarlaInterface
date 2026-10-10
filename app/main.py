@@ -3,7 +3,14 @@ from pathlib import Path
 
 from PyQt6.QtWidgets import QApplication
 
-from carla_interface import AppConfig, CarlaInterface, Patch, parse_args, run_app
+from carla_interface import (
+    AppConfig,
+    CarlaInterface,
+    Patch,
+    apply_config_args,
+    parse_args,
+    run_app,
+)
 
 if __name__ == '__main__':
     args = parse_args()
@@ -25,6 +32,7 @@ if __name__ == '__main__':
         cols=4,
         rows=2,
     )
+    config = apply_config_args(config, args)
 
     # This is a single plugin/patch in Carla. Each '.add' stands for a preset.
     # Without supplying indexes, presets are assumed sequential.
