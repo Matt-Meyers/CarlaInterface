@@ -12,7 +12,6 @@ if __name__ == '__main__':
 
     # Carla rack indexes and I/O. Split bank is main index + split_start_idx.
     config = AppConfig(
-        assets_dir=Path(__file__).resolve().parent / 'assets',
         osc_port='22752',
         midi_port='Midi Through Port-0',
         midi_record_dir=Path.home() / 'midi',

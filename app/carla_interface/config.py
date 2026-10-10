@@ -1,12 +1,14 @@
 from dataclasses import dataclass
 from pathlib import Path
 
+# Bundled CSS, icons, and sendmidi live next to the package.
+_ASSETS_DIR = Path(__file__).resolve().parent.parent / 'assets'
+
 
 @dataclass
 class AppConfig:
     """Rack indexes and I/O settings. Construct this in main.py."""
 
-    assets_dir: Path
     osc_host: str = 'localhost'
     osc_port: str = '22752'                 # Carla OSC UDP port
     midi_port: str = 'Midi Through Port-0'  # sendmidi device name
@@ -20,6 +22,10 @@ class AppConfig:
     split_key_idx: int = 60                 # default split note (C4)
     cols: int = 4                           # preset button columns
     rows: int = 2                           # preset button rows
+
+    @property
+    def assets_dir(self) -> Path:
+        return _ASSETS_DIR
 
     @property
     def sendmidi_path(self) -> Path:
