@@ -2,9 +2,9 @@
 Encoding=UTF-8
 Version=0.9.4
 Type=Application
-Name=Pianoteq 7
+Name=Pianoteq 9
 Comment=
-Exec="/home/matthew/Documents/Pianoteq 7/x86-64bit/Pianoteq 7"
+Exec="/home/matthew/Documents/Pianoteq 7/x86-64bit/Pianoteq 9"
 OnlyShowIn=XFCE;
 RunHook=0
 StartupNotify=false

@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     # This is a single plugin/patch in Carla. Each '.add' stands for a preset.
     # Without supplying indexes, presets are assumed sequential.
-    patch1 = Patch('Pianoteq 7', 0)   # Plugin is Pianoteq 7, at rack 0
+    patch1 = Patch('Pianoteq 9', 0)   # Plugin is Pianoteq 9, at rack 0
     patch1.add('Bluethner Concert', 'Piano')    # first preset
     patch1.add('Bluethner Cinematic', 'Piano')   # second preset...
     patch1.add('NY Steinway Chamber', 'Piano')
@@ -41,6 +41,7 @@ if __name__ == '__main__':
     patch1.add('Pianet N Little Fuzzy', 'Keys')
     patch1.add('Electra Fatty', 'Keys')
     patch1.add('Electra RubberChorus', 'Keys')
+    patch1.add('Bechstein Sombre', 'Piano')   # Prev cat to the end to avoid reordering
     patches.append(patch1)   # append to patch-list to send to CarlaInterface
 
     # If a plugin does not support presets or MIDI program changes (or you want
