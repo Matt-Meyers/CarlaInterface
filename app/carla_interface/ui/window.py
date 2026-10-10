@@ -108,13 +108,13 @@ class CarlaInterface(QWidget):
         self.splitter_btn.clicked.connect(self._on_splitter_clicked)
 
         self.split_key_box = NoteSpinBox()
-        self.split_key_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.split_key_box.setMinimumHeight(46)
         self.split_key_box.setMaximum(127)
         self.split_key_box.setValue(config.split_key_idx)
         self.split_key_box.valueChanged.connect(self._on_split_key_changed)
 
         self.octave_box = OctaveSpinBox()
-        self.octave_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.octave_box.setMinimumHeight(46)
         self.octave_box.setMinimum(-4)
         self.octave_box.setMaximum(4)
         self.octave_box.setValue(0)

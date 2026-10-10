@@ -58,58 +58,44 @@ QTabBar::tab:hover {
     background-color: #404040;
 }
 
-QSpinBox
+/* Match QPushButton chrome. Inner buttons stay square so they do not
+   fight the pill radius; end-cap radii cover hover at the corners. */
+#TouchStepper
 {
-    subcontrol-position: center;
-    border: 0px solid #498fd0;
-    padding-right: 1px;
-    padding-left: 1px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    background-color: #212121;
+    background-color: #242424;
     color: white;
-    text-align: center;
-    font-size: 16px;
-    height: 46px;
-    selection-background-color: #252525;
+    border: 1px solid #202020;
+    border-radius: 5%;
 }
 
-QSpinBox::up-button
+#TouchStepper QPushButton
 {
-    subcontrol-origin: border;
-    subcontrol-position: top left; /* position at the top right corner */
-    background-color: #151515;
-    image: url(icons:up_arrow_sml.png) 1;
-    width: 40px;
-    height: 40px;
-    margin-top:3px;
-    margin-left:3px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    min-width: 56px;
 }
 
-QSpinBox::down-button
+#TouchStepper QPushButton:hover
 {
-    subcontrol-origin: border;
-    subcontrol-position: top right; /* position at the top right corner */
-    background-color: #151515;
-    image: url(icons:dn_arrow_sml.png) 1;
-    width: 40px;
-    height: 40px;
-    margin-top:3px;
-    margin-right:3px;
+    background-color: #404040;
 }
 
-QSpinBox::up-button:hover
+#TouchStepper QPushButton#stepDown
 {
-    background-color: #303030;
+    border-radius: 10%;
 }
 
-QSpinBox::down-button:hover
+#TouchStepper QPushButton#stepUp
 {
-    background-color: #303030;
+    border-radius: 10%;
 }
 
-QSpinBox::selection
+#TouchStepper QLabel
 {
-    background-color: #101010;
-    color: #101010;
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 12pt;
 }
