@@ -1,32 +1,37 @@
+/* Flat fills so XFCE/GTK styles cannot paint 3D chrome. Colors match
+   the Windows palette the kiosk already used (idle / active / Split). */
+
 QPushButton
 {
-background-color: #414141;
-font-size: 16px;
-color: white;
-border: 1px solid #222222;
+    background-color: #373737;
+    color: white;
+    border: 1px solid #222222;
+    /* Stylesheet chrome ignores QWidget.setFont; match the window's 12pt. */
+    font-size: 12pt;
 }
 
 QPushButton:hover
 {
-background-color: #505050;
+    background-color: #404040;
 }
 
-QPushButton:selected
+QPushButton[active="true"],
+QPushButton[active="true"]:hover
 {
-background-color: #121212;
+    background-color: #171717;
 }
 
-QWidget::window
+QPushButton[altActive="true"],
+QPushButton[altActive="true"]:hover
 {
-background-color: #454545;
+    background-color: #14143c;
 }
 
-
-/* tabs */
 QTabWidget::pane
 {
-border: 1px solid #222222;
-border-top:none;
+    background-color: #2a2a2a;
+    border: 1px solid #222222;
+    border-top: none;
 }
 
 QTabBar
@@ -36,20 +41,19 @@ QTabBar
 }
 
 QTabBar::tab {
-    background-color: #303030;
+    background-color: #373737;
+    color: white;
     border: 1px solid #222222;
-    outline: true;
 }
 
 QTabBar::tab:selected {
-    background-color: #555555;
+    background-color: #4a4a4a;
 }
 
 QTabBar::tab:hover {
-    background-color: #2F2F2F;
+    background-color: #404040;
 }
 
-/* spinbox */
 QSpinBox
 {
     subcontrol-position: center;
@@ -102,6 +106,6 @@ QSpinBox::down-button:hover
 
 QSpinBox::selection
 {
-background-color: #101010;
-color: #101010;
+    background-color: #101010;
+    color: #101010;
 }

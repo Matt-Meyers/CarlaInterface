@@ -9,9 +9,17 @@ from PyQt6.QtGui import (
     QFocusEvent,
     QFont,
     QPainter,
-    QPalette,
 )
 from PyQt6.QtWidgets import QPushButton, QSpinBox, QTabBar, QTabWidget
+
+
+def set_style_property(widget, name, value):
+    """Restyle after a dynamic Qt property change (stylesheets cache selectors)."""
+    widget.setProperty(name, value)
+    style = widget.style()
+    style.unpolish(widget)
+    style.polish(widget)
+    widget.update()
 
 
 class NoteSpinBox(QSpinBox):
@@ -54,11 +62,6 @@ class TouchTabWidget(QTabWidget):
         super().__init__()
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.setTabBar(TouchTabBar())
-        # QTabWidget paints its pane with ColorRole.Button; keep it slightly
-        # darker than the tab buttons themselves.
-        palette = QPalette()
-        palette.setColor(QPalette.ColorRole.Button, QColor(42, 42, 42))
-        self.setPalette(palette)
 
     def resizeEvent(self, event):
         self.tabBar().setFixedWidth(self.width())
@@ -71,9 +74,6 @@ class TouchTabBar(QTabBar):
     def __init__(self):
         super().__init__()
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        palette = QPalette()
-        palette.setColor(QPalette.ColorRole.Button, QColor(55, 55, 55))
-        self.setPalette(palette)
         self.setDrawBase(False)
         font = QFont()
         font.setPointSize(14)
@@ -116,11 +116,11 @@ class RecordButton(QPushButton):
 
 
 class TouchButton(QPushButton):
-    """Preset button. Idle palette here; the window applies the active one."""
+    """Preset button. Idle/active fills come from stylesheet.css."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        palette = QPalette()
-        palette.setColor(QPalette.ColorRole.Button, QColor(55, 55, 55))
-        self.setPalette(palette)
+
+    def set_active(self, active):
+        set_style_property(self, 'active', active)

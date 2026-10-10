@@ -4,7 +4,8 @@ from functools import partial
 
 from PyQt6.QtCore import QDir, Qt
 from PyQt6.QtGui import QFont, QIcon
-from PyQt6.QtWidgets import (  
+from PyQt6.QtWidgets import (
+    QApplication,
     QGridLayout,
     QPushButton,
     QSizePolicy,
@@ -22,6 +23,7 @@ from carla_interface.ui.widgets import (
     RecordButton,
     TouchButton,
     TouchTabWidget,
+    set_style_property,
 )
 
 
@@ -46,13 +48,15 @@ class CarlaInterface(QWidget):
 
     Each category tab has two stacked grids: main presets (index 0) and the
     split-bank copy (index 1). Clicks go to PatchController; this class only
-    updates palettes and which grid is visible.
+    updates button styles and which grid is visible.
 
     Keys 1-9 and 0 select slots on the current tab; left/right change tabs;
     up/down step through that tab's slots.
     """
 
     def __init__(self, patches, categories, config, windowed=False):
+        # GTK/XFCE styles add 3D chrome on QPalette buttons; Fusion + CSS stay flat.
+        QApplication.setStyle('Fusion')
         super().__init__()
         self.patches = patches
         self.categories = categories
@@ -78,14 +82,9 @@ class CarlaInterface(QWidget):
         # Children are NoFocus; this widget must keep keys for patch/tab nav.
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
-        # Buttons use QPalette (Linux). Spinboxes get the CSS below.
-        self.palette = palettes.set_full_dark()
-        self.palette_active = palettes.set_active(palettes.set_full_dark())
-        self.palette_alt_active = palettes.set_alt_active(
-            palettes.set_full_dark()
-        )
-        self.setPalette(self.palette)
-        self.custom_css = config.stylesheet_path.read_text(encoding='utf-8')
+        # Palette fills the window; stylesheet.css paints buttons/tabs/spinboxes.
+        self.setPalette(palettes.set_full_dark())
+        self.setStyleSheet(config.stylesheet_path.read_text(encoding='utf-8'))
 
         self.policy = QSizePolicy.Policy.Expanding
         font = QFont()
@@ -110,14 +109,12 @@ class CarlaInterface(QWidget):
 
         self.split_key_box = NoteSpinBox()
         self.split_key_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.split_key_box.setStyleSheet(self.custom_css)
         self.split_key_box.setMaximum(127)
         self.split_key_box.setValue(config.split_key_idx)
         self.split_key_box.valueChanged.connect(self._on_split_key_changed)
 
         self.octave_box = OctaveSpinBox()
         self.octave_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.octave_box.setStyleSheet(self.custom_css)
         self.octave_box.setMinimum(-4)
         self.octave_box.setMaximum(4)
         self.octave_box.setValue(0)
@@ -216,12 +213,12 @@ class CarlaInterface(QWidget):
         self.controller.set_split_enabled(enabled)
         curr_tab = self.tab_container.currentIndex()
         if enabled:
-            self.splitter_btn.setPalette(self.palette_alt_active)
+            set_style_property(self.splitter_btn, 'altActive', True)
             self.stack_layouts[curr_tab].setCurrentIndex(1)
         else:
-            self.splitter_btn.setPalette(self.palette)
+            set_style_property(self.splitter_btn, 'altActive', False)
             self.stack_layouts[curr_tab].setCurrentIndex(0)
-            self._reset_button_palettes(self.split_btns)
+            self._reset_button_styles(self.split_btns)
         # Low and high keyboards keep separate octave offsets.
         self.octave_box.setValue(self.controller.octave_value)
 
@@ -232,17 +229,17 @@ class CarlaInterface(QWidget):
         self.stack_layouts[curr_tab].setCurrentIndex(stack_index)
 
     def _on_main_clicked(self, btn, preset):
-        self._reset_button_palettes(self.main_btns)
+        self._reset_button_styles(self.main_btns)
         self.controller.select_main(preset)
-        btn.setPalette(self.palette_active)
+        btn.set_active(True)
         self._remember_selection(
             self.main_bank_by_tab, self.main_sel_by_tab, btn
         )
 
     def _on_split_clicked(self, btn, preset):
-        self._reset_button_palettes(self.split_btns)
+        self._reset_button_styles(self.split_btns)
         self.controller.select_split(preset)
-        btn.setPalette(self.palette_active)
+        btn.set_active(True)
         self._remember_selection(
             self.split_bank_by_tab, self.split_sel_by_tab, btn
         )
@@ -357,6 +354,6 @@ class CarlaInterface(QWidget):
             layout.setRowStretch(row, 1)
         return bank
 
-    def _reset_button_palettes(self, buttons):
+    def _reset_button_styles(self, buttons):
         for btn in buttons:
-            btn.setPalette(self.palette)
+            btn.set_active(False)
