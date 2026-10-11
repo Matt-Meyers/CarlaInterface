@@ -13,7 +13,7 @@ class PatchController:
     """Preset selection, split, octave, and MIDI record — OSC/MIDI I/O."""
 
     # Pigments needs a short gap after set_active before a MIDI program change.
-    MIDI_PC_DELAY_MS = 250
+    MIDI_PC_DELAY_MS = 125
     MIDI_RESTORE_DELAY_MS = 100
 
     def __init__(self, patches, config, osc, midi):
