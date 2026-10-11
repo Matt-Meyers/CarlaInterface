@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-# Bundled CSS, icons, and sendmidi live next to the package.
+# Bundled CSS and icons live next to the package.
 _ASSETS_DIR = Path(__file__).resolve().parent.parent / 'assets'
 
 
@@ -11,7 +11,7 @@ class AppConfig:
 
     osc_host: str = 'localhost'
     osc_port: str = '22752'                 # Carla OSC UDP port
-    midi_port: str = 'Midi Through Port-0'  # sendmidi device name
+    midi_port: str = 'Midi Through Port-0'  # ALSA sequencer port (aplaymidi)
     midi_record_dir: Path = Path.home() / 'midi'  # arecordmidi save folder
     midi_record_name_chars: int = 20        # voice slug length in .mid names
     split_start_idx: int = 12               # duplicate rack starts here
@@ -26,10 +26,6 @@ class AppConfig:
     @property
     def assets_dir(self) -> Path:
         return _ASSETS_DIR
-
-    @property
-    def sendmidi_path(self) -> Path:
-        return self.assets_dir / 'sendmidi'
 
     @property
     def stylesheet_path(self) -> Path:

@@ -9,7 +9,7 @@ alwaysApply: true
 
 Implementation lives under `app/carla_interface/`. Avoid giant god files; split modules by responsibility when a file grows unwieldy. `os/` is the piano-PC overlay (autostart, JACK, Carla project) — leave it alone unless asked.
 
-Runtime is Linux (`oscsend`, bundled `app/assets/sendmidi`). Do not reintroduce Windows code paths.
+Runtime is Linux (`oscsend`, `aplaymidi`). Do not reintroduce Windows code paths.
 
 # Agent UI preview
 
@@ -20,6 +20,6 @@ This is a PyQt6 kiosk, not a browser app. After UI changes, grab a PNG and Read 
 2. Never set `QT_QPA_PLATFORM=offscreen`. Fonts tofu or garble. Leave the default Windows Qt plugin.
 3. Keep the grabber out of the repo. Temp script: put `app/` on `sys.path`, replace `carla_interface.run_app` and `carla_interface.runtime.run_app` with a function that waits ~500ms, `grab()`s the visible top-level widget, writes `%TEMP%\carla_interface_preview.png`, then `app.quit()`. Monkeypatch `QWidget.showMaximized` to `setGeometry(80, 80, 1600, 900)` + `show()` so the frameless window does not cover the desktop. `import runpy; runpy.run_path(..., run_name="__main__")` on `app/main.py`.
 4. Run with `app/.venv/Scripts/python.exe`, then Read the PNG.
-5. `oscsend` / `sendmidi` already no-op on failure — Carla is not required to preview.
+5. `oscsend` / `aplaymidi` already no-op on failure — Carla is not required to preview.
 
 Human launch from `app/`: `.\.venv\Scripts\python.exe main.py`. Ctrl+C quits.

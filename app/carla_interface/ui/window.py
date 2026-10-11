@@ -67,7 +67,6 @@ class CarlaInterface(QWidget):
             config,
             CarlaOsc(config.osc_port, config.osc_host),
             MidiService(
-                config.sendmidi_path,
                 config.midi_port,
                 config.midi_record_dir,
             ),

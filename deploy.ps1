@@ -96,7 +96,7 @@ Invoke-Native -FilePath scp -ArgumentList $appCopyArgs.ToArray()
 Write-Host ""
 Write-Host "Fixing remote execute bits..."
 $remoteFix = "find $remoteHome/startup_scripts -type f -name '*.sh' -exec chmod +x {} +; " +
-    "if [ -f $remoteHome/CarlaInterface/assets/sendmidi ]; then chmod +x $remoteHome/CarlaInterface/assets/sendmidi; fi; " +
+    "rm -f $remoteHome/CarlaInterface/assets/sendmidi; " +
     "find $remoteHome/CarlaInterface -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true"
 Invoke-Native -FilePath ssh -ArgumentList @($Target, $remoteFix)
 

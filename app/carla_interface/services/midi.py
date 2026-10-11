@@ -1,19 +1,23 @@
-"""MIDI program changes via sendmidi, and SMF capture via arecordmidi.
+"""MIDI program changes via ALSA, and SMF capture via arecordmidi.
 
 Program changes are used for plugins that do not expose Carla presets
-(e.g. Pigments). Recording uses the system `arecordmidi` binary (Linux).
-Missing binaries no-op so a Windows host can still preview the UI.
+(e.g. Pigments). They go to an ALSA sequencer port (Midi Through) with
+`aplaymidi` so JUCE/sendmidi never opens JACK. Recording uses
+`arecordmidi`. Missing binaries no-op so a Windows host can still
+preview the UI.
 """
 
 import re
 import signal
 import subprocess
+import tempfile
 from pathlib import Path
 
-# arecordmidi -l: " 14:0    Midi Through                     Midi Through Port-0"
+# arecordmidi/aplaymidi -l: " 14:0    Midi Through                     Midi Through Port-0"
 _PORT_LINE = re.compile(r'^\s*(\d+:\d+)\s+(.*)$')
 _TEMP_NAME = '.carla_interface_recording.mid'
 _STOP_WAIT_SEC = 8
+_PLAY_TIMEOUT_SEC = 2
 
 
 def voice_slug(main_name, split_name, split_enabled, max_chars):
@@ -44,11 +48,10 @@ def unique_midi_path(directory, stem):
     return candidate
 
 
-def list_record_ports():
-    """ALSA sequencer addresses for arecordmidi -p, excluding Midi Through."""
+def _list_seq_ports(command):
     try:
         result = subprocess.run(
-            ['arecordmidi', '-l'],
+            [command, '-l'],
             capture_output=True,
             text=True,
             check=False,
@@ -60,36 +63,75 @@ def list_record_ports():
         match = _PORT_LINE.match(line)
         if not match:
             continue
-        addr, rest = match.group(1), match.group(2)
+        ports.append((match.group(1), match.group(2).strip()))
+    return ports
+
+
+def list_record_ports():
+    """ALSA sequencer addresses for arecordmidi -p, excluding Midi Through."""
+    ports = []
+    for addr, rest in _list_seq_ports('arecordmidi'):
         if 'through' in rest.lower():
             continue
         ports.append(addr)
     return ports
 
 
+def resolve_play_port(port_name):
+    """aplaymidi client:port whose listing contains port_name."""
+    name = port_name.lower()
+    ports = _list_seq_ports('aplaymidi')
+    for addr, rest in ports:
+        rest_l = rest.lower()
+        if rest_l == name or rest_l.endswith(name):
+            return addr
+    for addr, rest in ports:
+        if name in rest.lower():
+            return addr
+    return None
+
+
+def _program_change_smf(program, channel=0):
+    """One-event type-0 SMF: program change, then end-of-track."""
+    program = max(0, min(127, int(program)))
+    status = 0xC0 | (channel & 0x0F)
+    track = bytes((0x00, status, program, 0x00, 0xFF, 0x2F, 0x00))
+    header = b'MThd' + (6).to_bytes(4, 'big') + b'\x00\x00\x00\x01\x00\x60'
+    return header + b'MTrk' + len(track).to_bytes(4, 'big') + track
+
+
 class MidiService:
-    def __init__(self, sendmidi_path, port_name, record_dir):
-        self.sendmidi_path = Path(sendmidi_path)
+    def __init__(self, port_name, record_dir):
         self.port_name = port_name
         self.record_dir = Path(record_dir)
+        self._play_addr = None
         self._record_proc = None
         self._record_temp = None
 
     def send_program_change(self, program):
+        addr = self._play_addr or resolve_play_port(self.port_name)
+        if addr is None:
+            return
+        self._play_addr = addr
+        path = None
         try:
+            with tempfile.NamedTemporaryFile(suffix='.mid', delete=False) as tmp:
+                tmp.write(_program_change_smf(program))
+                path = tmp.name
             subprocess.run(
-                [
-                    str(self.sendmidi_path),
-                    'dev',
-                    self.port_name,
-                    'pc',
-                    str(program),
-                ],
+                ['aplaymidi', '-p', addr, path],
                 check=False,
+                timeout=_PLAY_TIMEOUT_SEC,
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
             )
-        except OSError:
-            # sendmidi missing or not executable (e.g. Windows host).
+        except (OSError, subprocess.TimeoutExpired):
+            # aplaymidi missing (Windows preview) or a wedged sequencer.
             pass
+        finally:
+            if path is not None:
+                Path(path).unlink(missing_ok=True)
 
     def start_recording(self):
         if self._record_proc is not None:
