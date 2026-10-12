@@ -5,6 +5,8 @@ alwaysApply: true
 
 # Project intent
 
+PyQt6 kiosk designed for (usually) small touchscreens. Gives MIDI keyboard player the ability to easily change between software VSTs.
+
 `app/main.py` is designed to be user friendly and novice editable: categories, `Patch(...).add(...)` lists, and `AppConfig` rack indexes. Do not move that catalog into the package. Keep the sequential `.add` style and the existing explanatory comments.
 
 Implementation lives under `app/carla_interface/`. Avoid giant god files; split modules by responsibility when a file grows unwieldy. `os/` is the piano-PC overlay (autostart, JACK, Carla project) — leave it alone unless asked.
