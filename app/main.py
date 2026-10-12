@@ -18,9 +18,12 @@ if __name__ == '__main__':
     patches = []
 
     # Carla rack indexes and I/O. Split bank is main index + split_start_idx.
+    # Pigments filters are so MIDI program changes are sent to the correct plugin.
     config = AppConfig(
         osc_port='22752',
         midi_port='Midi Through Port-0',
+        midi_pc_main_channel=2,   # MAIN Pigments filter
+        midi_pc_split_channel=3,  # SPLIT Pigments filter
         midi_record_dir=Path.home() / 'midi',
         midi_record_name_chars=20,
         split_start_idx=12,   # duplicated instruments start here

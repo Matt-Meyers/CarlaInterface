@@ -14,7 +14,6 @@ class PatchController:
 
     # Pigments needs a short gap after set_active before a MIDI program change.
     MIDI_PC_DELAY_MS = 125
-    MIDI_RESTORE_DELAY_MS = 100
 
     def __init__(self, patches, config, osc, midi):
         self.patches = patches
@@ -94,7 +93,7 @@ class PatchController:
         return self.midi.stop_recording(dest)
 
     def set_split_enabled(self, enabled):
-        self._midi_seq += 1  # cancel in-flight MIDI PC / restore timeouts
+        self._midi_seq += 1  # cancel in-flight MIDI program-change timeouts
         self.split_enabled = enabled
         self._apply_split_key()
         if not enabled:
@@ -123,33 +122,21 @@ class PatchController:
         if not preset.preset_over_midi:
             self.osc.set_program(carla_idx, preset.idx)
             return
-        if for_split:
-            # Mute the main instance so the PC hits only the split plugin.
-            self.osc.set_active(self.curr_main_carla_idx, False)
+        # Channels 2/3: midichanfilter in front of each Pigments (1 is keyboard).
+        channel = (
+            self.config.midi_pc_split_channel
+            if for_split
+            else self.config.midi_pc_main_channel
+        )
+        QTimer.singleShot(
+            self.MIDI_PC_DELAY_MS,
+            lambda: self._send_pc_if_current(seq, preset.idx, channel),
+        )
 
-            def send_pc():
-                if seq != self._midi_seq:
-                    return
-                self.midi.send_program_change(preset.idx)
-
-                def restore_main():
-                    if seq != self._midi_seq:
-                        return
-                    self.osc.set_active(self.curr_main_carla_idx, True)
-
-                QTimer.singleShot(self.MIDI_RESTORE_DELAY_MS, restore_main)
-
-            QTimer.singleShot(self.MIDI_PC_DELAY_MS, send_pc)
-        else:
-            QTimer.singleShot(
-                self.MIDI_PC_DELAY_MS,
-                lambda: self._send_pc_if_current(seq, preset.idx),
-            )
-
-    def _send_pc_if_current(self, seq, program):
+    def _send_pc_if_current(self, seq, program, channel):
         if seq != self._midi_seq:
             return
-        self.midi.send_program_change(program)
+        self.midi.send_program_change(program, channel)
 
     def _apply_split_key(self):
         # Carla MIDI Key-Range Filter: param 3 = high note (low plugin),

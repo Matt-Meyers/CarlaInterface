@@ -26,6 +26,6 @@ Edit [`app/main.py`](app/main.py) to change patches, categories, and Carla rack 
 ## Runtime notes
 
 - OSC: `oscsend` to `localhost:22752` (Carla’s OSC port).
-- MIDI: `aplaymidi` to ALSA `Midi Through Port-0` (bridged into Carla by a2jmidid).
+- MIDI: `aplaymidi` to ALSA `Midi Through Port-0` (bridged into Carla by a2jmidid). Pigments program changes use MIDI channels 2 (main) and 3 (split); channel 1 is the keyboard.
 - `app/assets/sendosc.exe` is an unused Windows leftover; the app is Linux-only.
 - The XFCE autostart script [`os/home/startup_scripts/audio/carlaInterface.sh`](os/home/startup_scripts/audio/carlaInterface.sh) still points at an old PycharmProjects path. Update it to this repo’s `app/.venv` and `app/main.py` when deploying.

@@ -2,9 +2,10 @@
 
 Program changes are used for plugins that do not expose Carla presets
 (e.g. Pigments). They go to an ALSA sequencer port (Midi Through) with
-`aplaymidi` so JUCE/sendmidi never opens JACK. Recording uses
-`arecordmidi`. Missing binaries no-op so a Windows host can still
-preview the UI.
+`aplaymidi` so JUCE/sendmidi never opens JACK. Main vs split Pigments
+use different MIDI channels so Carla midichanfilter can isolate them.
+Recording uses `arecordmidi`. Missing binaries no-op so a Windows host
+can still preview the UI.
 """
 
 import re
@@ -92,7 +93,10 @@ def resolve_play_port(port_name):
 
 
 def _program_change_smf(program, channel=0):
-    """One-event type-0 SMF: program change, then end-of-track."""
+    """One-event type-0 SMF: program change, then end-of-track.
+
+    channel is 0-based (0 = MIDI channel 1).
+    """
     program = max(0, min(127, int(program)))
     status = 0xC0 | (channel & 0x0F)
     track = bytes((0x00, status, program, 0x00, 0xFF, 0x2F, 0x00))
@@ -108,15 +112,17 @@ class MidiService:
         self._record_proc = None
         self._record_temp = None
 
-    def send_program_change(self, program):
+    def send_program_change(self, program, channel=1):
+        # channel is 1-based (Carla midichanfilter / keyboard = 1).
         addr = self._play_addr or resolve_play_port(self.port_name)
         if addr is None:
             return
         self._play_addr = addr
         path = None
+        smf_channel = max(1, min(16, int(channel))) - 1
         try:
             with tempfile.NamedTemporaryFile(suffix='.mid', delete=False) as tmp:
-                tmp.write(_program_change_smf(program))
+                tmp.write(_program_change_smf(program, smf_channel))
                 path = tmp.name
             subprocess.run(
                 ['aplaymidi', '-p', addr, path],

@@ -15,6 +15,6 @@ Comment *why*, not the next line. Good targets: Carla param/rack indexes, MIDI p
 self.osc.set_active(idx, True)  # activate the plugin
 
 # ✅ GOOD
-# Mute the main instance so the PC hits only the split plugin.
-self.osc.set_active(self.curr_main_carla_idx, False)
+# Channels 2/3: midichanfilter in front of each Pigments (1 is keyboard).
+self.midi.send_program_change(preset.idx, channel)
 ```

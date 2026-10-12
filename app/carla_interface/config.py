@@ -12,6 +12,9 @@ class AppConfig:
     osc_host: str = 'localhost'
     osc_port: str = '22752'                 # Carla OSC UDP port
     midi_port: str = 'Midi Through Port-0'  # ALSA sequencer port (aplaymidi)
+    # 1-based. Channel 1 is the keyboard; 16 is reserved for playback.
+    midi_pc_main_channel: int = 2           # MAIN Pigments midichanfilter
+    midi_pc_split_channel: int = 3          # SPLIT Pigments midichanfilter
     midi_record_dir: Path = Path.home() / 'midi'  # arecordmidi save folder
     midi_record_name_chars: int = 20        # voice slug length in .mid names
     split_start_idx: int = 12               # duplicate rack starts here
