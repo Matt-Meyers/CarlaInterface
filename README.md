@@ -1,6 +1,6 @@
 ## Preface
 
-I made this application in a weekend back in 2021 to transform an old Casio keyboard with dated, unimpressive sounds (but a decent keybed) into something relevant and high quality. By simply grabbing an old hp elitedesk mini and buying a $35 5 inch touchscreen, this Casio can now play Pianoteq, Arturia Pigments, etc. in a single press of the finger.
+I made this application on a weekend back in 2021 to transform an old Casio keyboard with dated, unimpressive sounds (but a decent keybed) into something relevant and high quality. By simply grabbing an old hp elitedesk mini and buying a $35 5 inch touchscreen, this Casio can now play Pianoteq, Arturia Pigments, etc. in a single press of the finger.
 
 I wanted to make this code public but I knew it needed work to be simple to implement. I could never get to creating instructions for Carla setup, scripts for setting up audio/JACK, real time audio Linux optimizations (passing rtqcs), etc. Which I did manually at the time.
 
@@ -33,7 +33,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-Edit [`app/main.py`](app/main.py) to change patches, categories, and Carla rack indexes. Everything else lives under `app/carla_interface/`.
+Edit [`app/main.py`](app/main.py) to change patches, categories, and Carla rack indexes. That should be the only code a user needs to touch. Everything else lives under `app/carla_interface/`.
 
 ## Runtime notes
 
