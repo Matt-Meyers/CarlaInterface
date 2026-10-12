@@ -72,12 +72,6 @@ QTabBar::tab:hover {
     border-radius: 5%;
 }
 
-#TouchStepper:disabled
-{
-    background-color: #1a1a1a;
-    color: #555555;
-}
-
 #TouchStepper QPushButton
 {
     background-color: transparent;
@@ -109,4 +103,9 @@ QTabBar::tab:hover {
     color: white;
     border: none;
     font-size: 12pt;
+}
+
+#TouchStepper QLabel[locked="true"]
+{
+    color: #666666;
 }

@@ -2,7 +2,7 @@
 
 from math import floor
 
-from PyQt6.QtCore import QPointF, QRectF, QSize, Qt, QTimer, pyqtSignal
+from PyQt6.QtCore import QEvent, QPointF, QRectF, QSize, Qt, QTimer, pyqtSignal
 from PyQt6.QtGui import (
     QColor,
     QColorConstants,
@@ -84,6 +84,7 @@ class TouchStepper(QWidget):
         self._repeat = QTimer(self)
         self._repeat.timeout.connect(self._on_repeat)
         self._refresh_label()
+        self._sync_disabled_chrome()
 
     def textFromValue(self, value):
         return str(value)
@@ -118,6 +119,18 @@ class TouchStepper(QWidget):
 
     def _refresh_label(self):
         self._label.setText(self.textFromValue(self._value))
+
+    def _sync_disabled_chrome(self):
+        # Playback locks the value; hide steppers instead of dimming the chrome.
+        shown = self.isEnabled()
+        self._down.setVisible(shown)
+        self._up.setVisible(shown)
+        set_style_property(self._label, 'locked', not shown)
+
+    def changeEvent(self, event):
+        if event.type() == QEvent.Type.EnabledChange:
+            self._sync_disabled_chrome()
+        super().changeEvent(event)
 
     def _zone_at(self, pos):
         width = self.width()
