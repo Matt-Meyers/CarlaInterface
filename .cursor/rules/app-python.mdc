@@ -6,9 +6,9 @@ alwaysApply: false
 
 # App Python
 
-Window and widgets do layout and signal wiring only. Carla I/O belongs in `services/` (`PatchController`, `CarlaOsc`, `MidiService`). Future MIDI recording goes in `services/midi.py`, not the UI.
+Window and widgets do layout and signal wiring only. Carla I/O belongs in `services/` (`PatchController`, `CarlaOsc`, `MidiService`). MIDI record and loop playback stay in `services/midi.py` and `PatchController`, not the UI.
 
-Comment *why*, not the next line. Good targets: Carla param/rack indexes, MIDI program-change delays, touch `clearFocus`, stacked main vs split grids. Skip narration like “create a button”.
+Comment *why*, not the next line. Good targets: Carla param/rack indexes, MIDI program-change delays, touch `NoFocus`, stacked main vs split grids. Skip narration like “create a button”.
 
 ```python
 # ❌ BAD
