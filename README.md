@@ -14,7 +14,7 @@ Touchscreen PyQt6 front-end for a fixed [Carla](https://kx.studio/Applications:C
 
 Python **3.10**, Linux. The piano-PC overlay (autostart, JACK, Carla project) lives in [`os/`](os/) and is not required to edit the app.
 
-The Carla (.carxp) and main.py example in this repo are specific to my setup, but do well to show how many types of programs can interact with this interface. (For example, Pianoteq takes program changes, Pigments does not and takes midi commands).
+The Carla (.carxp) and main.py example in this repo are specific to my setup and VSTs, but do well to show how many types of programs can interact with this interface. (For example, Pianoteq takes program changes, Pigments does not and takes midi commands).
 
 ## Setup
 
