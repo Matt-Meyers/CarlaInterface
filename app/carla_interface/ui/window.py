@@ -214,7 +214,7 @@ class CarlaInterface(QWidget):
 
     def show_app(self):
         if self._windowed:
-            self.resize(1600, 900)
+            self.resize(1280, 700)
             self.show()
         else:
             self.showMaximized()
