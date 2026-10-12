@@ -47,7 +47,7 @@ def _preview_run(app):
 
 
 def _show_preview(self):
-    self.setGeometry(80, 80, 1600, 900)
+    self.setGeometry(80, 80, 1280, 700)
     self.show()
 
 
