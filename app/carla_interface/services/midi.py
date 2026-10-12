@@ -282,10 +282,8 @@ class MidiService:
         self._looping = False
         self._loop_file = None
         self._loop_started_at = 0
-        self._loop_proc = QProcess()
-        self._loop_proc.setStandardOutputFile(QProcess.nullDevice())
-        self._loop_proc.setStandardErrorFile(QProcess.nullDevice())
-        self._loop_proc.finished.connect(self._on_loop_finished)
+        self._async_plays = []
+        self._loop_proc = self._new_loop_proc()
 
     def send_program_change(self, program, channel=1):
         # channel is 1-based (Carla midichanfilter / keyboard = 1).
@@ -366,6 +364,8 @@ class MidiService:
     def start_loop(self, midi_path, channel):
         """Loop a take on 1-based channel. Remaps voice messages first."""
         self.stop_loop(notes_off=False)
+        if self._loop_proc.state() != QProcess.ProcessState.NotRunning:
+            self._retire_loop_proc()
         addr = self._play_addr or resolve_play_port(self.port_name)
         if addr is None:
             return False
@@ -395,36 +395,57 @@ class MidiService:
         self._looping = False
         if self._loop_proc.state() != QProcess.ProcessState.NotRunning:
             self._loop_proc.kill()
-            self._loop_proc.waitForFinished(2000)
         if self._loop_file is not None:
+            # Linux keeps the open fd; unlinking must not wait on aplaymidi.
             self._loop_file.unlink(missing_ok=True)
             self._loop_file = None
         if notes_off:
             self.send_all_notes_off((1, 16))
 
     def send_all_notes_off(self, channels=(1, 16)):
+        self._play_smf_async(_all_notes_off_smf(channels))
+
+    def _play_smf_async(self, smf):
         addr = self._play_addr or resolve_play_port(self.port_name)
         if addr is None:
             return
         self._play_addr = addr
-        path = None
         try:
             with tempfile.NamedTemporaryFile(suffix='.mid', delete=False) as tmp:
-                tmp.write(_all_notes_off_smf(channels))
+                tmp.write(smf)
                 path = tmp.name
-            subprocess.run(
-                ['aplaymidi', '-p', addr, path],
-                check=False,
-                timeout=_PLAY_TIMEOUT_SEC,
-                stdin=subprocess.DEVNULL,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-            )
-        except (OSError, subprocess.TimeoutExpired):
+        except OSError:
+            return
+        proc = QProcess()
+        proc.setStandardOutputFile(QProcess.nullDevice())
+        proc.setStandardErrorFile(QProcess.nullDevice())
+        proc.finished.connect(lambda *_: self._finish_async_play(proc, path))
+        self._async_plays.append(proc)
+        proc.start('aplaymidi', ['-p', addr, path])
+
+    def _finish_async_play(self, proc, path):
+        Path(path).unlink(missing_ok=True)
+        if proc in self._async_plays:
+            self._async_plays.remove(proc)
+        proc.deleteLater()
+
+    def _new_loop_proc(self):
+        proc = QProcess()
+        proc.setStandardOutputFile(QProcess.nullDevice())
+        proc.setStandardErrorFile(QProcess.nullDevice())
+        proc.finished.connect(self._on_loop_finished)
+        return proc
+
+    def _retire_loop_proc(self):
+        old = self._loop_proc
+        try:
+            old.finished.disconnect(self._on_loop_finished)
+        except TypeError:
             pass
-        finally:
-            if path is not None:
-                Path(path).unlink(missing_ok=True)
+        if old.state() != QProcess.ProcessState.NotRunning:
+            old.kill()
+        old.finished.connect(old.deleteLater)
+        self._loop_proc = self._new_loop_proc()
 
     def _launch_loop(self):
         if self._loop_file is None or self._play_addr is None:
@@ -434,7 +455,7 @@ class MidiService:
             'aplaymidi',
             ['-p', self._play_addr, str(self._loop_file)],
         )
-        return self._loop_proc.waitForStarted(1500)
+        return self._loop_proc.state() != QProcess.ProcessState.NotRunning
 
     def _on_loop_finished(self, _code=0, _status=QProcess.ExitStatus.NormalExit):
         if not self._looping:

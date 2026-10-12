@@ -230,6 +230,7 @@ class CarlaInterface(QWidget):
 
     def _on_play_clicked(self):
         if self.controller.is_playing:
+            self.play_btn.set_playing(False)
             self.controller.stop_playback()
             self._set_playing_ui(False)
             return
