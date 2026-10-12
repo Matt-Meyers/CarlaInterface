@@ -41,3 +41,9 @@ Edit [`app/main.py`](app/main.py) to change patches, categories, and Carla rack 
 - MIDI: `aplaymidi` to ALSA `Midi Through Port-0` (bridged into Carla by a2jmidid). Pigments program changes use MIDI channels 2 (main) and 3 (split); channel 1 is the keyboard.
 - `app/assets/sendosc.exe` is an unused Windows leftover; the app is Linux-only.
 - XFCE autostart runs [`os/home/startup_scripts/audio/carlaInterface.sh`](os/home/startup_scripts/audio/carlaInterface.sh), which starts `~/CarlaInterface/main.py` with `~/CarlaInterface/venv`. [`deploy.ps1`](deploy.ps1) copies `app/` to that path and `os/home/` onto the user home.
+
+## License
+
+[Creative Commons Attribution-NonCommercial 4.0 International](https://creativecommons.org/licenses/by-nc/4.0/)
+
+You may copy, modify, and share this code for any non-commercial purpose, with attribution. Commercial use is not permitted.
