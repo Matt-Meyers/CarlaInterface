@@ -7,6 +7,7 @@ from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtWidgets import (
     QApplication,
     QGridLayout,
+    QHBoxLayout,
     QPushButton,
     QSizePolicy,
     QStackedLayout,
@@ -20,6 +21,7 @@ from carla_interface.ui import palettes
 from carla_interface.ui.widgets import (
     NoteSpinBox,
     OctaveSpinBox,
+    PlayButton,
     RecordButton,
     TouchButton,
     TouchTabWidget,
@@ -90,16 +92,38 @@ class CarlaInterface(QWidget):
         font.setPointSize(12)
         self.setFont(font)
 
-        # Header: record mark, Split toggle, split-note spinner, octave spinner.
+        # Header: record + play, Split toggle, split-note spinner, octave spinner.
         self.outer_layout = QGridLayout(self)
         self.header_container = QWidget()
         self.header_layout = QGridLayout(self.header_container)
         self.header_layout.setHorizontalSpacing(45)
         self.header_layout.setContentsMargins(25, 15, 25, 10)
 
+        transport = QWidget()
+        transport.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
+        )
+        transport_layout = QHBoxLayout(transport)
+        transport_layout.setContentsMargins(0, 0, 0, 0)
+        transport_layout.setSpacing(12)
+
         self.record_btn = RecordButton()
         self.record_btn.setMinimumHeight(46)
+        self.record_btn.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
+        )
         self.record_btn.clicked.connect(self._on_record_clicked)
+
+        self.play_btn = PlayButton()
+        self.play_btn.setMinimumHeight(46)
+        self.play_btn.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
+        )
+        self.play_btn.clicked.connect(self._on_play_clicked)
+        self._refresh_play_enabled()
+
+        transport_layout.addWidget(self.record_btn)
+        transport_layout.addWidget(self.play_btn)
 
         self.splitter_btn = QPushButton('Split')
         self.splitter_btn.setFocusPolicy(Qt.FocusPolicy.NoFocus)
@@ -119,7 +143,7 @@ class CarlaInterface(QWidget):
         self.octave_box.setValue(0)
         self.octave_box.valueChanged.connect(self._on_octave_changed)
 
-        self.header_layout.addWidget(self.record_btn, 0, 0)
+        self.header_layout.addWidget(transport, 0, 0)
         self.header_layout.addWidget(self.splitter_btn, 0, 1)
         self.header_layout.addWidget(self.split_key_box, 0, 2)
         self.header_layout.addWidget(self.octave_box, 0, 3)
@@ -128,6 +152,8 @@ class CarlaInterface(QWidget):
         self.header_layout.setColumnStretch(2, 2)
         self.header_layout.setColumnStretch(3, 2)
         self.outer_layout.addWidget(self.header_container, 0, 0, 1, 3)
+        self.outer_layout.setRowStretch(0, 0)
+        self.outer_layout.setRowStretch(1, 1)
 
         # One stacked pair of grids per category tab.
         self.stack_layouts = []
@@ -197,11 +223,49 @@ class CarlaInterface(QWidget):
         if self.controller.is_recording:
             self.controller.stop_recording()
             self.record_btn.set_recording(False)
+            self._refresh_play_enabled()
             return
-        self.controller.start_recording()
-        self.record_btn.set_recording(True)
+        if self.controller.start_recording():
+            self.record_btn.set_recording(True)
+
+    def _on_play_clicked(self):
+        if self.controller.is_playing:
+            self.controller.stop_playback()
+            self._set_playing_ui(False)
+            return
+        if self.controller.start_playback():
+            self._set_playing_ui(True)
+
+    def _set_playing_ui(self, playing):
+        self.play_btn.set_playing(playing)
+        self.splitter_btn.setEnabled(not playing)
+        self.split_key_box.setEnabled(not playing)
+        self._apply_split_ui(self.controller.split_enabled)
+        self._refresh_play_enabled()
+
+    def _refresh_play_enabled(self):
+        self.play_btn.setEnabled(
+            self.controller.is_playing or self.controller.has_midi_takes()
+        )
+
+    def _apply_split_ui(self, enabled):
+        curr_tab = self.tab_container.currentIndex()
+        set_style_property(self.splitter_btn, 'altActive', enabled)
+        self.stack_layouts[curr_tab].setCurrentIndex(1 if enabled else 0)
+        if enabled:
+            sel = self.split_sel_by_tab[curr_tab]
+            entries = self.split_bank_by_tab[curr_tab]
+            self._reset_button_styles(self.split_btns)
+            if 0 <= sel < len(entries):
+                entries[sel][0].set_active(True)
+        else:
+            self._reset_button_styles(self.split_btns)
+        # Low and high keyboards keep separate octave offsets.
+        self.octave_box.setValue(self.controller.octave_value)
 
     def closeEvent(self, event):
+        if self.controller.is_playing:
+            self.controller.stop_playback()
         if self.controller.is_recording:
             self.controller.stop_recording()
         super().closeEvent(event)
@@ -210,16 +274,7 @@ class CarlaInterface(QWidget):
         """Toggle split mode: swap grids, highlight Split, restore octave."""
         enabled = not self.controller.split_enabled
         self.controller.set_split_enabled(enabled)
-        curr_tab = self.tab_container.currentIndex()
-        if enabled:
-            set_style_property(self.splitter_btn, 'altActive', True)
-            self.stack_layouts[curr_tab].setCurrentIndex(1)
-        else:
-            set_style_property(self.splitter_btn, 'altActive', False)
-            self.stack_layouts[curr_tab].setCurrentIndex(0)
-            self._reset_button_styles(self.split_btns)
-        # Low and high keyboards keep separate octave offsets.
-        self.octave_box.setValue(self.controller.octave_value)
+        self._apply_split_ui(enabled)
 
     def _on_tab_changed(self):
         # New tab's stack should match current split/main mode.

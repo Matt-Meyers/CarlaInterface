@@ -15,8 +15,11 @@ class AppConfig:
     # 1-based. Channel 1 is the keyboard; 16 is reserved for playback.
     midi_pc_main_channel: int = 2           # MAIN Pigments midichanfilter
     midi_pc_split_channel: int = 3          # SPLIT Pigments midichanfilter
+    midi_play_channel: int = 16             # original-voice accompaniment
     midi_record_dir: Path = Path.home() / 'midi'  # arecordmidi save folder
     midi_record_name_chars: int = 20        # voice slug length in .mid names
+    ch_filter_split_std_idx: int = 22       # midichanfilter, split non-Pigments
+    ch_filter_split_pigments_idx: int = 23  # midichanfilter, split Pigments
     split_start_idx: int = 12               # duplicate rack starts here
     split_lo_idx: int = 8                   # Key-Range Filter (below split)
     split_hi_idx: int = 9                   # Key-Range Filter (above split)

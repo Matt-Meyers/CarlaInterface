@@ -2,13 +2,14 @@
 
 from math import floor
 
-from PyQt6.QtCore import QRectF, QSize, Qt, QTimer, pyqtSignal
+from PyQt6.QtCore import QPointF, QRectF, QSize, Qt, QTimer, pyqtSignal
 from PyQt6.QtGui import (
     QColor,
     QColorConstants,
     QFont,
     QIcon,
     QPainter,
+    QPolygonF,
 )
 from PyQt6.QtWidgets import (
     QHBoxLayout,
@@ -272,8 +273,48 @@ class RecordButton(QPushButton):
             half = side * 0.42
             painter.drawRect(QRectF(cx - half, cy - half, half * 2, half * 2))
         else:
-            painter.setBrush(QColorConstants.White)
+            painter.setBrush(
+                QColor(120, 120, 120)
+                if not self.isEnabled()
+                else QColorConstants.White
+            )
             painter.drawEllipse(QRectF(cx - side / 2, cy - side / 2, side, side))
+
+
+class PlayButton(QPushButton):
+    """Transport mark: white triangle idle, green while looping."""
+
+    def __init__(self):
+        super().__init__()
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self._playing = False
+
+    def set_playing(self, playing):
+        self._playing = playing
+        self.update()
+
+    def paintEvent(self, event):
+        super().paintEvent(event)
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.setPen(Qt.PenStyle.NoPen)
+        side = min(self.width(), self.height()) * 0.52
+        cx = self.width() / 2
+        cy = self.height() / 2
+        if not self.isEnabled():
+            painter.setBrush(QColor(120, 120, 120))
+        elif self._playing:
+            painter.setBrush(QColor(36, 180, 72))
+        else:
+            painter.setBrush(QColorConstants.White)
+        triangle = QPolygonF(
+            [
+                QPointF(cx - side * 0.32, cy - side * 0.38),
+                QPointF(cx - side * 0.32, cy + side * 0.38),
+                QPointF(cx + side * 0.42, cy),
+            ]
+        )
+        painter.drawPolygon(triangle)
 
 
 class TouchButton(QPushButton):

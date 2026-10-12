@@ -24,7 +24,10 @@ if __name__ == '__main__':
         midi_port='Midi Through Port-0',
         midi_pc_main_channel=2,   # MAIN Pigments filter
         midi_pc_split_channel=3,  # SPLIT Pigments filter
+        midi_play_channel=16,     # original-voice accompaniment
         midi_record_dir=Path.home() / 'midi',
+        ch_filter_split_std_idx=22,
+        ch_filter_split_pigments_idx=23,
         midi_record_name_chars=20,
         split_start_idx=12,   # duplicated instruments start here
         split_lo_idx=8,       # MIDI Key-Range Filter (low)

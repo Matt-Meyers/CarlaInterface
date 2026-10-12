@@ -29,6 +29,12 @@ QPushButton[altActive="true"]:hover
     background-color: #14143c;
 }
 
+QPushButton:disabled
+{
+    background-color: #2a2a2a;
+    color: #666666;
+}
+
 QTabWidget::pane
 {
     background-color: #232323;
@@ -64,6 +70,12 @@ QTabBar::tab:hover {
     color: white;
     border: 1px solid #202020;
     border-radius: 5%;
+}
+
+#TouchStepper:disabled
+{
+    background-color: #1a1a1a;
+    color: #555555;
 }
 
 #TouchStepper QPushButton
