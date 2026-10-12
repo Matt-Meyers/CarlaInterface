@@ -1,0 +1,14 @@
+---
+description: Piano-PC overlay and deploy.ps1 — do not invent JACK/Carla changes
+globs: os/**/*,deploy.ps1
+alwaysApply: false
+---
+
+# Piano-PC overlay
+
+`os/home/` is copied onto the Linux piano PC by `deploy.ps1`:
+
+- `os/home/<folder>` → `/home/<user>/<folder>`
+- `app/` → `/home/<user>/CarlaInterface/` (skips `.venv` and `__pycache__`)
+
+Autostart lives under `os/home/.config/autostart/`; scripts under `os/home/startup_scripts/`. Do not rewrite JACK patchbays, Carla `.carxp` projects, or autostart unless asked.

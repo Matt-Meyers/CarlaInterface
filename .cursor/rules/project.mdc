@@ -1,27 +1,30 @@
 ---
-description: Keep main.py human-editable; Linux kiosk layout
+description: Keep main.py human-editable; Linux kiosk; screenshot UI
 alwaysApply: true
 ---
 
 # Project intent
 
-PyQt6 kiosk designed for (usually) small touchscreens. Gives MIDI keyboard player the ability to easily change between software VSTs.
+PyQt6 kiosk for (usually) small touchscreens. Gives MIDI keyboard player ability to switch software VSTs.
 
-`app/main.py` is designed to be user friendly and novice editable: categories, `Patch(...).add(...)` lists, and `AppConfig` rack indexes. Do not move that catalog into the package. Keep the sequential `.add` style and the existing explanatory comments.
+`app/main.py` is novice-editable: categories, `Patch(...).add(...)` lists, and `AppConfig` rack indexes. Do not move that catalog into the package. Keep the sequential `.add` style and the existing explanatory comments.
 
-Implementation lives under `app/carla_interface/`. Avoid giant god files; split modules by responsibility when a file grows unwieldy. `os/` is the piano-PC overlay (autostart, JACK, Carla project) — leave it alone unless asked.
+# Layout (do not flatten)
 
-Runtime is Linux (`oscsend`, `aplaymidi`, `arecordmidi`). Do not reintroduce Windows code paths.
+```
+app/main.py                      catalog + AppConfig construction
+app/carla_interface/ui/          layout, widgets, palettes — no OSC/MIDI strings
+app/carla_interface/services/    PatchController, CarlaOsc, MidiService
+app/assets/stylesheet.css        button/tab/stepper chrome
+os/                              piano-PC overlay — do not touch unless asked
+```
+
+Avoid giant god files; split by responsibility when a file grows unwieldy.
+
+Ship Linux subprocesses only (`oscsend`, `aplaymidi`, `arecordmidi`). Preview on Windows is fine; do not add `sys.platform` branches or revive `sendosc.exe` / `sendmidi`.
 
 # Agent UI preview
 
-This is a PyQt6 kiosk, not a browser app. After UI changes, grab a PNG and Read it — do not skip visual check.
-
-1. Use `app/.venv` (Python 3.10 + `requirements.txt`). Create if missing:
-   `py -3.10 -m venv .venv` then `.\.venv\Scripts\python.exe -m pip install -r requirements.txt` from `app/`.
-2. Never set `QT_QPA_PLATFORM=offscreen`. Fonts tofu or garble. Leave the default Windows Qt plugin.
-3. Keep the grabber out of the repo. Temp script: put `app/` on `sys.path`, replace `carla_interface.run_app` and `carla_interface.runtime.run_app` with a function that waits ~500ms, `grab()`s the visible top-level widget, writes `%TEMP%\carla_interface_preview.png`, then `app.quit()`. Monkeypatch `QWidget.showMaximized` to `setGeometry(80, 80, 1600, 900)` + `show()` so the frameless window does not cover the desktop. `import runpy; runpy.run_path(..., run_name="__main__")` on `app/main.py`.
-4. Run with `app/.venv/Scripts/python.exe`, then Read the PNG.
-5. `oscsend` / `aplaymidi` / `arecordmidi` already no-op on failure — Carla is not required to preview.
+This is a PyQt6 kiosk, not a browser app. After UI or CSS changes, screenshot and Read the PNG — do not skip. Never `QT_QPA_PLATFORM=offscreen`. Use the `preview-ui` skill (`app/.venv` Python 3.10; grabber stays out of `app/`).
 
 Human launch from `app/`: `.\.venv\Scripts\python.exe main.py`. Ctrl+C quits.

@@ -1,5 +1,5 @@
 ---
-description: UI vs services split; comment only non-obvious Python
+description: UI vs services split; Carla rack/MIDI facts; comment only why
 globs: app/**/*.py
 alwaysApply: false
 ---
@@ -8,11 +8,18 @@ alwaysApply: false
 
 Window and widgets do layout and signal wiring only. Carla I/O belongs in `services/` (`PatchController`, `CarlaOsc`, `MidiService`). MIDI record and loop playback stay in `services/midi/` and `PatchController`, not the UI.
 
+# Rack / MIDI
+
+- Split voice = same patch at `carla_idx + split_start_idx`. Indexes live in `main.py` `AppConfig`; do not invent new ones.
+- Pigments (`preset_over_midi`): MIDI program change on channels 2 (main) / 3 (split) after `MIDI_PC_DELAY_MS`.
+- Everything else: Carla OSC `/set_program`.
+- Channel 1 is the keyboard; 16 is playback.
+
 Comment *why*, not the next line. Good targets: Carla param/rack indexes, MIDI program-change delays, touch `NoFocus`, stacked main vs split grids. Skip narration like “create a button”.
 
 ```python
 # ❌ BAD
-self.osc.set_active(idx, True)  # activate the plugin
+self.midi.send_program_change(preset.idx, channel)  # send the program change
 
 # ✅ GOOD
 # Channels 2/3: midichanfilter in front of each Pigments (1 is keyboard).

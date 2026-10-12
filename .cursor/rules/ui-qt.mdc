@@ -1,0 +1,18 @@
+---
+description: Touch kiosk Qt chrome — Fusion, stylesheet, NoFocus
+globs: app/carla_interface/ui/**/*.py,app/assets/*
+alwaysApply: false
+---
+
+# Qt chrome
+
+After edits here, screenshot via the `preview-ui` skill and Read the PNG.
+
+- `QApplication.setStyle('Fusion')` — GTK/XFCE otherwise paints 3D chrome.
+- Window palette in `palettes.py`; button/tab/stepper fills in `app/assets/stylesheet.css`. Do not sprinkle `setStyleSheet` on widgets.
+- After changing dynamic properties (`active`, `altActive`, `hot`, `locked`), call `set_style_property` (unpolish/polish). Stylesheets cache selectors.
+- Children are `NoFocus`; `CarlaInterface` keeps keys 1–9/0 and arrows for slots/tabs. Do not give focus to buttons or steppers.
+- `QWidget` needs `WA_StyledBackground` to honor stylesheet fills (`TouchStepper`).
+- Qt CSS is not web CSS: no flex/grid, limited selectors. Put `font-size` in the stylesheet (`setFont` is ignored by stylesheet chrome).
+- Icons via `url(icons:...)` / `QIcon('icons:...')` after `QDir.addSearchPath('icons', ...)`.
+- Keep hit targets large (small touchscreen). Avoid hover-only cues.
