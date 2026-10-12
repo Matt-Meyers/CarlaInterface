@@ -1,6 +1,6 @@
 ## Preface
 
-I made this application on a weekend back in 2021 to transform an old Casio keyboard with dated, unimpressive sounds (but a decent keybed) into something relevant and high quality. By simply grabbing an old hp elitedesk mini and buying a $35 5 inch touchscreen, this Casio can now play Pianoteq, Arturia Pigments, etc. in a single press of the finger.
+I made/deployed this app on a weekend back in 2021 to transform an old Casio keyboard with dated, unimpressive sounds (but a decent keybed) into something relevant and high quality. By simply grabbing an old hp elitedesk mini and buying a $35 5 inch touchscreen, this Casio can now play Pianoteq, Arturia Pigments, etc. in a single press of the finger.
 
 I wanted to make this code public but I knew it needed work to be simple to implement. I could never get to creating instructions for Carla setup, scripts for setting up audio/JACK, real time audio Linux optimizations (passing rtqcs), etc. Which I did manually at the time.
 
@@ -8,13 +8,13 @@ Now that I've decided to update this application with new features (like Midi Re
 
 # Carla Interface
 
-Touchscreen PyQt6 front-end for a fixed [Carla](https://kx.studio/Applications:Carla) rack: preset buttons, keyboard split, octave shift, and more. It talks to Carla over OSC (`oscsend`) and sends MIDI program changes through ALSA (`aplaymidi`).
+Touchscreen PyQt6 front-end for a fixed [Carla](https://kx.studio/Applications:Carla) rack: Patch-select buttons, keyboard split, octave shift, and MIDI record/playback. It talks to Carla over OSC (`oscsend`) and sends MIDI program changes through ALSA (`aplaymidi`).
 
 ![Carla Interface](docs/screenshot.png)
 
 Python **3.10**, Linux. The piano-PC overlay (autostart, JACK, Carla project) lives in [`os/`](os/) and is not required to edit the app.
 
-The Carla example in this repo is specific to my setup, but does well to show how many types of programs can interact with this interface. (For example, Pianoteq takes program changes, Pigments does not and takes midi commands).
+The Carla (.carxp) and main.py example in this repo are specific to my setup, but do well to show how many types of programs can interact with this interface. (For example, Pianoteq takes program changes, Pigments does not and takes midi commands).
 
 ## Setup
 
@@ -41,6 +41,15 @@ Edit [`app/main.py`](app/main.py) to change patches, categories, and Carla rack 
 - MIDI: `aplaymidi` to ALSA `Midi Through Port-0` (bridged into Carla by a2jmidid). Pigments program changes use MIDI channels 2 (main) and 3 (split); channel 1 is the keyboard.
 - `app/assets/sendosc.exe` is an unused Windows leftover; the app is Linux-only.
 - XFCE autostart runs [`os/home/startup_scripts/audio/carlaInterface.sh`](os/home/startup_scripts/audio/carlaInterface.sh), which starts `~/CarlaInterface/main.py` with `~/CarlaInterface/venv`. [`deploy.ps1`](deploy.ps1) copies `app/` to that path and `os/home/` onto the user home.
+
+## Other Notes
+Initial Setup can seem daunting, as the quirks of various programs (like Pigments, which can't do Program Changes) and features like Split (which requires duplicating the patches) require different hacky fixes. Once you understand it, it's very easy.
+
+The main thing to keep in mind is updating the rack indexes in main.py. Try your own setup with a simple program like Pianoteq first, as that's more straightforward.
+
+Until I add setup scripts, make sure you make your Linux OS real-time friendly. Google "rtcqs" and research how to do that. 
+
+Feel free to create issues in the repo. Even if just to ask questions.
 
 ## License
 
