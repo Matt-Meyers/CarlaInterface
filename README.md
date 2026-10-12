@@ -2,6 +2,8 @@
 
 Touchscreen PyQt6 front-end for a fixed [Carla](https://kx.studio/Applications:Carla) rack: preset buttons, keyboard split, and octave shift. It talks to Carla over OSC (`oscsend`) and sends MIDI program changes through ALSA (`aplaymidi`).
 
+![Carla Interface](docs/screenshot.png)
+
 Python **3.10**, Linux. The piano-PC overlay (autostart, JACK, Carla project) lives in [`os/`](os/) and is not required to edit the app.
 
 ## Setup
