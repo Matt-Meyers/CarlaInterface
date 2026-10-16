@@ -82,7 +82,7 @@ if __name__ == '__main__':
     patch6.add('Atmo Lead', 'Synth-Keys')   # TODO add category for lead?
     patch6.add('DX Keys', 'Synth-Keys')
     patch6.add('Malibu Express', 'Synth-Keys')
-    patch6.add('Rompler', 'Synth-Keys')
+    patch6.add('Ambiv. String Keys', 'Synth-Keys')
     patch6.add('Reverse Box', 'Synth-Keys')
     patch6.add('Journeys 1983', 'Pad')
     patch6.add('Choral Grains', 'Pad')
