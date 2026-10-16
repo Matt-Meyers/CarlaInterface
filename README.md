@@ -1,6 +1,6 @@
 ## Preface
 
-I made/deployed this app on a weekend back in 2021 to transform an old Casio keyboard with dated, unimpressive sounds (but a decent keybed) into something relevant and high quality. By simply grabbing an old hp elitedesk mini and buying a $35 5 inch touchscreen, this Casio can now play Pianoteq, Arturia Pigments, etc. in a single press of the finger.
+I quickly made/deployed this app for myself on a weekend back in 2021 to transform an old Casio keyboard with dated, unimpressive sounds (but a decent keybed) into something relevant and high quality. By simply grabbing an old hp elitedesk mini and buying a $35 5 inch touchscreen, this Casio can now play Pianoteq, Arturia Pigments, etc. in a single press of the finger.
 
 I wanted to make this code public but I knew it needed work to be simple to implement. I could never get to creating instructions for Carla setup, scripts for setting up audio/JACK, real time audio Linux optimizations (passing rtcqs), etc. Which I did manually at the time.
 
@@ -43,7 +43,7 @@ Edit [`app/main.py`](app/main.py) to change patches, categories, and Carla rack 
 - XFCE autostart runs [`os/home/startup_scripts/audio/carlaInterface.sh`](os/home/startup_scripts/audio/carlaInterface.sh), which starts `~/CarlaInterface/main.py` with `~/CarlaInterface/venv`. [`deploy.ps1`](deploy.ps1) copies `app/` to that path and `os/home/` onto the user home.
 
 ## Other Notes
-Initial Setup can seem daunting, as the quirks of various programs (like Pigments, which can't do Program Changes) and features like Split (which requires duplicating the patches) require different hacky fixes. Once you understand it, it's very easy.
+Initial Setup can seem daunting, as quirky programs (like Pigments) and features like Split (which requires duplicating the patches) require different hacky fixes and "simply add your patches in order" grew to "also define indexes for x/y/z." But once you understand it, it's very easy.
 
 The main thing to keep in mind is updating the rack indexes in main.py. Try your own setup with a simple program like Pianoteq first, as that's more straightforward.
 
