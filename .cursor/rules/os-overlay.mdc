@@ -10,5 +10,6 @@ alwaysApply: false
 
 - `os/home/<folder>` → `/home/<user>/<folder>`
 - `app/` → `/home/<user>/CarlaInterface/` (skips `.venv` and `__pycache__`)
+- `--app-only` / `-AppOnly` copies only the app and leaves the overlay untouched
 
 Autostart lives under `os/home/.config/autostart/`; scripts under `os/home/startup_scripts/`. Do not rewrite JACK patchbays, Carla `.carxp` projects, or autostart unless asked.

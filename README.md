@@ -40,7 +40,7 @@ Edit [`app/main.py`](app/main.py) to change patches, categories, and Carla rack 
 - OSC: `oscsend` to `localhost:22752` (Carla’s OSC port).
 - MIDI: `aplaymidi` to ALSA `Midi Through Port-0` (bridged into Carla by a2jmidid). Pigments program changes use MIDI channels 2 (main) and 3 (split); channel 1 is the keyboard.
 - `app/assets/sendosc.exe` is an unused Windows leftover; the app is Linux-only.
-- XFCE autostart runs [`os/home/startup_scripts/audio/carlaInterface.sh`](os/home/startup_scripts/audio/carlaInterface.sh), which starts `~/CarlaInterface/main.py` with `~/CarlaInterface/venv`. [`deploy.ps1`](deploy.ps1) copies `app/` to that path and `os/home/` onto the user home.
+- XFCE autostart runs [`os/home/startup_scripts/audio/carlaInterface.sh`](os/home/startup_scripts/audio/carlaInterface.sh), which starts `~/CarlaInterface/main.py` with `~/CarlaInterface/venv`. [`deploy.ps1`](deploy.ps1) copies `app/` to that path and `os/home/` onto the user home (`--app-only` skips the overlay).
 
 ## Other Notes
 Initial Setup can seem daunting, as quirky programs (like Pigments) and features like Split (which requires duplicating the patches) require different hacky fixes and "simply add your patches in order" grew to "also define indexes for x/y/z." But once you understand it, it's very easy.
