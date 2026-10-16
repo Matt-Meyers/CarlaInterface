@@ -62,7 +62,7 @@ if __name__ == '__main__':
     # to chain each instance different FX), simply make several patches.
     # In these cases, just '.add' once to each patch.
     patch2 = Patch('Zebralette', 1)   # rack 1
-    patch2.add('HS Grand Entrance', 'Synth-Keys')   # just one append
+    patch2.add('HS Grand Extrance', 'Synth-Keys')   # just one append
     patch3 = Patch('Zebralette', 2)   # rack 2
     patch3.add('HS Pacific Swell', 'Pad')   # just one append
     patches.append(patch2)
