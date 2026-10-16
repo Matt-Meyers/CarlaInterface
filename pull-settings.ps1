@@ -5,6 +5,9 @@
 .DESCRIPTION
   /home/<user>/ci_settings  ->  os/home/ci_settings
 
+  Pulls only .carxp and .xml files (Carla projects and JACK patchbays).
+  Plugin leftovers such as sfizz .sfz/.scl links are skipped.
+
   Downloads into a staging folder first, then replaces the local copy so a
   failed transfer does not wipe what is already here.
 
@@ -73,15 +76,39 @@ if (Test-Path $staging) {
 New-Item -ItemType Directory -Path $staging | Out-Null
 
 try {
+    $remotePrefix = "${remoteHome}/ci_settings"
+    $findCmd = "find $remotePrefix -type f \( -iname '*.carxp' -o -iname '*.xml' \) -print"
     Write-Host ""
-    Write-Host "Downloading..."
-    Invoke-Native -FilePath scp -ArgumentList @(
-        "-r",
-        "${Target}:${remoteHome}/ci_settings",
-        (ConvertTo-ScpPath $staging)
-    )
+    Write-Host "Listing .carxp and .xml files..."
+    Write-Host "  ssh $Target $findCmd"
+    $remoteFiles = @(& ssh $Target $findCmd | Where-Object { $_ -and $_.Trim() })
+    if ($LASTEXITCODE -ne 0) {
+        throw "ssh failed with exit code $LASTEXITCODE"
+    }
+    if (-not $remoteFiles) {
+        throw "No .carxp or .xml files under $remotePrefix"
+    }
 
     $pulled = Join-Path $staging "ci_settings"
+    Write-Host ""
+    Write-Host "Downloading $($remoteFiles.Count) files..."
+    foreach ($remoteFile in $remoteFiles) {
+        $remoteFile = $remoteFile.Trim()
+        if (-not $remoteFile.StartsWith("$remotePrefix/")) {
+            throw "Unexpected path: $remoteFile"
+        }
+        $rel = $remoteFile.Substring($remotePrefix.Length + 1).Replace("/", "\")
+        $localFile = Join-Path $pulled $rel
+        $localDir = Split-Path $localFile -Parent
+        if (-not (Test-Path $localDir)) {
+            New-Item -ItemType Directory -Path $localDir | Out-Null
+        }
+        Invoke-Native -FilePath scp -ArgumentList @(
+            "${Target}:${remoteFile}",
+            (ConvertTo-ScpPath $localFile)
+        )
+    }
+
     if (-not (Test-Path $pulled)) {
         throw "scp finished but ${staging}\ci_settings is missing."
     }
