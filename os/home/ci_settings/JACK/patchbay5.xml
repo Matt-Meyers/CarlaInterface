@@ -1,0 +1,63 @@
+<!DOCTYPE patchbay>
+<patchbay version="0.9.6" name="patchbay5">
+ <output-sockets>
+  <socket client="PulseAudio\ JACK\ Sink" exclusive="off" name="PulseAudio\ JACK\ Sink 1" type="jack-audio">
+   <plug>front\-left</plug>
+  </socket>
+  <socket client="PulseAudio\ JACK\ Sink" exclusive="off" name="PulseAudio\ JACK\ Sink 2" type="jack-audio">
+   <plug>front\-right</plug>
+  </socket>
+  <socket client="system" exclusive="off" name="system 1" type="jack-audio">
+   <plug>capture_1</plug>
+  </socket>
+  <socket client="a2j" exclusive="off" name="a2j casio cap" type="jack-midi">
+   <plug>Keyboard\ \(capture\)\:\ Keyboard\ CASIO\ USB\ IN</plug>
+  </socket>
+  <socket client="a2j" exclusive="off" name="a2j Impulse cap 1" type="jack-midi">
+   <plug>Impulse\ \(capture\)\:\ Impulse\ \ Impulse\ </plug>
+  </socket>
+  <socket client="a2j" exclusive="off" name="a2j KX8 1 cap" type="jack-midi">
+   <plug>YAMAHA\ KX\ \(capture\)\:\ YAMAHA\ KX\ MIDI\ 1</plug>
+  </socket>
+  <socket client="a2j" exclusive="off" name="a2j korg nano" type="jack-midi">
+   <plug>nanoKONTROL\ \(capture\)\:\ nanoKONTROL\ nanoKONTROL\ _\ CTRL</plug>
+  </socket>
+  <socket client="Carla" exclusive="off" name="carla audio out 1" type="jack-audio">
+   <plug>audio\-out1</plug>
+  </socket>
+  <socket client="Carla" exclusive="off" name="carla audio out 2" type="jack-audio">
+   <plug>audio\-out2</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket client="grab" exclusive="off" name="ffmpeg_grab 1" type="jack-audio">
+   <plug>input_1</plug>
+  </socket>
+  <socket client="grab" exclusive="off" name="ffmpeg_grab 2" type="jack-audio">
+   <plug>input_2</plug>
+  </socket>
+  <socket client="Carla" exclusive="off" name="Carla 1" type="jack-midi">
+   <plug>events\-in</plug>
+  </socket>
+  <socket client="system" exclusive="off" name="system playback 1" type="jack-audio">
+   <plug>playback_1</plug>
+  </socket>
+  <socket client="system" exclusive="off" name="system playback 2" type="jack-audio">
+   <plug>playback_2</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable type="jack-audio" output="PulseAudio\ JACK\ Sink 1" input="system playback 1"/>
+  <cable type="jack-audio" output="PulseAudio\ JACK\ Sink 2" input="system playback 2"/>
+  <cable type="jack-midi" output="a2j casio cap" input="Carla 1"/>
+  <cable type="jack-midi" output="a2j Impulse cap 1" input="Carla 1"/>
+  <cable type="jack-midi" output="a2j KX8 1 cap" input="Carla 1"/>
+  <cable type="jack-midi" output="a2j korg nano" input="Carla 1"/>
+  <cable type="jack-audio" output="carla audio out 1" input="system playback 1"/>
+  <cable type="jack-audio" output="carla audio out 1" input="ffmpeg_grab 1"/>
+  <cable type="jack-audio" output="carla audio out 2" input="system playback 2"/>
+  <cable type="jack-audio" output="carla audio out 2" input="ffmpeg_grab 2"/>
+ </cables>
+</patchbay>
+
