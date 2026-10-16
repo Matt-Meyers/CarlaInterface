@@ -5245,7 +5245,7 @@ YWdlOgonQVQgPSB0b25lL3N3ZWxsXHJNVyA9IHBhbicKCkNhdGVnb3JpZXM6CidLZXlzOkRpZ2l0YWwn
 ZScKCkNoYXJhY3RlcjoKJ0NvbnN0YW50LCBDbGVhbiwgU29mdCwgU3ludGhldGljJwoKKi8KCiNBTT1aZWJyYWxldHRlCiNWZXJzPTEwMDAzCiNFbmRpYW49
 bGl0dGxlCiNubT0xMwojbXM9bm9uZQojbXM9TW9kV2hsCiNtcz1QaXRjaFcKI21zPUN0cmxBCiNtcz1DdHJsQgojbXM9TGZvRzEKI21zPUdhdGUKI21zPVZl
 bG9jaXR5CiNtcz1QcmVzc3VyZQojbXM9S2V5Rm9sbG93CiNtcz1FbnYxCiNtcz1NU0VHMQojbXM9TGZvMQojbnY9MgojbXY9R2F0ZQojbXY9RW52MQojY209
-bWFpbgpDY09wPTEwMC4wMAojTEZPRz0xCiNNb2RGWDE9MQojRGVsYXkxPTEKI2NtPVBDb3JlClNCYXNlPTQKU3dpbmc9MC4wMApTVHJpZz0xClBQcm9qPTE3
+bWFpbgpDY09wPTEwMC4wMAojTEZPRz0xCiNNb2RGWDE9MQojRGVsYXkxPTEKI2NtPVBDb3JlClNCYXNlPTQKU3dpbmc9MC4wMApTVHJpZz0xClBQcm9qPTE4
 ClBGb2xkPTAKUEZpbGU9MQpHRmlsZT0yCkdTY2FsZT0wCkNoTGF5PTAKU3Vyck89MApSZXY9MTIwOTIKTEVEPTAuMDAKUEFHRT0wClBhZ2VzT249MApDb3Jl
 Tj0zClNsaWNlPTQKVUlfb3A9MgpNaWRpQT01Ck1pZGlQPTYKREZvbGQ9NwpDdHJsQT0yCkN0cmxCPTExCiNjbT1MRk9HClN5bmM9LTMKVHJpZz0wCldhdmU9
 MApQaHNlPTAuMDAKUG9sYXI9MAojY209VkNDCiNMRk8xPTEKI09TQzE9MQpWb2ljZXM9MgpWb2ljaW5nPTEKTW9kZT0wClBvcnRhTT0wClBvcnRhPTAuMDAK
@@ -5267,32 +5267,32 @@ dj0wLjAwClN5bmMxPTQKU3luYzI9OQpTeW5jMz00ClN5bmM0PTQKVDA9MTAwLjAwClQxPTk5Ljc2ClQy
 YW4yPS0xMDAuMDAKUGFuMz0tMTAwLjAwClBhbjQ9MTAwLjAwCiNjbT1aTWFzCk9TQzE9MTUKTVNFRzE9MTYKCgovLyBTZWN0aW9uIGZvciB1Z2x5IGNvbXBy
 ZXNzZWQgYmluYXJ5IERhdGEKLy8gRE9OJ1QgVE9VQ0ggVEhJUwoKJCQkJDE5MDY0Cj9hYWFhaWFkcDpnZGdjZW5lYjpvYWhrYmVscDphbG5oa2RsbzpwbnBw
 aHBkcDphYWFhaWFscDpwbXBwaHBkcDoKZWFhYWFhYWE6YWFhYWFhZWE6cG5wcGhwbHA6YWE6ZWM6ZWI6ZG46ZG86ZWE6ZHA6Y2E6bG86cHA6aHA6ZG06YQpt
-OmRiOmxwOmdiOmhjOmthOmJvOm1hOm1kOmFrOmVpOmZkOmdhOmdtIXJBYWJBOWNwZW1ncGdkUFpjcGRhZGVICmVsZ2ZoamhkQTI0MXJ4QTdXWEhlaFFQZ29n
+OmRiOmxwOmdiOmhjOmthOmJvOm1hOm1kOmFrOmVpOmZkOmdtOmlhIXJBYWJBOWNwZW1ncGdkUFljcGRhZGVICmVsZ2ZoamhkQTI0MXJ4QTdXWEhlaFFQZ29n
 ZUhlZmdvaGVRUGdvZ2RnZmNvZ2lkY2hhQTQycnhBNzFyeEE3YnAKZWphZGxmYnBVamRjaGhkbWdhZmFvU2ttcGlqam1paG1jbm9uQ0RkamljamZwZmxhcGpM
-am1XY2RkZGlta21maQpuYlFpYmZlb25pbm5tY2VpYVlmamVnam1mbW9iV2tsY2dvaWJsbmVqZGRrY29HY2pqZmpwcmFlQTEwWWFpam1BCnJBYWJBOVdncGho
-UFFnZUhYZ2RQUTFBMjQzcmlhQTEzOHJBYWJBMjY1cnhBN2NvMkFoZlpoZUhoZGdkUFpnZkEKMjJxeUExRjFBMWlhRkExUkZBMVRGQTFvYUZyQWFjQTVxQTNx
-eUExRjFBMWlhRkExUkZBMVRGQTFvYXhDQTFiYQpDQTFIQ0ExZGFDQTFGQ0ExZmFDQTFZQ0ExaGFDQTFpYUNBMWlpQ0ExamFDQTFqaUNBMVJDQTFraUNBMWxh
-Q0ExCmxpQ0ExVENBMW1pQ0ExbmFDQTFuaUNBMW9hQ0Exb2lDQTFwYUNBMXBpQ0EyQkExYWVCQTFhaUJBMU1CQTFiYUIKQTFiZUJBMWJpQkExYm1CQTFIQkEx
-Y2VCQTFjaUJBMWNtQkExZGFCQTFkZUJBMWRpQkExTEJBMUZCQTFlZUJBMQpXQkExZW1CQTFmYUJBMWZlQkExZmlCQTFmbUJBMVlCQTFnZUJBMWdpQkExWkJB
-MWhhQkExaGVCQTFoaUJBMWhtCkJBMWlhQkExaWNCQTFpZUJBMWlnQkExaWlCQTFpa0JBMWltQkExaW9CQTFqYUJBMWpjQkExamVCQTFqZ0JBMWoKaUJBMWpr
-QkExam1CQTFqb0JBMVJCQTFrY0JBMWtlQkExa2dCQTFraUJBMWtrQkExa21CQTFrb0JBMWxhQkExbApjQkExbGVCQTFsZ0JBMWxpQkExbGtCQTFsbUJBMUlC
-QTFUQkExbWNCQTFtZUJBMW1nQkExbWlCQTFta0JBMW1tCkJBMW1vQkExbmFCQTFuY0JBMW5lQkExbmdCQTFuaUJBMW5rQkExbm1CQTFub0JBMW9hQkExb2NC
-QTFvZUJBMW8KZ0JBMW9pQkExb2tCQTFvbUJBMW9vQkExcGFCQTFwY0JBMXBlQkExcGdCQTFwaUJBMXBrQkExcG1CQTFwb0JyZAphYWNBNXFBM0hBNkhBMjZj
-aWZtYXBJb2xmYmxpSUExUkVEbXBoZERmY2xpU09tbG1tMURBMUZHQTNtYnBmY2lPClZuaGNkbG1xTk1lZEVuZmtkcGFJQTVrZUdOTVVMRFZuaElWbmhrZGxt
-QTFtaUdnY2JpYWdFZmxpcGFjT1ZuaGMKZGxtQTFwZUdjZmVqYmNESjJJb21mYmRpRUExVkZOTVVEYmZrb21oSW1tMWVtREExY2NGTk1VRG1jcGZraUlvawpm
-YmxpREExZGNGa2xra2NrRURWbmhJbW0xZW1sbkExZWVGTk1VTGhrYmVrb0lpcG1jcGZMQTFmYUZsaGdubmxECm5na2RwYUlmbWlwbWNJQTFZRk5NZWREbGlT
+am1XY2RkZGlta21maQpuYlFpYmZlb25pbm5tY2VaZ2FmamVnam1mbW9iV2tsY2dvaWJsbmVqZGRrY29HY2pqZmpwcmFlQTEwcGFuamJsCmFickFhYkE5V2dw
+aGhQUWdlSFhnZFBRMUEyNDNyWkExMzhyQWFiQTI2NXJ4QTdjbzJBaGZZaGVIaGRnZFBZZ2YKQTIycXlBMUYxQTFaRkExUkZBMVRGQTFvYUZyQWFjQTVxQTNx
+eUExRjFBMVpGQTFSRkExVEZBMW9heENBMWJhQwpBMUhDQTFkYUNBMUZDQTFmYUNBMWdhQ0ExaGFDQTFaQ0ExaWlDQTFqYUNBMWppQ0ExUkNBMWtpQ0ExbGFD
+QTFsCmlDQTFUQ0ExbWlDQTFuYUNBMW5pQ0Exb2FDQTFvaUNBMXBhQ0ExcGlDQTJCQTFhZUJBMWFpQkExTUJBMWJhQkEKMWJlQkExYmlCQTFibUJBMUhCQTFj
+ZUJBMWNpQkExY21CQTFkYUJBMWRlQkExZGlCQTFMQkExRkJBMWVlQkExVwpCQTFlbUJBMWZhQkExZmVCQTFmaUJBMWZtQkExZ2FCQTFnZUJBMWdpQkExWUJB
+MWhhQkExaGVCQTFoaUJBMWhtCkJBMVpCQTFpY0JBMWllQkExaWdCQTFpaUJBMWlrQkExaW1CQTFpb0JBMWphQkExamNCQTFqZUJBMWpnQkExamkKQkExamtC
+QTFqbUJBMWpvQkExUkJBMWtjQkExa2VCQTFrZ0JBMWtpQkExa2tCQTFrbUJBMWtvQkExbGFCQTFsYwpCQTFsZUJBMWxnQkExbGlCQTFsa0JBMWxtQkExSUJB
+MVRCQTFtY0JBMW1lQkExbWdCQTFtaUJBMW1rQkExbW1CCkExbW9CQTFuYUJBMW5jQkExbmVCQTFuZ0JBMW5pQkExbmtCQTFubUJBMW5vQkExb2FCQTFvY0JB
+MW9lQkExb2cKQkExb2lCQTFva0JBMW9tQkExb29CQTFwYUJBMXBjQkExcGVCQTFwZ0JBMXBpQkExcGtCQTFwbUJBMXBvQnJkYQphY0E1cUEzSEE2SEEyNmNp
+Zm1hcElvbGZibGlJQTFSRURtcGhkRGZjbGlTT21sbW0xREExRkdBM21icGZjaU9WCm5oY2RsbXFOTWVkRW5ma2RwYUlBNWtlR05NVUxEVm5oSVZuaGtkbG1B
+MW1pR2djYmlhZ0VmbGlwYWNPVm5oY2QKbG1BMXBlR2NmZWpiY0RKMklvbWZiZGlFQTFWRk5NVURiZmtvbWhJbW0xZW1EQTFjY0ZOTVVEbWNwZmtpSW9rZgpi
+bGlEQTFkY0ZrbGtrY2tFRFZuaEltbTFlbWxuQTFlZUZOTVVMaGtiZWtvSWlwbWNwZkxBMWZhRmxoZ25ubERuCmdrZHBhSWZtaXBtY0lBMWdhRk5NZWREbGlT
 YWZPb21mYmRpRUExaGFGa2xra2NrRXBmY2libU9jY2lmZ2xJQTEKaWp4QW1sbW0xSVFuaGNkbG1BMWpiRmtsa2sxRHN0a2JqcFJGTk1lZERzdGxha29rcEZs
 aGdubmxEc3RUbG5tYwpGTk1lZERzdGZtZmtuYkZvaWhqU0VzdG9ob2VvYnhBc3RBcG5wakZjZmVqamNEc3RXbWZhZENsaGdubmxEc3RiCmVpcGFuQ05NVUxz
 dGJramZiZENrbGtrMURzdEhqbGJqQ2djYmlhZ0VzdG9lZm9ibkNOTVVMc3Rnb29qY2hDbGgKZ25ubERzdGRja25jbENEbXBoZERzdGRpbGROQ2NmZWpiY0Vz
 dGVlbG1kaENBM3N0ZWVMZGxDTk1lZERzdGplaQpuQkNBN2pramoxSXJhZUhBNXlBM3BqWEpFcTJBMTExaG1qZWpwRVRucEtHSjFLR3FBMTExcGlYSkRpY09L
 R3ExCkExMTFSZmNjakRPbGVLR3VxQTExOEdwbmZmQUdxQTExNXBvWEpFcGlKMUVxQTExNXBsa2hwb0VwaFhKRXFBMTEKNXBhZW5vZEVvbHBqb2RFcUExMTVv
 ZXBkbWhFb2FqcG1pRXFBMTE1bmpqamttRW5lZWZrbkVxQTExNW1vR2piRQptaW9samJFcUExMTVpZW1sZ2xFaGtjZGduRXFBMTE1R2tsY2pFZGZhZGNsRXFB
-MTE1TWhnbmVEcGdjZm5oRHFBCjExNVRuZW9rTFlqZXBmTHFBMTE1bGFhY2NtTGplZGFlcExxQTEwN3V2cGlKS0dxMUExMDd1dm5pSWhvR3BsSksKR3FBMTA3
-dXZsa2huMUdwaUpLR3FBMTA3dXZrcGJjaG5HcGhKS0dxQTEwN3V2QTNkY2JlZmdMcUExMDd1dnBuSgoxSWNna21hYkdxQTEwN3V2endxQTEwN3V2endxQTEw
-N3V2endxQTEwN3V2endxQTEwN3V2endxQTEwN3V2cG1KCktPd3FBMTA3dXZwbUpLT3dxQTEwN3V2cG1KS093cUExMDd1dnBtSktPd3FBMTA3dXBtSktPdndx
-QTQyMDNhZkEKMnJiYUE2eWZpZW1MY2VLM1lXZGFiaUszckFIQTV5QTgxOTFySEExMGZrZGNIZmhQaGdnZmhlUGdjWmdmSGVmaAppaGFncFFoZUExMnJ4QTdm
-ZVFnamNuWFBoaGNuZmFoZlpoZGdmQTljbWJnZmNSaWRibUFhYmJhanBqaVNqYW1mCmppU0E3VG1jamlTbGFVamlTQThyeEE3ZW1lZ2VwSGNuSGZoZ3BnYzFo
-ZlpQaGVncFFIZGRBNGxhaG1WUkEzamEKY2xsbUFnZW1uZ2tiaUExYmFBM2lhQTE2PTIwOTM3MgoAAA==
+MTE1TWhnbmVEcGdjZm5oRHFBCjExNVRuZW9rTGdhamVwZkxxQTExNWxhYWNjbUxqZWRhZXBMcUExMDd1dnBpSktHcTFBMTA3dXZuaUlob0dwbEoKS0dxQTEw
+N3V2bGtobjFHcGlKS0dxQTEwN3V2a3BiY2huR3BoSktHcUExMDd1dkEzZGNiZWZnTHFBMTA3dXZwbgpKMUljZ2ttYWJHcUExMDd1dnp3cUExMDd1dnp3cUEx
+MDd1dnp3cUExMDd1dnp3cUExMDd1dnp3cUExMDd1dnBtCkpLT3dxQTEwN3V2cG1KS093cUExMDd1dnBtSktPd3FBMTA3dXZwbUpLT3dxQTEwN3VwbUpLT3Z3
+cUE0MjAzYWYKQTJyYmFBNnlmaWVtTGNlSzNnYVdkYWJpSzNyQUhBNXlBODE5MXJIQTEwZmtkY0hmaFBoZ2dmaGVQZ2NZZ2ZIZQpmaGloYWdwUWhlQTEycnhB
+N2ZlUWdqY25YUGhoY25mYWhmWWhkZ2ZBOWNtYmdmY1JpZGJtQWFiYmFqcGppU2phCm1mamlTQTdUbWNqaVNsYVVqaVNBOHJ4QTdlbWVnZXBIY25IZmhncGdj
+MWhmWVBoZWdwUUhkZEE0bGFobVZSQTMKamFjbGxtQWdlbW5na2JpQTFiYUEzWkExNj0yMDk1MDQKAAA=
    </Chunk>
   </Data>
  </Plugin>
@@ -5327,7 +5327,7 @@ Z2U6CidNVyA9IGN1dG9mZicKCkNhdGVnb3JpZXM6CidQYWRzOlN0cmluZ3MsIFBhZHM6U3ludGgnCgpG
 CkNoYXJhY3RlcjoKJ0RhcmssIENvbnN0YW50LCBTb2Z0LCBOYXR1cmFsJwoKKi8KCiNBTT1aZWJyYWxldHRlCiNWZXJzPTEwMDAzCiNFbmRpYW49bGl0dGxl
 CiNubT0xMwojbXM9bm9uZQojbXM9TW9kV2hsCiNtcz1QaXRjaFcKI21zPUN0cmxBCiNtcz1DdHJsQgojbXM9TGZvRzEKI21zPUdhdGUKI21zPVZlbG9jaXR5
 CiNtcz1QcmVzc3VyZQojbXM9S2V5Rm9sbG93CiNtcz1FbnYxCiNtcz1NU0VHMQojbXM9TGZvMQojbnY9MgojbXY9R2F0ZQojbXY9RW52MQojY209bWFpbgpD
-Y09wPTE0NS4wMAojTEZPRz0wCiNNb2RGWDE9MQojRGVsYXkxPTEKI2NtPVBDb3JlClNCYXNlPTQKU3dpbmc9MC4wMApTVHJpZz0xClBQcm9qPTIyClBGb2xk
+Y09wPTE0NS4wMAojTEZPRz0wCiNNb2RGWDE9MQojRGVsYXkxPTEKI2NtPVBDb3JlClNCYXNlPTQKU3dpbmc9MC4wMApTVHJpZz0xClBQcm9qPTIzClBGb2xk
 PTAKUEZpbGU9MQpHRmlsZT0yCkdTY2FsZT0tMgpDaExheT0wClN1cnJPPTAKUmV2PTEyMDkyCkxFRD0wLjAwClBBR0U9MApQYWdlc09uPTAKQ29yZU49MwpT
 bGljZT00ClVJX29wPTMKTWlkaUE9NQpNaWRpUD02CkRGb2xkPTcKQ3RybEE9MgpDdHJsQj0xMQojY209TEZPRwpTeW5jPTIxClRyaWc9MApXYXZlPTEKUGhz
 ZT0wLjAwClBvbGFyPTAKI2NtPVZDQwojTEZPMT0xCiNPU0MxPTEKVm9pY2VzPTIKVm9pY2luZz0xCk1vZGU9MApQb3J0YU09MApQb3J0YT0wLjAwClBvcnRh
@@ -5352,7 +5352,7 @@ aWRkbDprZ2psbWVkbDplY2dhb2ZkbDoKZ3BiY2FkZG06bG1oZWJkZG06cGVwbmZlZG06ZG06YWE6ZG46
 OmdhOmtnOmRlOmlwOmJjOmxtOm1jOmxvOmVlOmVhOmVkOmdmOmdwIWdkZ2NlbklCYWJCOWNwZW1aZ2RnYmdtCmNwZGFkY2NhZmFnYmdlaGRCMjQxZ2RnY2Vu
 SVdCMTBlaWZkY2FmYWdiZ2RnamdnZ2pnZGNhZmRoaFlnbTFjb2cKaWRjaGFCNDNnZGdjZW5JV0I3NGdkZ2NlbklXQjEwYnBlamFkbGZicG1kamRjaGhkbWdh
 ZmFvYm9rbXBpamptaQpobWNub25JQ0ppY2pmcGZsYXBqQWptZWlNZGRpbWttS25iaGNpYmZlb25pbm5tY2VMTmZqZWdqbWZtb2JlaWtsCmNnb2libG5lamRk
-a2NvR2NqamZqcGdkZ2NlbklhZUIxMG9hb2dDQmdkZ2NlbklCYWJCOWVpWmhoZ2JoY2dlY2EKZmRnZGdiaGMxQjI0M2dkZ2NlbklMQjEzOGdkZ2NlbklCYWJC
+a2NvR2NqamZqcGdkZ2NlbklhZUIxMGthTWRvQmdkZ2NlbklCYWJCOWVpWmhoZ2JoY2dlY2EKZmRnZGdiaGMxQjI0M2dkZ2NlbklMQjEzOGdkZ2NlbklCYWJC
 MjY1Z2RnY2VuSVdCMTBjbzJCaGZnbWhlY2FoZApnZGdiZ21ZQjI0TEdCMldCMVcxQjFMV0Ixa2FXQjFtYVdCMW9hV2dkZ2NlbklCYWNCN0xHQjVMR0IyV0Ix
 VzFCCjFMV0Ixa2FXQjFtYVdCMW9hV0IySUIxYmFJQjFjYUlCMWRhSUIxV0lCMWZhSUIxTklCMWhhSUIxTElCMWlpSUIKMWphSUIxamlJQjFrYUlCMWtpSUIx
 bGFJQjFsaUlCMW1hSUIxbWlJQjFuYUlCMW5pSUIxb2FJQjFvaUlCMXBhSQpCMXBpSUIyREIxYWVEQjFhaURCMWFtREIxYmFEQjFiZURCMWJpREIxYm1EQjFj
@@ -5424,7 +5424,7 @@ dXRydnRycXNxc3lyenlocGdrU0FRVGhmQW9tZmJkaUN6T0VWQVpSaWRBegp1QjNzS0pQQXJxcnUxdHhz
 dXJxcnFzMXIxcUIzcUIxMXJxCjJyMUIzcXJxcjFxcjFxMXIxcUIxNXFCM3E0QjNxM0I3cU9FVkF4cXVxM3JxQjdxNEIyM3EyQjNxMXIxcTNCN3EKMUI4Njdn
 ZGdjZW5JY2FCMTBma2RjY2FmaGdiaGdZaGVnYmdjZ21ZY2FlZmhpaGFaaGNoZUIxMmdkZ2NlbklXQgoxMGNvMkIzbmFpamtvYmpjb21qa29iakxCMmlmQjJh
 ZkI2Z21nYmhqY2FkaFBkYUJlZmdvaGdQQm1qa29iamxmCmFiQjExYmZYQmdkZ2NlbklXQjEwZW1lZ2VwY2FjbmNhWGdqaGNnZGdtWUIxMGduZ2JnZGhkZ2Qx
-Z2VnZFdCNWEKbWduZ2JnZGhkZ2VnYmhhaGpXQjVjZWduZ2JnZGhkZ2VoYWhmZ2NCPTYxMDY2MAoAAA==
+Z2VnZFdCNWEKbWduZ2JnZGhkZ2VnYmhhaGpXQjVjZWduZ2JnZGhkZ2VoYWhmZ2NCPTYxMDY2MwoAAA==
    </Chunk>
   </Data>
  </Plugin>
@@ -5451,7 +5451,7 @@ Z2VnZFdCNWEKbWduZ2JnZGhkZ2VnYmhhaGpXQjVjZWduZ2JnZGhkZ2VoYWhmZ2NCPTYxMDY2MAoAAA==
    </CustomData>
 
    <Chunk>
-vA0AACNwZ209VFVDIFdhdGVyd29ybGQgS2V5cy5oMnAKLypATWV0YQoKQmFuazoKJ1BvZG9sc2tpIEZhY3RvcnkgMS4yJwoKQXV0aG9yOgonVGhlIFVuc2h1
+vQ0AACNwZ209VFVDIFdhdGVyd29ybGQgS2V5cy5oMnAKLypATWV0YQoKQmFuazoKJ1BvZG9sc2tpIEZhY3RvcnkgMS4yJwoKQXV0aG9yOgonVGhlIFVuc2h1
 c2hhYmxlIENva3RvcicKCkNhdGVnb3JpZXM6CidLZXlzOk1hbGxldHMsIEtleXM6T3JnYW5zJwoKRmVhdHVyZXM6CidQb2x5LCBNb2R1bGF0ZWQnCgpDaGFy
 YWN0ZXI6CidEYXJrLCBNb3ZpbmcsIFNvZnQsIFRoaW4sIE5hdHVyYWwnCgoqLwoKI0FNPVBvZG9sc2tpCiNWZXJzPTEwMjAxCiNFbmRpYW49bGl0dGxlCiNu
 bT0xNwojbXM9bm9uZQojbXM9TW9kV2hlZWwKI21zPVBpdGNoV2hlZWwKI21zPUNvbnRyb2wgQQojbXM9Q29udHJvbCBCCiNtcz1MRk9nbG9iYWwKI21zPUdh
@@ -5480,17 +5480,17 @@ bD01MC4wMApWQ0E9MQpNb2RTcmM9NQpNb2REcHQ9NTAuMDAKUGFuU3JjPTAKI2NtPUNocnMKQ2VudD0x
 Qj0wLjAwCk1peD0zMS4wMAojY209RGx5MQpTbmNMPTAKU25jUj0xCkZlZUI9MC4wMApDcnNCPTAuMDAKTWl4PTM1LjAwCgoKCi8vIFNlY3Rpb24gZm9yIHVn
 bHkgY29tcHJlc3NlZCBiaW5hcnkgRGF0YQovLyBET04nVCBUT1VDSCBUSElTCgokJCQkMTgyOAo/Z2RnY2VuZWI6ZWFhYWFhYWE6YWFhYmFhYWE6YWFhYWlh
 ZHA6ZmVmZmVkY2E6ZmhnYmhlZ2Y6aGNoaGdwaGM6CmdtZ2VjYWVsOmdmaGpoZGNvOmdpZGNoYWFhOmFhOmVjOmViOmVhOmlhOmNhOmRhOmthOm1hOm9hOmFl
-OmJhOmMKcDpkZTphYzphaTphbTphcDpiZTpiaTpibTpjZTpjaTpjbTpjbjpjbyFxc0E3TWVtZ3BnZGdiZ21NR05GZWxnZgpoamhkQTI0MXFyQTd1dnd4eXpB
-MzlxckE3MXFyQTdwanBrcGxwbXBucG9wcEFhYk9hZEthZmFnYWhQYWpha2FsClFhbmFvUkxiYmJjYmRTYmZiZ2JoVGJqYmtibFVibmJvYnBGY2JjY2NkVmNm
-Y2djaFdjamNrY2xYWVpNR2RiZGMKZGROZGZkZ2RoZGlxS0ExMENwYlJBcXNBN2hmWWdpZ2ZBMjUxcUVBMTB1dnd4eXpBMTAzcXNBMjYzcXJBN1oyQQozMnRB
-MkRBMUQxQTFFREExSERBMUlEQTFKRHFBT0E1dEEzdEEyREExRDFBMUVEQTFIREExSURBMUpyQ0ExTENBCjFGQ0ExR0NBMURDQTFmYUNBMWdhQ0ExaGFDQTFF
-Q0ExaWlDQTFqYUNBMWppQ0ExSENBMWtpQ0ExbGFDQTFsaUMKQTFJQ0ExbWlDQTFuYUNBMW5pQ0ExSkNBMW9pQ0ExcGFDQTFwaUNBMkJBMUtCQTFQQkExUUJB
-MUxCQTFTQkExVApCQTFVQkExRkJBMVZCQTFXQkExWEJBMUdCQTFOQkExZGlCQTFkbUJBMURCQTFlZUJBMWVpQkExZW1CQTFmYUJBCjFmZUJBMWZpQkExZm1C
-QTFnYUJBMWdlQkExZ2lCQTFnbUJBMWhhQkExaGVCQTFoaUJBMWhtQkExRUJBMWljQkEKMWllQkExaWdCQTFpaUJBMWlrQkExaW1CQTFpb0JBMWphQkExamNC
-QTFqZUJBMWpnQkExamlCQTFqa0JBMWptQgpBMWpvQkExSEJBMWtjQkExa2VCQTFrZ0JBMWtpQkExa2tCQTFrbUJBMWtvQkExbGFCQTFsY0JBMWxlQkExbGdC
-CkExbGlCQTFsa0JBMWxtQkExbG9CQTFJQkExbWNCQTFtZUJBMW1nQkExbWlCQTFta0JBMW1tQkExbW9CQTFuYUIKQTFuY0JBMW5lQkExbmdCQTFuaUJBMW5r
-QkExbm1CQTFub0JBMUpCQTFvY0JBMW9lQkExb2dCQTFvaUJBMW9rQgpBMW9tQkExb29CQTFwYUJBMXBjQkExcGVCQTFwZ0JBMXBpQkExcGtCQTFwbUJBMXBv
-Qj04MjA3NAoAAA==
+OmJhOmMKcDpkZTphYzphaTphbTpiZTpiZjpiaTpibTpjZTpjaTpjbTpjbjpjbyFxc0E3TWVtZ3BnZGdiZ21NR05GZWxnZgpoamhkQTI0MXFyQTd1dnd4eXpB
+MzlxckE3MXFyQTdwanBrcGxwbXBucG9wcEFhYk9hZEthZmFnYWhQYWpha2FsClFhbmFvYXBMYmJiY2JkUlNiZ2JoVGJqYmtibFVibmJvYnBGY2JjY2NkVmNm
+Y2djaFdjamNrY2xYWVpNR2RiZGMKZGROZGZkZ2RoZGlxS0ExMGtiZWRTQXFzQTdoZllnaWdmQTI1MXFFQTEwdXZ3eHl6QTEwM3FzQTI2M3FyQTdaMgpBMzJ0
+QTJEQTFEMUExRURBMUhEQTFJREExSkRxQU9BNXRBM3RBMkRBMUQxQTFFREExSERBMUlEQTFKckNBMUxDCkExRkNBMUdDQTFEQ0ExZmFDQTFnYUNBMWhhQ0Ex
+RUNBMWlpQ0ExamFDQTFqaUNBMUhDQTFraUNBMWxhQ0ExbGkKQ0ExSUNBMW1pQ0ExbmFDQTFuaUNBMUpDQTFvaUNBMXBhQ0ExcGlDQTJCQTFLQkExUEJBMVFC
+QTFMQkExUkJBMQpUQkExVUJBMUZCQTFWQkExV0JBMVhCQTFHQkExTkJBMWRpQkExZG1CQTFEQkExZWVCQTFlaUJBMWVtQkExZmFCCkExZmVCQTFmaUJBMWZt
+QkExZ2FCQTFnZUJBMWdpQkExZ21CQTFoYUJBMWhlQkExaGlCQTFobUJBMUVCQTFpY0IKQTFpZUJBMWlnQkExaWlCQTFpa0JBMWltQkExaW9CQTFqYUJBMWpj
+QkExamVCQTFqZ0JBMWppQkExamtCQTFqbQpCQTFqb0JBMUhCQTFrY0JBMWtlQkExa2dCQTFraUJBMWtrQkExa21CQTFrb0JBMWxhQkExbGNCQTFsZUJBMWxn
+CkJBMWxpQkExbGtCQTFsbUJBMWxvQkExSUJBMW1jQkExbWVCQTFtZ0JBMW1pQkExbWtCQTFtbUJBMW1vQkExbmEKQkExbmNCQTFuZUJBMW5nQkExbmlCQTFu
+a0JBMW5tQkExbm9CQTFKQkExb2NCQTFvZUJBMW9nQkExb2lCQTFvawpCQTFvbUJBMW9vQkExcGFCQTFwY0JBMXBlQkExcGdCQTFwaUJBMXBrQkExcG1CQTFw
+b0I9ODIyMDMKAAA=
    </Chunk>
   </Data>
  </Plugin>
@@ -8845,165 +8845,6 @@ RVJWRURfX01PRElGSUVEIDEgMCAyNyBfX1NUQVRFX19SRVNFUlZFRF9fUExfX1VVSUQgMTkgN2U3Ny0x
   </Data>
  </Plugin>
 
- <!-- ZynReverb -->
- <Plugin>
-  <Info>
-   <Type>INTERNAL</Type>
-   <Name>ZynReverb (HS Grand)</Name>
-   <Label>zynreverb</Label>
-  </Info>
-
-  <Data>
-   <Active>Yes</Active>
-   <DryWet>0.4289216</DryWet>
-   <Volume>1.27</Volume>
-   <ControlChannel>1</ControlChannel>
-   <Options>0x5</Options>
-
-   <Parameter>
-    <Index>0</Index>
-    <Name>Time</Name>
-    <Value>69</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>1</Index>
-    <Name>Delay</Name>
-    <Value>35</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>2</Index>
-    <Name>Feedback</Name>
-    <Value>0</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>5</Index>
-    <Name>Low-Pass Filter</Name>
-    <Value>127</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>6</Index>
-    <Name>High-Pass Filter</Name>
-    <Value>0</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>7</Index>
-    <Name>Damp</Name>
-    <Value>71</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>8</Index>
-    <Name>Type</Name>
-    <Value>0</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>9</Index>
-    <Name>Room size</Name>
-    <Value>64</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>10</Index>
-    <Name>Bandwidth</Name>
-    <Value>20</Value>
-   </Parameter>
-
-   <CurrentMidiBank>1</CurrentMidiBank>
-   <CurrentMidiProgram>2</CurrentMidiProgram>
-
-   <CustomData>
-    <Type>http://kxstudio.sf.net/ns/carla/property</Type>
-    <Key>CarlaSkinIsCompacted</Key>
-    <Value>true</Value>
-   </CustomData>
-  </Data>
- </Plugin>
-
- <!-- ZynReverb -->
- <Plugin>
-  <Info>
-   <Type>INTERNAL</Type>
-   <Name>ZynReverb (TUC Waterworld)</Name>
-   <Label>zynreverb</Label>
-  </Info>
-
-  <Data>
-   <Active>Yes</Active>
-   <DryWet>0.509804</DryWet>
-   <ControlChannel>1</ControlChannel>
-   <Options>0x5</Options>
-
-   <Parameter>
-    <Index>0</Index>
-    <Name>Time</Name>
-    <Value>69</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>1</Index>
-    <Name>Delay</Name>
-    <Value>24</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>2</Index>
-    <Name>Feedback</Name>
-    <Value>0</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>5</Index>
-    <Name>Low-Pass Filter</Name>
-    <Value>127</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>6</Index>
-    <Name>High-Pass Filter</Name>
-    <Value>75</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>7</Index>
-    <Name>Damp</Name>
-    <Value>78</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>8</Index>
-    <Name>Type</Name>
-    <Value>1</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>9</Index>
-    <Name>Room size</Name>
-    <Value>85</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>10</Index>
-    <Name>Bandwidth</Name>
-    <Value>20</Value>
-   </Parameter>
-
-   <CurrentMidiBank>1</CurrentMidiBank>
-   <CurrentMidiProgram>3</CurrentMidiProgram>
-
-   <CustomData>
-    <Type>http://kxstudio.sf.net/ns/carla/property</Type>
-    <Key>CarlaSkinIsCompacted</Key>
-    <Value>true</Value>
-   </CustomData>
-  </Data>
- </Plugin>
-
  <!-- MIDI Key-Range Filter -->
  <Plugin>
   <Info>
@@ -9183,8 +9024,8 @@ RVJWRURfX01PRElGSUVEIDEgMCAyNyBfX1NUQVRFX19SRVNFUlZFRF9fUExfX1VVSUQgMTkgN2U3Ny0x
    <ControlChannel>1</ControlChannel>
    <Options>0x3f9</Options>
 
-   <CurrentProgramIndex>1</CurrentProgramIndex>
-   <CurrentProgramName>Blüthner Concert Record</CurrentProgramName>
+   <CurrentProgramIndex>8</CurrentProgramIndex>
+   <CurrentProgramName>Pianet T Jazzy</CurrentProgramName>
 
    <CustomData>
     <Type>http://kxstudio.sf.net/ns/carla/property</Type>
@@ -14400,7 +14241,7 @@ YWdlOgonQVQgPSB0b25lL3N3ZWxsXHJNVyA9IHBhbicKCkNhdGVnb3JpZXM6CidLZXlzOkRpZ2l0YWwn
 ZScKCkNoYXJhY3RlcjoKJ0NvbnN0YW50LCBDbGVhbiwgU29mdCwgU3ludGhldGljJwoKKi8KCiNBTT1aZWJyYWxldHRlCiNWZXJzPTEwMDAzCiNFbmRpYW49
 bGl0dGxlCiNubT0xMwojbXM9bm9uZQojbXM9TW9kV2hsCiNtcz1QaXRjaFcKI21zPUN0cmxBCiNtcz1DdHJsQgojbXM9TGZvRzEKI21zPUdhdGUKI21zPVZl
 bG9jaXR5CiNtcz1QcmVzc3VyZQojbXM9S2V5Rm9sbG93CiNtcz1FbnYxCiNtcz1NU0VHMQojbXM9TGZvMQojbnY9MgojbXY9R2F0ZQojbXY9RW52MQojY209
-bWFpbgpDY09wPTEwMC4wMAojTEZPRz0xCiNNb2RGWDE9MQojRGVsYXkxPTEKI2NtPVBDb3JlClNCYXNlPTQKU3dpbmc9MC4wMApTVHJpZz0xClBQcm9qPTI2
+bWFpbgpDY09wPTEwMC4wMAojTEZPRz0xCiNNb2RGWDE9MQojRGVsYXkxPTEKI2NtPVBDb3JlClNCYXNlPTQKU3dpbmc9MC4wMApTVHJpZz0xClBQcm9qPTI3
 ClBGb2xkPTAKUEZpbGU9MQpHRmlsZT0yCkdTY2FsZT0wCkNoTGF5PTAKU3Vyck89MApSZXY9MTIwOTIKTEVEPTAuMDAKUEFHRT0wClBhZ2VzT249MApDb3Jl
 Tj0zClNsaWNlPTQKVUlfb3A9MwpNaWRpQT01Ck1pZGlQPTYKREZvbGQ9NwpDdHJsQT0yCkN0cmxCPTExCiNjbT1MRk9HClN5bmM9LTMKVHJpZz0wCldhdmU9
 MApQaHNlPTAuMDAKUG9sYXI9MAojY209VkNDCiNMRk8xPTEKI09TQzE9MQpWb2ljZXM9MgpWb2ljaW5nPTEKTW9kZT0wClBvcnRhTT0wClBvcnRhPTAuMDAK
@@ -14482,7 +14323,7 @@ Z2U6CidNVyA9IGN1dG9mZicKCkNhdGVnb3JpZXM6CidQYWRzOlN0cmluZ3MsIFBhZHM6U3ludGgnCgpG
 CkNoYXJhY3RlcjoKJ0RhcmssIENvbnN0YW50LCBTb2Z0LCBOYXR1cmFsJwoKKi8KCiNBTT1aZWJyYWxldHRlCiNWZXJzPTEwMDAzCiNFbmRpYW49bGl0dGxl
 CiNubT0xMwojbXM9bm9uZQojbXM9TW9kV2hsCiNtcz1QaXRjaFcKI21zPUN0cmxBCiNtcz1DdHJsQgojbXM9TGZvRzEKI21zPUdhdGUKI21zPVZlbG9jaXR5
 CiNtcz1QcmVzc3VyZQojbXM9S2V5Rm9sbG93CiNtcz1FbnYxCiNtcz1NU0VHMQojbXM9TGZvMQojbnY9MgojbXY9R2F0ZQojbXY9RW52MQojY209bWFpbgpD
-Y09wPTEwMC4wMAojTEZPRz0wCiNNb2RGWDE9MQojRGVsYXkxPTEKI2NtPVBDb3JlClNCYXNlPTQKU3dpbmc9MC4wMApTVHJpZz0xClBQcm9qPTIzClBGb2xk
+Y09wPTEwMC4wMAojTEZPRz0wCiNNb2RGWDE9MQojRGVsYXkxPTEKI2NtPVBDb3JlClNCYXNlPTQKU3dpbmc9MC4wMApTVHJpZz0xClBQcm9qPTI0ClBGb2xk
 PTAKUEZpbGU9MQpHRmlsZT0yCkdTY2FsZT0yCkNoTGF5PTAKU3Vyck89MApSZXY9MTIwOTIKTEVEPTAuMDAKUEFHRT0wClBhZ2VzT249MApDb3JlTj0zClNs
 aWNlPTQKVUlfb3A9MQpNaWRpQT01Ck1pZGlQPTYKREZvbGQ9NwpDdHJsQT0yCkN0cmxCPTExCiNjbT1MRk9HClN5bmM9MjEKVHJpZz0wCldhdmU9MQpQaHNl
 PTAuMDAKUG9sYXI9MAojY209VkNDCiNMRk8xPTEKI09TQzE9MQpWb2ljZXM9MgpWb2ljaW5nPTEKTW9kZT0wClBvcnRhTT0wClBvcnRhPTAuMDAKUG9ydGEy
@@ -17989,165 +17830,6 @@ NzctMWY1ZC0xNmY3LTdhZGIK
   </Data>
  </Plugin>
 
- <!-- ZynReverb -->
- <Plugin>
-  <Info>
-   <Type>INTERNAL</Type>
-   <Name>ZynReverb (HS Grand) (2)</Name>
-   <Label>zynreverb</Label>
-  </Info>
-
-  <Data>
-   <Active>Yes</Active>
-   <DryWet>0.4289216</DryWet>
-   <Volume>1.27</Volume>
-   <ControlChannel>1</ControlChannel>
-   <Options>0x5</Options>
-
-   <Parameter>
-    <Index>0</Index>
-    <Name>Time</Name>
-    <Value>69</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>1</Index>
-    <Name>Delay</Name>
-    <Value>35</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>2</Index>
-    <Name>Feedback</Name>
-    <Value>0</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>5</Index>
-    <Name>Low-Pass Filter</Name>
-    <Value>127</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>6</Index>
-    <Name>High-Pass Filter</Name>
-    <Value>0</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>7</Index>
-    <Name>Damp</Name>
-    <Value>71</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>8</Index>
-    <Name>Type</Name>
-    <Value>0</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>9</Index>
-    <Name>Room size</Name>
-    <Value>64</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>10</Index>
-    <Name>Bandwidth</Name>
-    <Value>20</Value>
-   </Parameter>
-
-   <CurrentMidiBank>1</CurrentMidiBank>
-   <CurrentMidiProgram>2</CurrentMidiProgram>
-
-   <CustomData>
-    <Type>http://kxstudio.sf.net/ns/carla/property</Type>
-    <Key>CarlaSkinIsCompacted</Key>
-    <Value>true</Value>
-   </CustomData>
-  </Data>
- </Plugin>
-
- <!-- ZynReverb -->
- <Plugin>
-  <Info>
-   <Type>INTERNAL</Type>
-   <Name>ZynReverb (TUC Waterworld (2)</Name>
-   <Label>zynreverb</Label>
-  </Info>
-
-  <Data>
-   <Active>Yes</Active>
-   <DryWet>0.3063726</DryWet>
-   <ControlChannel>1</ControlChannel>
-   <Options>0x5</Options>
-
-   <Parameter>
-    <Index>0</Index>
-    <Name>Time</Name>
-    <Value>53</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>1</Index>
-    <Name>Delay</Name>
-    <Value>20</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>2</Index>
-    <Name>Feedback</Name>
-    <Value>0</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>5</Index>
-    <Name>Low-Pass Filter</Name>
-    <Value>127</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>6</Index>
-    <Name>High-Pass Filter</Name>
-    <Value>75</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>7</Index>
-    <Name>Damp</Name>
-    <Value>71</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>8</Index>
-    <Name>Type</Name>
-    <Value>1</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>9</Index>
-    <Name>Room size</Name>
-    <Value>64</Value>
-   </Parameter>
-
-   <Parameter>
-    <Index>10</Index>
-    <Name>Bandwidth</Name>
-    <Value>20</Value>
-   </Parameter>
-
-   <CurrentMidiBank>1</CurrentMidiBank>
-   <CurrentMidiProgram>5</CurrentMidiProgram>
-
-   <CustomData>
-    <Type>http://kxstudio.sf.net/ns/carla/property</Type>
-    <Key>CarlaSkinIsCompacted</Key>
-    <Value>true</Value>
-   </CustomData>
-  </Data>
- </Plugin>
-
  <!-- MIDI Channel Filter -->
  <Plugin>
   <Info>
@@ -18616,6 +18298,1158 @@ NzctMWY1ZC0xNmY3LTdhZGIK
   </Data>
  </Plugin>
 
+ <!-- MIDI Channel Filter -->
+ <Plugin>
+  <Info>
+   <Type>INTERNAL</Type>
+   <Name>MIDI Ch Filter DRUMS</Name>
+   <Label>midichanfilter</Label>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x3f0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>1</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>2</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>3</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>4</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>5</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>6</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>7</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>8</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>9</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>10</Name>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>11</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>12</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>13</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>14</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>15</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>15</Index>
+    <Name>16</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <CustomData>
+    <Type>http://kxstudio.sf.net/ns/carla/property</Type>
+    <Key>CarlaSkinIsCompacted</Key>
+    <Value>true</Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+
+ <!-- sfizz -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>sfizz Gogodze Drums</Name>
+   <URI>http://sfztools.github.io/sfizz</URI>
+  </Info>
+
+  <Data>
+   <Active>No</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x3f0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Volume</Name>
+    <Symbol>volume</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Polyphony</Name>
+    <Symbol>num_voices</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Oversampling factor</Name>
+    <Symbol>oversampling</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Preload size</Name>
+    <Symbol>preload_size</Symbol>
+    <Value>8192</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Scala root key</Name>
+    <Symbol>scala_root_key</Symbol>
+    <Value>60</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Tuning frequency</Name>
+    <Symbol>tuning_frequency</Symbol>
+    <Value>440</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Stretched tuning</Name>
+    <Symbol>stretched_tuning</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Sample quality</Name>
+    <Symbol>sample_quality</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Oscillator quality</Name>
+    <Symbol>oscillator_quality</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>16</Index>
+    <Name>Freewheeling Sample quality</Name>
+    <Symbol>freewheeling_sample_quality</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>17</Index>
+    <Name>Freewheeling Oscillator quality</Name>
+    <Symbol>freewheeling_oscillator_quality</Symbol>
+    <Value>3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>18</Index>
+    <Name>Sustain cancels release</Name>
+    <Symbol>sustain_cancels_release</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <CustomData>
+    <Type>http://kxstudio.sf.net/ns/carla/property</Type>
+    <Key>CarlaSkinIsCompacted</Key>
+    <Value>true</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://sfztools.github.io/sfizz:sfzfile</Key>
+    <Value>Kit.sfz</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://sfztools.github.io/sfizz:tuningfile</Key>
+    <Value>DefaultScale.scl</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc004</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc007</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc010</Key>
+    <Value>AAAAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc011</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc100</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc101</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc102</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc103</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc105</Key>
+    <Value>hUIhPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc108</Key>
+    <Value>+Pv9Pg==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc110</Key>
+    <Value>+Pv9Pg==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc111</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc112</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc113</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc114</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+
+ <!-- sfizz -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>sfizz Virtuosity Drums</Name>
+   <URI>http://sfztools.github.io/sfizz</URI>
+  </Info>
+
+  <Data>
+   <Active>No</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x3f0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Volume</Name>
+    <Symbol>volume</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Polyphony</Name>
+    <Symbol>num_voices</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Oversampling factor</Name>
+    <Symbol>oversampling</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Preload size</Name>
+    <Symbol>preload_size</Symbol>
+    <Value>8192</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Scala root key</Name>
+    <Symbol>scala_root_key</Symbol>
+    <Value>60</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Tuning frequency</Name>
+    <Symbol>tuning_frequency</Symbol>
+    <Value>440</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Stretched tuning</Name>
+    <Symbol>stretched_tuning</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Sample quality</Name>
+    <Symbol>sample_quality</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Oscillator quality</Name>
+    <Symbol>oscillator_quality</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>16</Index>
+    <Name>Freewheeling Sample quality</Name>
+    <Symbol>freewheeling_sample_quality</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>17</Index>
+    <Name>Freewheeling Oscillator quality</Name>
+    <Symbol>freewheeling_oscillator_quality</Symbol>
+    <Value>3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>18</Index>
+    <Name>Sustain cancels release</Name>
+    <Symbol>sustain_cancels_release</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <CustomData>
+    <Type>http://kxstudio.sf.net/ns/carla/property</Type>
+    <Key>CarlaSkinIsCompacted</Key>
+    <Value>true</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://sfztools.github.io/sfizz:sfzfile</Key>
+    <Value>01-basic-kit.sfz</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://sfztools.github.io/sfizz:tuningfile</Key>
+    <Value>DefaultScale.scl</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc004</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc007</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc010</Key>
+    <Value>AAAAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc011</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc100</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc101</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc102</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc103</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc105</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc108</Key>
+    <Value>+Pv9Pg==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc110</Key>
+    <Value>+Pv9Pg==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc111</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc112</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc113</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc114</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc071</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc072</Key>
+    <Value>AAAAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc076</Key>
+    <Value>AAAAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc081</Key>
+    <Value>AAAAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc086</Key>
+    <Value>AAAAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc090</Key>
+    <Value>AAAAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc104</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc106</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+
+ <!-- sfizz -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>sfizz Tanzbar clubbanger Drums</Name>
+   <URI>http://sfztools.github.io/sfizz</URI>
+  </Info>
+
+  <Data>
+   <Active>No</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x3f0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Volume</Name>
+    <Symbol>volume</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Polyphony</Name>
+    <Symbol>num_voices</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Oversampling factor</Name>
+    <Symbol>oversampling</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Preload size</Name>
+    <Symbol>preload_size</Symbol>
+    <Value>8192</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Scala root key</Name>
+    <Symbol>scala_root_key</Symbol>
+    <Value>60</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Tuning frequency</Name>
+    <Symbol>tuning_frequency</Symbol>
+    <Value>440</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Stretched tuning</Name>
+    <Symbol>stretched_tuning</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Sample quality</Name>
+    <Symbol>sample_quality</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Oscillator quality</Name>
+    <Symbol>oscillator_quality</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>16</Index>
+    <Name>Freewheeling Sample quality</Name>
+    <Symbol>freewheeling_sample_quality</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>17</Index>
+    <Name>Freewheeling Oscillator quality</Name>
+    <Symbol>freewheeling_oscillator_quality</Symbol>
+    <Value>3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>18</Index>
+    <Name>Sustain cancels release</Name>
+    <Symbol>sustain_cancels_release</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <CustomData>
+    <Type>http://kxstudio.sf.net/ns/carla/property</Type>
+    <Key>CarlaSkinIsCompacted</Key>
+    <Value>true</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://sfztools.github.io/sfizz:sfzfile</Key>
+    <Value>clubbanger.sfz</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://sfztools.github.io/sfizz:tuningfile</Key>
+    <Value>DefaultScale.scl</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc004</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc007</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc010</Key>
+    <Value>AAAAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc011</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc100</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc101</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc102</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc103</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc105</Key>
+    <Value>hUIhPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc108</Key>
+    <Value>+Pv9Pg==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc110</Key>
+    <Value>+Pv9Pg==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc111</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc112</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc113</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc114</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+
+ <!-- sfizz -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>sfizz Tanzbar decimate Drums</Name>
+   <URI>http://sfztools.github.io/sfizz</URI>
+  </Info>
+
+  <Data>
+   <Active>No</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x3f0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Volume</Name>
+    <Symbol>volume</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Polyphony</Name>
+    <Symbol>num_voices</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Oversampling factor</Name>
+    <Symbol>oversampling</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Preload size</Name>
+    <Symbol>preload_size</Symbol>
+    <Value>8192</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Scala root key</Name>
+    <Symbol>scala_root_key</Symbol>
+    <Value>60</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Tuning frequency</Name>
+    <Symbol>tuning_frequency</Symbol>
+    <Value>440</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Stretched tuning</Name>
+    <Symbol>stretched_tuning</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Sample quality</Name>
+    <Symbol>sample_quality</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Oscillator quality</Name>
+    <Symbol>oscillator_quality</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>16</Index>
+    <Name>Freewheeling Sample quality</Name>
+    <Symbol>freewheeling_sample_quality</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>17</Index>
+    <Name>Freewheeling Oscillator quality</Name>
+    <Symbol>freewheeling_oscillator_quality</Symbol>
+    <Value>3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>18</Index>
+    <Name>Sustain cancels release</Name>
+    <Symbol>sustain_cancels_release</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <CustomData>
+    <Type>http://kxstudio.sf.net/ns/carla/property</Type>
+    <Key>CarlaSkinIsCompacted</Key>
+    <Value>true</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://sfztools.github.io/sfizz:sfzfile</Key>
+    <Value>decimate.sfz</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://sfztools.github.io/sfizz:tuningfile</Key>
+    <Value>DefaultScale.scl</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc004</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc007</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc010</Key>
+    <Value>AAAAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc011</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc100</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc101</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc102</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc103</Key>
+    <Value>JpNJPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc105</Key>
+    <Value>hUIhPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc108</Key>
+    <Value>+Pv9Pg==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc110</Key>
+    <Value>+Pv9Pg==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc111</Key>
+    <Value>AACAPw==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc112</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc113</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Float</Type>
+    <Key>http://sfztools.github.io/sfizz#cc114</Key>
+    <Value>AAAAAA==</Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+
+ <!-- ZynReverb -->
+ <Plugin>
+  <Info>
+   <Type>INTERNAL</Type>
+   <Name>ZynReverb Drums</Name>
+   <Label>zynreverb</Label>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <DryWet>0.4161164</DryWet>
+   <Volume>1.27</Volume>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x5</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Time</Name>
+    <Value>53</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Delay</Name>
+    <Value>20</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Feedback</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Low-Pass Filter</Name>
+    <Value>127</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>High-Pass Filter</Name>
+    <Value>75</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Damp</Name>
+    <Value>71</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Type</Name>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Room size</Name>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Bandwidth</Name>
+    <Value>20</Value>
+   </Parameter>
+
+   <CurrentMidiBank>1</CurrentMidiBank>
+   <CurrentMidiProgram>5</CurrentMidiProgram>
+
+   <CustomData>
+    <Type>http://kxstudio.sf.net/ns/carla/property</Type>
+    <Key>CarlaSkinIsCompacted</Key>
+    <Value>true</Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+
+ <!-- ZynReverb -->
+ <Plugin>
+  <Info>
+   <Type>INTERNAL</Type>
+   <Name>ZynReverb (Cathedral)</Name>
+   <Label>zynreverb</Label>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <DryWet>0.3063726</DryWet>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x5</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Time</Name>
+    <Value>69</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Delay</Name>
+    <Value>35</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Feedback</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Low-Pass Filter</Name>
+    <Value>127</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>High-Pass Filter</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Damp</Name>
+    <Value>71</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Type</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Room size</Name>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Bandwidth</Name>
+    <Value>20</Value>
+   </Parameter>
+
+   <CurrentMidiBank>1</CurrentMidiBank>
+   <CurrentMidiProgram>2</CurrentMidiProgram>
+
+   <CustomData>
+    <Type>http://kxstudio.sf.net/ns/carla/property</Type>
+    <Key>CarlaSkinIsCompacted</Key>
+    <Value>true</Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+
  <Patchbay>
   <Connection>
    <Source>Midi Input:Capture 1</Source>
@@ -18626,12 +19460,24 @@ NzctMWY1ZC0xNmY3LTdhZGIK
    <Target>MIDI Key-Range Filter HIGH:events-in</Target>
   </Connection>
   <Connection>
+   <Source>Midi Input:Capture 1</Source>
+   <Target>MIDI Ch Filter DRUMS:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>Pianoteq 9:output_1</Source>
+   <Target>Audio Output:Left</Target>
+  </Connection>
+  <Connection>
+   <Source>Pianoteq 9:output_2</Source>
+   <Target>Audio Output:Right</Target>
+  </Connection>
+  <Connection>
    <Source>Zebralette HS Grand Extrance:output_1</Source>
-   <Target>ZynReverb (HS Grand):input_1</Target>
+   <Target>ZynReverb (Cathedral):input_1</Target>
   </Connection>
   <Connection>
    <Source>Zebralette HS Grand Extrance:output_2</Source>
-   <Target>ZynReverb (HS Grand):input_2</Target>
+   <Target>ZynReverb (Cathedral):input_2</Target>
   </Connection>
   <Connection>
    <Source>Zebralette HS Pacific Swell:output_1</Source>
@@ -18643,11 +19489,11 @@ NzctMWY1ZC0xNmY3LTdhZGIK
   </Connection>
   <Connection>
    <Source>Podolski Waterworld Keys:output_1</Source>
-   <Target>ZynReverb (TUC Waterworld):input_1</Target>
+   <Target>ZynReverb (Cathedral):input_1</Target>
   </Connection>
   <Connection>
    <Source>Podolski Waterworld Keys:output_2</Source>
-   <Target>ZynReverb (TUC Waterworld):input_2</Target>
+   <Target>ZynReverb (Cathedral):input_2</Target>
   </Connection>
   <Connection>
    <Source>Podolski SM Fullpad:output_1</Source>
@@ -18666,22 +19512,6 @@ NzctMWY1ZC0xNmY3LTdhZGIK
    <Target>Audio Output:Right</Target>
   </Connection>
   <Connection>
-   <Source>ZynReverb (HS Grand):output_1</Source>
-   <Target>Audio Output:Left</Target>
-  </Connection>
-  <Connection>
-   <Source>ZynReverb (HS Grand):output_2</Source>
-   <Target>Audio Output:Right</Target>
-  </Connection>
-  <Connection>
-   <Source>ZynReverb (TUC Waterworld):output_1</Source>
-   <Target>Audio Output:Left</Target>
-  </Connection>
-  <Connection>
-   <Source>ZynReverb (TUC Waterworld):output_2</Source>
-   <Target>Audio Output:Right</Target>
-  </Connection>
-  <Connection>
    <Source>MIDI Key-Range Filter LOW:events-out</Source>
    <Target>MIDI Transpose:events-in</Target>
   </Connection>
@@ -18690,12 +19520,36 @@ NzctMWY1ZC0xNmY3LTdhZGIK
    <Target>MIDI Transpose (2):events-in</Target>
   </Connection>
   <Connection>
+   <Source>MIDI Transpose:events-out</Source>
+   <Target>MIDI Ch Filter MAIN std:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>MIDI Transpose:events-out</Source>
+   <Target>MIDI Ch Filter MAIN Pigments:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>MIDI Transpose (2):events-out</Source>
+   <Target>MIDI Ch Filter SPLIT std:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>MIDI Transpose (2):events-out</Source>
+   <Target>MIDI Ch Filter SPLIT Pigments:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>Pianoteq 9 (2):output_1</Source>
+   <Target>Audio Output:Left</Target>
+  </Connection>
+  <Connection>
+   <Source>Pianoteq 9 (2):output_2</Source>
+   <Target>Audio Output:Right</Target>
+  </Connection>
+  <Connection>
    <Source>Zebralette HS Grand Entrance (2):output_1</Source>
-   <Target>ZynReverb (HS Grand) (2):input_1</Target>
+   <Target>ZynReverb (Cathedral):input_1</Target>
   </Connection>
   <Connection>
    <Source>Zebralette HS Grand Entrance (2):output_2</Source>
-   <Target>ZynReverb (HS Grand) (2):input_2</Target>
+   <Target>ZynReverb (Cathedral):input_2</Target>
   </Connection>
   <Connection>
    <Source>Zebralette HS Pacific Swell (2):output_1</Source>
@@ -18707,11 +19561,11 @@ NzctMWY1ZC0xNmY3LTdhZGIK
   </Connection>
   <Connection>
    <Source>Podolski Waterworld Keys (2):output_1</Source>
-   <Target>ZynReverb (TUC Waterworld (2):input_1</Target>
+   <Target>ZynReverb (Cathedral):input_1</Target>
   </Connection>
   <Connection>
    <Source>Podolski Waterworld Keys (2):output_2</Source>
-   <Target>ZynReverb (TUC Waterworld (2):input_2</Target>
+   <Target>ZynReverb (Cathedral):input_2</Target>
   </Connection>
   <Connection>
    <Source>Podolski SM Fullpad (2):output_1</Source>
@@ -18730,52 +19584,16 @@ NzctMWY1ZC0xNmY3LTdhZGIK
    <Target>Audio Output:Right</Target>
   </Connection>
   <Connection>
-   <Source>ZynReverb (HS Grand) (2):output_1</Source>
+   <Source>ZynReverb (Cathedral):output_1</Source>
    <Target>Audio Output:Left</Target>
   </Connection>
   <Connection>
-   <Source>ZynReverb (HS Grand) (2):output_2</Source>
-   <Target>Audio Output:Right</Target>
-  </Connection>
-  <Connection>
-   <Source>ZynReverb (TUC Waterworld (2):output_1</Source>
-   <Target>Audio Output:Left</Target>
-  </Connection>
-  <Connection>
-   <Source>ZynReverb (TUC Waterworld (2):output_2</Source>
-   <Target>Audio Output:Right</Target>
-  </Connection>
-  <Connection>
-   <Source>Pianoteq 9:output_1</Source>
-   <Target>Audio Output:Left</Target>
-  </Connection>
-  <Connection>
-   <Source>Pianoteq 9:output_2</Source>
-   <Target>Audio Output:Right</Target>
-  </Connection>
-  <Connection>
-   <Source>Pianoteq 9 (2):output_1</Source>
-   <Target>Audio Output:Left</Target>
-  </Connection>
-  <Connection>
-   <Source>Pianoteq 9 (2):output_2</Source>
+   <Source>ZynReverb (Cathedral):output_2</Source>
    <Target>Audio Output:Right</Target>
   </Connection>
   <Connection>
    <Source>MIDI Ch Filter MAIN std:events-out</Source>
-   <Target>Zebralette HS Pacific Swell:events-in</Target>
-  </Connection>
-  <Connection>
-   <Source>MIDI Transpose:events-out</Source>
-   <Target>MIDI Ch Filter MAIN std:events-in</Target>
-  </Connection>
-  <Connection>
-   <Source>MIDI Ch Filter MAIN std:events-out</Source>
-   <Target>Podolski SM Fullpad:events-in</Target>
-  </Connection>
-  <Connection>
-   <Source>MIDI Ch Filter MAIN std:events-out</Source>
-   <Target>Podolski Waterworld Keys:events-in</Target>
+   <Target>Pianoteq 9:events-in</Target>
   </Connection>
   <Connection>
    <Source>MIDI Ch Filter MAIN std:events-out</Source>
@@ -18783,23 +19601,23 @@ NzctMWY1ZC0xNmY3LTdhZGIK
   </Connection>
   <Connection>
    <Source>MIDI Ch Filter MAIN std:events-out</Source>
-   <Target>Pianoteq 9:events-in</Target>
+   <Target>Zebralette HS Pacific Swell:events-in</Target>
   </Connection>
   <Connection>
-   <Source>MIDI Transpose:events-out</Source>
-   <Target>MIDI Ch Filter MAIN Pigments:events-in</Target>
+   <Source>MIDI Ch Filter MAIN std:events-out</Source>
+   <Target>Podolski Waterworld Keys:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>MIDI Ch Filter MAIN std:events-out</Source>
+   <Target>Podolski SM Fullpad:events-in</Target>
   </Connection>
   <Connection>
    <Source>MIDI Ch Filter MAIN Pigments:events-out</Source>
    <Target>Pigments:events-in</Target>
   </Connection>
   <Connection>
-   <Source>MIDI Transpose (2):events-out</Source>
-   <Target>MIDI Ch Filter SPLIT std:events-in</Target>
-  </Connection>
-  <Connection>
-   <Source>MIDI Transpose (2):events-out</Source>
-   <Target>MIDI Ch Filter SPLIT Pigments:events-in</Target>
+   <Source>MIDI Ch Filter SPLIT std:events-out</Source>
+   <Target>Pianoteq 9 (2):events-in</Target>
   </Connection>
   <Connection>
    <Source>MIDI Ch Filter SPLIT std:events-out</Source>
@@ -18818,67 +19636,128 @@ NzctMWY1ZC0xNmY3LTdhZGIK
    <Target>Podolski SM Fullpad (2):events-in</Target>
   </Connection>
   <Connection>
-   <Source>MIDI Ch Filter SPLIT std:events-out</Source>
-   <Target>Pianoteq 9 (2):events-in</Target>
-  </Connection>
-  <Connection>
    <Source>MIDI Ch Filter SPLIT Pigments:events-out</Source>
    <Target>Pigments (2):events-in</Target>
   </Connection>
+  <Connection>
+   <Source>sfizz Gogodze Drums:Left Output</Source>
+   <Target>ZynReverb Drums:input_1</Target>
+  </Connection>
+  <Connection>
+   <Source>sfizz Gogodze Drums:Right Output</Source>
+   <Target>ZynReverb Drums:input_2</Target>
+  </Connection>
+  <Connection>
+   <Source>MIDI Ch Filter DRUMS:events-out</Source>
+   <Target>sfizz Gogodze Drums:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>MIDI Ch Filter DRUMS:events-out</Source>
+   <Target>sfizz Virtuosity Drums:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>MIDI Ch Filter DRUMS:events-out</Source>
+   <Target>sfizz Tanzbar clubbanger Drums:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>sfizz Virtuosity Drums:Left Output</Source>
+   <Target>ZynReverb Drums:input_1</Target>
+  </Connection>
+  <Connection>
+   <Source>sfizz Virtuosity Drums:Right Output</Source>
+   <Target>ZynReverb Drums:input_2</Target>
+  </Connection>
+  <Connection>
+   <Source>sfizz Tanzbar clubbanger Drums:Left Output</Source>
+   <Target>ZynReverb Drums:input_1</Target>
+  </Connection>
+  <Connection>
+   <Source>sfizz Tanzbar clubbanger Drums:Right Output</Source>
+   <Target>ZynReverb Drums:input_2</Target>
+  </Connection>
+  <Connection>
+   <Source>ZynReverb Drums:output_1</Source>
+   <Target>Audio Output:Left</Target>
+  </Connection>
+  <Connection>
+   <Source>ZynReverb Drums:output_2</Source>
+   <Target>Audio Output:Right</Target>
+  </Connection>
+  <Connection>
+   <Source>MIDI Ch Filter DRUMS:events-out</Source>
+   <Target>sfizz Tanzbar decimate Drums:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>sfizz Tanzbar decimate Drums:Left Output</Source>
+   <Target>ZynReverb Drums:input_1</Target>
+  </Connection>
+  <Connection>
+   <Source>sfizz Tanzbar decimate Drums:Right Output</Source>
+   <Target>ZynReverb Drums:input_2</Target>
+  </Connection>
   <Positions>
-   <Position x1="1039" y1="1644" pluginId="23">
+   <Position x1="657" y1="1286" pluginId="24">
+    <Name>sfizz Tanzbar decimate Drums</Name>
+   </Position>
+   <Position x1="1879" y1="1322" pluginId="25">
+    <Name>ZynReverb Drums</Name>
+   </Position>
+   <Position x1="665" y1="1190" pluginId="23">
+    <Name>sfizz Tanzbar clubbanger Drums</Name>
+   </Position>
+   <Position x1="665" y1="1086" pluginId="22">
+    <Name>sfizz Virtuosity Drums</Name>
+   </Position>
+   <Position x1="442" y1="1053" pluginId="20">
+    <Name>MIDI Ch Filter DRUMS</Name>
+   </Position>
+   <Position x1="668" y1="987" pluginId="21">
+    <Name>sfizz Gogodze Drums</Name>
+   </Position>
+   <Position x1="1039" y1="1644" pluginId="19">
     <Name>MIDI Ch Filter SPLIT Pigments</Name>
    </Position>
-   <Position x1="1058" y1="1568" pluginId="22">
+   <Position x1="1058" y1="1568" pluginId="18">
     <Name>MIDI Ch Filter SPLIT std</Name>
    </Position>
-   <Position x1="949" y1="642" pluginId="21">
+   <Position x1="949" y1="642" pluginId="17">
     <Name>MIDI Ch Filter MAIN Pigments</Name>
    </Position>
-   <Position x1="951" y1="559" pluginId="20">
+   <Position x1="951" y1="559" pluginId="16">
     <Name>MIDI Ch Filter MAIN std</Name>
    </Position>
-   <Position x1="1769" y1="1604" pluginId="19">
-    <Name>ZynReverb (TUC Waterworld (2)</Name>
+   <Position x1="1882" y1="1236" pluginId="26">
+    <Name>ZynReverb (Cathedral)</Name>
    </Position>
-   <Position x1="1767" y1="1465" pluginId="18">
-    <Name>ZynReverb (HS Grand) (2)</Name>
-   </Position>
-   <Position x1="1612" y1="1815" pluginId="17">
+   <Position x1="1612" y1="1815" pluginId="15">
     <Name>Pigments (2)</Name>
    </Position>
-   <Position x1="1519" y1="1698" pluginId="16">
+   <Position x1="1519" y1="1698" pluginId="14">
     <Name>Podolski SM Fullpad (2)</Name>
    </Position>
-   <Position x1="1497" y1="1609" pluginId="15">
+   <Position x1="1497" y1="1609" pluginId="13">
     <Name>Podolski Waterworld Keys (2)</Name>
    </Position>
-   <Position x1="1496" y1="1538" pluginId="14">
+   <Position x1="1496" y1="1538" pluginId="12">
     <Name>Zebralette HS Pacific Swell (2)</Name>
    </Position>
-   <Position x1="1502" y1="1475" pluginId="13">
+   <Position x1="1502" y1="1475" pluginId="11">
     <Name>Zebralette HS Grand Entrance (2)</Name>
    </Position>
-   <Position x1="1607" y1="1917" pluginId="12">
+   <Position x1="1607" y1="1917" pluginId="10">
     <Name>Pianoteq 9 (2)</Name>
    </Position>
-   <Position x1="800" y1="1593" pluginId="11">
+   <Position x1="800" y1="1593" pluginId="9">
     <Name>MIDI Transpose (2)</Name>
    </Position>
-   <Position x1="752" y1="615" pluginId="10">
+   <Position x1="716" y1="608" pluginId="8">
     <Name>MIDI Transpose</Name>
    </Position>
-   <Position x1="538" y1="1597" pluginId="9">
+   <Position x1="538" y1="1597" pluginId="7">
     <Name>MIDI Key-Range Filter HIGH</Name>
    </Position>
-   <Position x1="535" y1="615" pluginId="8">
+   <Position x1="483" y1="660" pluginId="6">
     <Name>MIDI Key-Range Filter LOW</Name>
-   </Position>
-   <Position x1="1589" y1="641" pluginId="7">
-    <Name>ZynReverb (TUC Waterworld)</Name>
-   </Position>
-   <Position x1="1555" y1="796" pluginId="6">
-    <Name>ZynReverb (HS Grand)</Name>
    </Position>
    <Position x1="1368" y1="884" pluginId="5">
     <Name>Pigments</Name>
@@ -18898,7 +19777,7 @@ NzctMWY1ZC0xNmY3LTdhZGIK
    <Position x1="1367" y1="978" pluginId="0">
     <Name>Pianoteq 9</Name>
    </Position>
-   <Position x1="1151" y1="740" x2="287" y2="942">
+   <Position x1="1151" y1="740" x2="144" y2="953">
     <Name>Midi Output</Name>
    </Position>
    <Position x1="245" y1="1055" x2="1912" y2="1266">
@@ -18907,7 +19786,7 @@ NzctMWY1ZC0xNmY3LTdhZGIK
    <Position x1="1520" y1="1192" x2="2434" y2="1274">
     <Name>Audio Output</Name>
    </Position>
-   <Position x1="435" y1="850">
+   <Position x1="113" y1="1146">
     <Name>Audio Input</Name>
    </Position>
   </Positions>
@@ -18920,11 +19799,11 @@ NzctMWY1ZC0xNmY3LTdhZGIK
   </Connection>
   <Connection>
    <Source>system:capture_1</Source>
-   <Target>Carla:audio-in1</Target>
+   <Target>system:playback_1</Target>
   </Connection>
   <Connection>
    <Source>system:capture_1</Source>
-   <Target>system:playback_1</Target>
+   <Target>Carla:audio-in1</Target>
   </Connection>
   <Connection>
    <Source>system:capture_2</Source>
@@ -18932,11 +19811,11 @@ NzctMWY1ZC0xNmY3LTdhZGIK
   </Connection>
   <Connection>
    <Source>system:capture_2</Source>
-   <Target>Carla:audio-in2</Target>
+   <Target>system:playback_2</Target>
   </Connection>
   <Connection>
    <Source>system:capture_2</Source>
-   <Target>system:playback_2</Target>
+   <Target>Carla:audio-in2</Target>
   </Connection>
   <Connection>
    <Source>PulseAudio JACK Sink:front-left</Source>
@@ -18951,11 +19830,11 @@ NzctMWY1ZC0xNmY3LTdhZGIK
    <Target>Carla:events-in</Target>
   </Connection>
   <Connection>
-   <Source>a2j:nanoKONTROL (capture): nanoKONTROL nanoKONTROL _ CTRL</Source>
+   <Source>a2j:Keyboard (capture): Keyboard CASIO USB IN</Source>
    <Target>Carla:events-in</Target>
   </Connection>
   <Connection>
-   <Source>a2j:Keyboard (capture): Keyboard CASIO USB IN</Source>
+   <Source>a2j:nanoKONTROL (capture): nanoKONTROL nanoKONTROL _ CTRL</Source>
    <Target>Carla:events-in</Target>
   </Connection>
   <Connection>
@@ -18973,6 +19852,10 @@ NzctMWY1ZC0xNmY3LTdhZGIK
   <Connection>
    <Source>Carla:audio-out2</Source>
    <Target>grab:input_2</Target>
+  </Connection>
+  <Connection>
+   <Source>a2j:RtMidiOut Client (capture): Python GUI MIDI Debugger</Source>
+   <Target>Carla:events-in</Target>
   </Connection>
   <Positions>
    <Position x1="1759" y1="1307">
