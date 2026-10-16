@@ -141,11 +141,3 @@ QLabel#takePageLabel
     font-size: 16pt;
     background: transparent;
 }
-
-QLabel#takeCue
-{
-    color: #c8c8c8;
-    font-size: 13pt;
-    background: transparent;
-    padding-left: 4px;
-}

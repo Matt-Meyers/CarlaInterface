@@ -15,7 +15,6 @@ from PyQt6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QPushButton,
-    QSizePolicy,
     QTabBar,
     QTabWidget,
     QWidget,
@@ -293,48 +292,6 @@ class RecordButton(QPushButton):
                 else QColorConstants.White
             )
             painter.drawEllipse(QRectF(cx - side / 2, cy - side / 2, side, side))
-
-
-class ElidedLabel(QLabel):
-    """Single-line label that ellipsizes instead of growing the header."""
-
-    def __init__(self, text=''):
-        super().__init__()
-        self.setObjectName('takeCue')
-        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        self.setAlignment(
-            Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
-        )
-        self.setSizePolicy(
-            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed
-        )
-        self.setMinimumHeight(28)
-        self._full = text
-
-    def set_full_text(self, text):
-        self._full = text or ''
-        self._apply()
-
-    def resizeEvent(self, event):
-        super().resizeEvent(event)
-        self._apply()
-
-    def showEvent(self, event):
-        super().showEvent(event)
-        self._apply()
-
-    def _apply(self):
-        width = self.contentsRect().width()
-        if width <= 0:
-            self.setText(self._full)
-            return
-        self.setText(
-            self.fontMetrics().elidedText(
-                self._full,
-                Qt.TextElideMode.ElideRight,
-                width,
-            )
-        )
 
 
 class PlayButton(QPushButton):

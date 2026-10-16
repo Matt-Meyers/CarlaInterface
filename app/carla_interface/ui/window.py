@@ -20,7 +20,6 @@ from carla_interface.services.osc import CarlaOsc
 from carla_interface.ui import palettes
 from carla_interface.ui.takes_browser import TakesBrowser
 from carla_interface.ui.widgets import (
-    ElidedLabel,
     NoteSpinBox,
     OctaveSpinBox,
     PlayButton,
@@ -147,14 +146,10 @@ class CarlaInterface(QWidget):
         self.octave_box.setValue(0)
         self.octave_box.valueChanged.connect(self._on_octave_changed)
 
-        self.take_cue = ElidedLabel()
-        self._refresh_take_cue()
-
         self.header_layout.addWidget(transport, 0, 0)
         self.header_layout.addWidget(self.splitter_btn, 0, 1)
         self.header_layout.addWidget(self.split_key_box, 0, 2)
         self.header_layout.addWidget(self.octave_box, 0, 3)
-        self.header_layout.addWidget(self.take_cue, 1, 0, 1, 4)
         self.header_layout.setColumnStretch(0, 1)
         self.header_layout.setColumnStretch(1, 3)
         self.header_layout.setColumnStretch(2, 2)
@@ -243,7 +238,6 @@ class CarlaInterface(QWidget):
             self.controller.stop_recording()
             self.record_btn.set_recording(False)
             self._refresh_play_enabled()
-            self._refresh_take_cue()
             if self._takes_open:
                 self._reload_takes_browser()
             return
@@ -289,16 +283,10 @@ class CarlaInterface(QWidget):
     def _on_take_chosen(self, path):
         playing = self.controller.is_playing
         self.controller.select_playback_take(path)
-        self._refresh_take_cue()
         if playing != self.controller.is_playing:
             self._set_playing_ui(self.controller.is_playing)
         else:
             self._refresh_play_enabled()
-
-    def _refresh_take_cue(self):
-        text = self.controller.playback_cue()
-        self.take_cue.set_full_text(text)
-        self.take_cue.setVisible(bool(text))
 
     def _sync_header_locks(self):
         # Split stays put while a loop is running, and while the grids are covered.

@@ -105,15 +105,6 @@ class PatchController:
             return pin
         return latest_midi_path(self.config.midi_record_dir)
 
-    def playback_cue(self):
-        """Short transport label: pinned voice, Newest, or blank when empty."""
-        pin = self.pinned_take_path()
-        if pin is not None:
-            return take_title(pin)
-        if self.has_midi_takes():
-            return 'Newest'
-        return ''
-
     def select_main(self, preset):
         self.deactivate_bank(0)
         self.osc.set_active(preset.carla_idx, True)
