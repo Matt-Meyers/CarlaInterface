@@ -12,3 +12,6 @@ build/
 *~
 .DS_Store
 Thumbs.db
+
+# Local notes on the current piano PC. Not part of the app; the box may be replaced.
+prodesk_notes/
