@@ -2,6 +2,7 @@
 
 import json
 import re
+from datetime import datetime
 from pathlib import Path
 
 _TEMP_NAME = '.carla_interface_recording.mid'
@@ -118,10 +119,23 @@ def take_title(path):
     return title or path.stem
 
 
-def take_detail(path):
-    """Duration stored in the filename, as m:ss. Empty when the stem has none."""
-    parts = _duration_parts(path)
-    if parts is None:
+def take_stamp(path):
+    """Local mtime as 10/16/26 5:31PM. Empty if the file is gone."""
+    try:
+        local = datetime.fromtimestamp(Path(path).stat().st_mtime)
+    except OSError:
         return ''
-    minutes, seconds, _start = parts
-    return f'{minutes}:{seconds:02d}'
+    meridiem = 'AM' if local.hour < 12 else 'PM'
+    hour = local.hour % 12 or 12
+    return f'{local.month}/{local.day}/{local.year % 100} {hour}:{local.minute:02d}{meridiem}'
+
+
+def take_detail(path):
+    """Duration and save time, one per line, for the take-browser cell."""
+    parts = _duration_parts(path)
+    duration = ''
+    if parts is not None:
+        minutes, seconds, _start = parts
+        duration = f'{minutes}:{seconds:02d}'
+    stamp = take_stamp(path)
+    return '\n'.join(line for line in (duration, stamp) if line)

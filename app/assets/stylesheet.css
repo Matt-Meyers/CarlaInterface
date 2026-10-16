@@ -141,3 +141,16 @@ QLabel#takePageLabel
     font-size: 16pt;
     background: transparent;
 }
+
+QPushButton#takeCell QLabel
+{
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 12pt;
+}
+
+QPushButton#takeCell QLabel#takeStamp
+{
+    color: #9a9a9a;
+}

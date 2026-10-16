@@ -29,7 +29,8 @@ def _pieces(word):
     return [word[i:i + _TITLE_WIDTH] for i in range(0, len(word), _TITLE_WIDTH)]
 
 
-def _cell_text(title, detail):
+def _cell_text(title, detail, reserved=0):
+    extra = [line for line in (detail or '').split('\n') if line]
     words = (title or '').split() or ['']
     lines = ['']
     for word in words:
@@ -39,13 +40,42 @@ def _cell_text(title, detail):
                 lines.append(part)
             else:
                 lines[-1] = trial
-    room = _MAX_LINES - (1 if detail else 0)
+    room = max(1, _MAX_LINES - len(extra) - reserved)
     if len(lines) > room:
         lines = lines[:room]
         lines[-1] = lines[-1].rstrip(' .') + '…'
-    if detail:
-        lines.append(detail)
+    lines.extend(extra)
     return '\n'.join(lines)
+
+
+class TakeButton(TouchButton):
+    """Patch-style cell; stamp line is a child label so CSS can grey it."""
+
+    def __init__(self):
+        super().__init__()
+        self.setObjectName('takeCell')
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setSpacing(2)
+        layout.addStretch(1)
+        self._body = QLabel()
+        self._body.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self._body.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self._stamp = QLabel()
+        self._stamp.setObjectName('takeStamp')
+        self._stamp.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self._stamp.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        for label in (self._body, self._stamp):
+            label.setAttribute(
+                Qt.WidgetAttribute.WA_TransparentForMouseEvents, True
+            )
+            layout.addWidget(label)
+        layout.addStretch(1)
+
+    def set_take_text(self, body, stamp=''):
+        self._body.setText(body)
+        self._stamp.setText(stamp)
+        self._stamp.setVisible(bool(stamp))
 
 
 class TakesBrowser(QWidget):
@@ -90,7 +120,7 @@ class TakesBrowser(QWidget):
         self._grid.setVerticalSpacing(15)
         self._buttons = []
         for slot in range(self.page_size):
-            btn = TouchButton('')
+            btn = TakeButton()
             btn.setSizePolicy(
                 QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding
             )
@@ -193,12 +223,17 @@ class TakesBrowser(QWidget):
         for slot, btn in enumerate(self._buttons):
             index = start + slot
             if index >= len(self._items):
-                btn.setText('')
+                btn.set_take_text('')
                 btn.set_active(False)
                 set_style_property(btn, 'empty', True)
                 continue
             path, title, detail = self._items[index]
-            btn.setText(_cell_text(title, detail))
+            extras = [line for line in (detail or '').split('\n') if line]
+            stamp = extras.pop() if path is not None and extras else ''
+            btn.set_take_text(
+                _cell_text(title, '\n'.join(extras), reserved=1 if stamp else 0),
+                stamp,
+            )
             btn.set_active(path == self._selected)
             set_style_property(btn, 'empty', False)
         pages = self._page_count()
