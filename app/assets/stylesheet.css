@@ -125,7 +125,7 @@ QPushButton#takeClose
 QPushButton#takePage
 {
     font-size: 16pt;
-    min-height: 64px;
+    min-height: 48px;
 }
 
 QPushButton[empty="true"],
