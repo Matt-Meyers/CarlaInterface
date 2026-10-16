@@ -18,7 +18,9 @@ from carla_interface.services.controller import PatchController
 from carla_interface.services.midi import MidiService
 from carla_interface.services.osc import CarlaOsc
 from carla_interface.ui import palettes
+from carla_interface.ui.takes_browser import TakesBrowser
 from carla_interface.ui.widgets import (
+    ElidedLabel,
     NoteSpinBox,
     OctaveSpinBox,
     PlayButton,
@@ -53,7 +55,8 @@ class CarlaInterface(QWidget):
     updates button styles and which grid is visible.
 
     Keys 1-9 and 0 select slots on the current tab; left/right change tabs;
-    up/down step through that tab's slots.
+    up/down step through that tab's slots. While the take browser is open,
+    those keys select a cell or change pages instead.
     """
 
     def __init__(self, patches, categories, config, windowed=False):
@@ -120,6 +123,7 @@ class CarlaInterface(QWidget):
             QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed
         )
         self.play_btn.clicked.connect(self._on_play_clicked)
+        self.play_btn.held.connect(self._on_play_held)
         self._refresh_play_enabled()
 
         transport_layout.addWidget(self.record_btn)
@@ -143,10 +147,14 @@ class CarlaInterface(QWidget):
         self.octave_box.setValue(0)
         self.octave_box.valueChanged.connect(self._on_octave_changed)
 
+        self.take_cue = ElidedLabel()
+        self._refresh_take_cue()
+
         self.header_layout.addWidget(transport, 0, 0)
         self.header_layout.addWidget(self.splitter_btn, 0, 1)
         self.header_layout.addWidget(self.split_key_box, 0, 2)
         self.header_layout.addWidget(self.octave_box, 0, 3)
+        self.header_layout.addWidget(self.take_cue, 1, 0, 1, 4)
         self.header_layout.setColumnStretch(0, 1)
         self.header_layout.setColumnStretch(1, 3)
         self.header_layout.setColumnStretch(2, 2)
@@ -210,7 +218,18 @@ class CarlaInterface(QWidget):
             stack_layout.addWidget(main_grid_container)   # index 0
             stack_layout.addWidget(split_grid_container)  # index 1
             self.tab_container.addTab(stack_container, cat)
-        self.outer_layout.addWidget(self.tab_container, 1, 0, 1, 3)
+
+        # Patch grids stay mounted; a hold on Play shows the take browser here.
+        self._takes_open = False
+        self.takes_browser = TakesBrowser()
+        self.takes_browser.closed.connect(self._close_takes)
+        self.takes_browser.chosen.connect(self._on_take_chosen)
+        body = QWidget()
+        self.body_stack = QStackedLayout(body)
+        self.body_stack.setContentsMargins(0, 0, 0, 0)
+        self.body_stack.addWidget(self.tab_container)
+        self.body_stack.addWidget(self.takes_browser)
+        self.outer_layout.addWidget(body, 1, 0, 1, 3)
 
     def show_app(self):
         if self._windowed:
@@ -224,6 +243,9 @@ class CarlaInterface(QWidget):
             self.controller.stop_recording()
             self.record_btn.set_recording(False)
             self._refresh_play_enabled()
+            self._refresh_take_cue()
+            if self._takes_open:
+                self._reload_takes_browser()
             return
         if self.controller.start_recording():
             self.record_btn.set_recording(True)
@@ -237,10 +259,57 @@ class CarlaInterface(QWidget):
         if self.controller.start_playback():
             self._set_playing_ui(True)
 
+    def _on_play_held(self):
+        if self._takes_open:
+            return
+        self._open_takes()
+
+    def _open_takes(self):
+        if not self.controller.has_midi_takes():
+            return
+        self._takes_open = True
+        self._reload_takes_browser()
+        self.body_stack.setCurrentIndex(1)
+        self._sync_header_locks()
+
+    def _close_takes(self):
+        if not self._takes_open:
+            return
+        self._takes_open = False
+        self.body_stack.setCurrentIndex(0)
+        self._sync_header_locks()
+        self._apply_split_ui(self.controller.split_enabled)
+
+    def _reload_takes_browser(self):
+        self.takes_browser.set_catalog(
+            self.controller.list_playback_takes(),
+            self.controller.pinned_take_path(),
+        )
+
+    def _on_take_chosen(self, path):
+        playing = self.controller.is_playing
+        self.controller.select_playback_take(path)
+        self._refresh_take_cue()
+        if playing != self.controller.is_playing:
+            self._set_playing_ui(self.controller.is_playing)
+        else:
+            self._refresh_play_enabled()
+
+    def _refresh_take_cue(self):
+        text = self.controller.playback_cue()
+        self.take_cue.set_full_text(text)
+        self.take_cue.setVisible(bool(text))
+
+    def _sync_header_locks(self):
+        # Split stays put while a loop is running, and while the grids are covered.
+        locked = self.controller.is_playing or self._takes_open
+        self.splitter_btn.setEnabled(not locked)
+        self.split_key_box.setEnabled(not locked)
+        self.octave_box.setEnabled(not self._takes_open)
+
     def _set_playing_ui(self, playing):
         self.play_btn.set_playing(playing)
-        self.splitter_btn.setEnabled(not playing)
-        self.split_key_box.setEnabled(not playing)
+        self._sync_header_locks()
         self._apply_split_ui(self.controller.split_enabled)
         self._refresh_play_enabled()
 
@@ -248,6 +317,8 @@ class CarlaInterface(QWidget):
         self.play_btn.setEnabled(
             self.controller.is_playing or self.controller.has_midi_takes()
         )
+        # No files: a hold must not swallow the click that stops a running loop.
+        self.play_btn.set_hold_enabled(self.controller.has_midi_takes())
 
     def _apply_split_ui(self, enabled):
         curr_tab = self.tab_container.currentIndex()
@@ -314,6 +385,9 @@ class CarlaInterface(QWidget):
             self.close()
             event.accept()
             return
+        if self._takes_open:
+            self._takes_key(event)
+            return
         slot = _SLOT_KEYS.get(key)
         if slot is not None:
             # Hold-repeat would retrigger OSC/MIDI for the same preset.
@@ -329,6 +403,27 @@ class CarlaInterface(QWidget):
             self._step_slot(1)
         elif key == Qt.Key.Key_Up:
             self._step_slot(-1)
+        else:
+            super().keyPressEvent(event)
+            return
+        event.accept()
+
+    def _takes_key(self, event):
+        key = event.key()
+        slot = _SLOT_KEYS.get(key)
+        if slot is not None:
+            if not event.isAutoRepeat():
+                self.takes_browser.activate_slot(slot)
+            event.accept()
+            return
+        if key == Qt.Key.Key_Left:
+            self.takes_browser.step_page(-1)
+        elif key == Qt.Key.Key_Right:
+            self.takes_browser.step_page(1)
+        elif key == Qt.Key.Key_Down:
+            self.takes_browser.step_item(1)
+        elif key == Qt.Key.Key_Up:
+            self.takes_browser.step_item(-1)
         else:
             super().keyPressEvent(event)
             return

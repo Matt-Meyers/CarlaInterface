@@ -15,6 +15,7 @@ from PyQt6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QPushButton,
+    QSizePolicy,
     QTabBar,
     QTabWidget,
     QWidget,
@@ -294,17 +295,109 @@ class RecordButton(QPushButton):
             painter.drawEllipse(QRectF(cx - side / 2, cy - side / 2, side, side))
 
 
+class ElidedLabel(QLabel):
+    """Single-line label that ellipsizes instead of growing the header."""
+
+    def __init__(self, text=''):
+        super().__init__()
+        self.setObjectName('takeCue')
+        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        self.setAlignment(
+            Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
+        )
+        self.setSizePolicy(
+            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed
+        )
+        self.setMinimumHeight(28)
+        self._full = text
+
+    def set_full_text(self, text):
+        self._full = text or ''
+        self._apply()
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self._apply()
+
+    def showEvent(self, event):
+        super().showEvent(event)
+        self._apply()
+
+    def _apply(self):
+        width = self.contentsRect().width()
+        if width <= 0:
+            self.setText(self._full)
+            return
+        self.setText(
+            self.fontMetrics().elidedText(
+                self._full,
+                Qt.TextElideMode.ElideRight,
+                width,
+            )
+        )
+
+
 class PlayButton(QPushButton):
-    """Transport mark: white triangle idle, green while looping."""
+    """Transport mark: white triangle idle, green while looping.
+
+    A short press emits clicked. A hold emits held and swallows that click
+    so opening the take browser does not also start or stop the loop.
+    """
+
+    held = pyqtSignal()
+    _HOLD_MS = 600
 
     def __init__(self):
         super().__init__()
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self._playing = False
+        self._suppress_click = False
+        self._hold_enabled = True
+        self._hold = QTimer(self)
+        self._hold.setSingleShot(True)
+        self._hold.timeout.connect(self._emit_held)
+
+    def set_hold_enabled(self, enabled):
+        self._hold_enabled = bool(enabled)
+        if not self._hold_enabled:
+            self._hold.stop()
 
     def set_playing(self, playing):
         self._playing = playing
         self.update()
+
+    def _emit_held(self):
+        self._suppress_click = True
+        # setDown can release the button; block so that does not emit clicked.
+        self.blockSignals(True)
+        self.setDown(False)
+        self.blockSignals(False)
+        self.held.emit()
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton and self.isEnabled():
+            self._suppress_click = False
+            if self._hold_enabled:
+                self._hold.start(self._HOLD_MS)
+        super().mousePressEvent(event)
+
+    def mouseMoveEvent(self, event):
+        if self._hold.isActive() and not self.rect().contains(
+            event.position().toPoint()
+        ):
+            self._hold.stop()
+        super().mouseMoveEvent(event)
+
+    def mouseReleaseEvent(self, event):
+        self._hold.stop()
+        if self._suppress_click:
+            self._suppress_click = False
+            self.blockSignals(True)
+            self.setDown(False)
+            self.blockSignals(False)
+            event.accept()
+            return
+        super().mouseReleaseEvent(event)
 
     def paintEvent(self, event):
         super().paintEvent(event)

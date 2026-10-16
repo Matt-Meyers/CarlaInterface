@@ -1,4 +1,5 @@
 import time
+from pathlib import Path
 
 from PyQt6.QtCore import QTimer
 
@@ -7,6 +8,9 @@ from carla_interface.services.midi import (
     has_midi_takes,
     latest_midi_path,
     read_sidecar,
+    take_detail,
+    take_title,
+    takes_newest_first,
     unique_midi_path,
     voice_slug,
     write_sidecar,
@@ -59,6 +63,8 @@ class PatchController:
         self._play_restore_split = False
         self._play_restore_split_preset = None
         self._play_seq = 0
+        # None: Play resolves the newest file at press time.
+        self._pinned_take = None
 
     @property
     def octave_value(self):
@@ -74,6 +80,39 @@ class PatchController:
 
     def has_midi_takes(self):
         return has_midi_takes(self.config.midi_record_dir)
+
+    def list_playback_takes(self):
+        """Newest-first (path, title, detail) for the take browser."""
+        return [
+            (path, take_title(path), take_detail(path))
+            for path in takes_newest_first(self.config.midi_record_dir)
+        ]
+
+    def pinned_take_path(self):
+        """Pinned file, or None when Play should use the newest take."""
+        pin = self._pinned_take
+        if pin is None:
+            return None
+        pin = Path(pin)
+        if pin.is_file():
+            return pin
+        self._pinned_take = None
+        return None
+
+    def resolve_playback_path(self):
+        pin = self.pinned_take_path()
+        if pin is not None:
+            return pin
+        return latest_midi_path(self.config.midi_record_dir)
+
+    def playback_cue(self):
+        """Short transport label: pinned voice, Newest, or blank when empty."""
+        pin = self.pinned_take_path()
+        if pin is not None:
+            return take_title(pin)
+        if self.has_midi_takes():
+            return 'Newest'
+        return ''
 
     def select_main(self, preset):
         self.deactivate_bank(0)
@@ -138,45 +177,48 @@ class PatchController:
                     'split': self._record_split,
                 },
             )
+            # The take just saved is the newest file Play should use.
+            self._pinned_take = None
         return saved
+
+    def select_playback_take(self, path):
+        """Pin a take. None means newest. A running loop switches in place.
+
+        Stopping first would restore Split and then playback would turn it
+        off again, which flickers the rack while auditioning files.
+        """
+        previous = self.resolve_playback_path()
+        if path is None:
+            self._pinned_take = None
+        else:
+            path = Path(path)
+            self._pinned_take = path if path.is_file() else None
+        if not self._playing:
+            return True
+        resolved = self.resolve_playback_path()
+        if resolved is None:
+            self.stop_playback()
+            return False
+        if previous == resolved:
+            return True
+        preset = self._preset_for_take(resolved)
+        if preset is None and self._play_original:
+            self._release_accompaniment()
+        return self._arm_loop(resolved, preset)
 
     def start_playback(self):
         if self._playing:
             return False
-        path = latest_midi_path(self.config.midi_record_dir)
+        path = self.resolve_playback_path()
         if path is None:
             return False
-        sidecar = read_sidecar(path)
-        preset = None
-        if sidecar is not None:
-            preset = self._preset_from_sidecar(sidecar.get('main'))
+        preset = self._preset_for_take(path)
         self._play_restore_split = self.split_enabled
         self._play_restore_split_preset = self.curr_split_preset
         if self.split_enabled:
             self.set_split_enabled(False)
         self._playing = True
-        self._play_seq += 1
-        seq = self._play_seq
-        if preset is None:
-            self._play_original = False
-            if not self.midi.start_loop(path, 1):
-                self.stop_playback()
-                return False
-            return True
-        self._play_original = True
-        self._activate_accompaniment(preset)
-        self._set_accompaniment_routing(True)
-        delay = self.MIDI_PC_DELAY_MS if preset.preset_over_midi else 0
-        channel = self.config.midi_play_channel
-        if delay:
-            QTimer.singleShot(
-                delay,
-                lambda: self._start_loop_if_current(seq, path, channel),
-            )
-        elif not self.midi.start_loop(path, channel):
-            self.stop_playback()
-            return False
-        return True
+        return self._arm_loop(path, preset)
 
     def stop_playback(self):
         if not self._playing:
@@ -184,11 +226,7 @@ class PatchController:
         self._playing = False
         self._play_seq += 1
         self.midi.stop_loop()
-        if self._play_original:
-            self._set_accompaniment_routing(False)
-            self.deactivate_bank(self.config.split_start_idx)
-            self.osc.set_parameter(self.config.octave_hi_idx, 0, self.octave_hi)
-        self._play_original = False
+        self._release_accompaniment()
         if self._play_restore_split:
             self.set_split_enabled(True)
             if self._play_restore_split_preset is not None:
@@ -221,6 +259,46 @@ class PatchController:
     def deactivate_bank(self, offset=0):
         for patch in self.patches:
             self.osc.set_active(patch.carla_idx + offset, False)
+
+    def _preset_for_take(self, path):
+        sidecar = read_sidecar(path)
+        if sidecar is None:
+            return None
+        return self._preset_from_sidecar(sidecar.get('main'))
+
+    def _arm_loop(self, path, preset):
+        self._play_seq += 1
+        seq = self._play_seq
+        if preset is None:
+            self._play_original = False
+            if not self.midi.start_loop(path, 1):
+                self.stop_playback()
+                return False
+            return True
+        self._play_original = True
+        self._activate_accompaniment(preset)
+        self._set_accompaniment_routing(True)
+        delay = self.MIDI_PC_DELAY_MS if preset.preset_over_midi else 0
+        channel = self.config.midi_play_channel
+        if delay:
+            QTimer.singleShot(
+                delay,
+                lambda seq=seq, path=path, channel=channel: (
+                    self._start_loop_if_current(seq, path, channel)
+                ),
+            )
+        elif not self.midi.start_loop(path, channel):
+            self.stop_playback()
+            return False
+        return True
+
+    def _release_accompaniment(self):
+        if not self._play_original:
+            return
+        self._set_accompaniment_routing(False)
+        self.deactivate_bank(self.config.split_start_idx)
+        self.osc.set_parameter(self.config.octave_hi_idx, 0, self.octave_hi)
+        self._play_original = False
 
     def _preset_from_sidecar(self, voice):
         if not isinstance(voice, dict):

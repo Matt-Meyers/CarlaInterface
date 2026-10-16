@@ -109,3 +109,43 @@ QTabBar::tab:hover {
 {
     color: #666666;
 }
+
+#TakesBrowser
+{
+    background-color: #232323;
+    border: 1px solid #202020;
+}
+
+QPushButton#takeClose
+{
+    font-size: 26pt;
+    padding: 0px;
+}
+
+QPushButton#takePage
+{
+    font-size: 16pt;
+    min-height: 64px;
+}
+
+QPushButton[empty="true"],
+QPushButton[empty="true"]:hover
+{
+    background-color: transparent;
+    border: none;
+}
+
+QLabel#takePageLabel
+{
+    color: white;
+    font-size: 16pt;
+    background: transparent;
+}
+
+QLabel#takeCue
+{
+    color: #c8c8c8;
+    font-size: 13pt;
+    background: transparent;
+    padding-left: 4px;
+}
