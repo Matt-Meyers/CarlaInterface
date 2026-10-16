@@ -17,7 +17,7 @@ from carla_interface.ui.widgets import TouchButton, set_style_property
 
 
 # Three columns fit a 5-inch screen with finger-sized cells.
-_COLS = 3
+_COLS = 4
 _ROWS = 3
 _TITLE_WIDTH = 22
 _MAX_LINES = 3
