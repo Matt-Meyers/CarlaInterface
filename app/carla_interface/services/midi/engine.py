@@ -4,8 +4,15 @@ The client is used from a single thread. Each playback gets a new tick queue
 so a stop can drop that queue instead of trying to pull events back out of
 the kernel. A take and a drum loop use separate queues, so each keeps its
 own tempo.
+
+Sends and receives go through SequencerClientBase. SequencerClient waits
+forever when the kernel buffer is full, and its event_input timeout is passed
+to poll() in seconds while poll() expects milliseconds. Either stall keeps
+this thread from closing the client, and the kernel then holds the sequencer
+open across process exit.
 """
 
+import errno
 import queue
 import threading
 
@@ -29,6 +36,8 @@ try:
         ProgramChangeEvent,
         SequencerClient,
     )
+    from alsa_midi.client import SequencerClientBase
+    from alsa_midi.exceptions import ALSAError
     _ALSA = True
 except (ImportError, OSError):
     _ALSA = False
@@ -36,6 +45,9 @@ except (ImportError, OSError):
 _RECORD_PPQ = 960
 _RECORD_BPM = 120.0
 _POLL_SEC = 0.05
+# A drum loop coming back in through a subscribed port must not crowd out
+# playback and stop commands.
+_CAPTURE_BATCH = 64
 
 
 def _safe_bpm(bpm):
@@ -174,7 +186,7 @@ class Engine:
             return
         self._running = True
         self._thread = threading.Thread(
-            target=self._run, name='carla-midi', daemon=True
+            target=self._run, name='carla-midi', daemon=False
         )
         self._thread.start()
         self._ready.wait(timeout=3)
@@ -199,27 +211,30 @@ class Engine:
 
     def _run(self):
         try:
-            self._open()
-            self.available = self._client is not None
-        except Exception:
-            self.available = False
-        self._ready.set()
-        if not self.available:
-            self._running = False
-            return
-        while self._running:
-            self._drain_commands()
-            if not self._running:
-                break
-            self._refill(self._take)
-            self._refill(self._drums)
-            self._drain()
-            if self._recording:
-                self._capture_pending()
-            else:
+            try:
+                self._open()
+                self.available = self._client is not None
+            except Exception:
+                self.available = False
+            self._ready.set()
+            while self.available and self._running:
+                try:
+                    self._drain_commands()
+                    if not self._running:
+                        break
+                    self._refill(self._take)
+                    self._refill(self._drums)
+                    self._drain()
+                    if self._recording:
+                        self._capture_pending()
+                except Exception:
+                    pass
+                # Same wait while recording, so a stream of incoming notes
+                # cannot postpone the next drum refill or a stop command.
                 self._wake.wait(_POLL_SEC)
                 self._wake.clear()
-        self._shutdown()
+        finally:
+            self._shutdown()
 
     def _drain_commands(self):
         while True:
@@ -278,9 +293,28 @@ class Engine:
                 continue
             self._input_count += 1
 
+    def _alsa_call(self, method, *args, **kwargs):
+        """Non-blocking ALSA call. A full buffer is a miss, not a wait."""
+        try:
+            return method(self._client, *args, **kwargs)
+        except ALSAError as err:
+            if err.errnum != -errno.EAGAIN:
+                return None
+        except Exception:
+            return None
+        try:
+            SequencerClientBase.drain_output(self._client)
+            return method(self._client, *args, **kwargs)
+        except Exception:
+            return None
+
     def _drain(self):
-        if self._client is not None:
-            self._client.drain_output()
+        if self._client is None:
+            return
+        try:
+            SequencerClientBase.drain_output(self._client)
+        except Exception:
+            return
 
     def _clock_ns(self):
         status = self._clock.get_status()
@@ -294,11 +328,12 @@ class Engine:
             event = _voice_event(status, data, tick)
             if event is None:
                 continue
-            try:
-                self._client.event_output(event, queue=player.queue, port=self._out)
-            except Exception:
-                self._drain()
-                self._client.event_output(event, queue=player.queue, port=self._out)
+            self._alsa_call(
+                SequencerClientBase.event_output,
+                event,
+                queue=player.queue,
+                port=self._out,
+            )
 
     def _arm(self, pattern, channel):
         bpm = _safe_bpm(pattern.bpm)
@@ -334,10 +369,12 @@ class Engine:
             return
         for channel in channels:
             event = ControlChangeEvent(int(channel) & 0x0F, 123, 0)
-            try:
-                self._client.event_output_direct(event, port=self._out)
-            except Exception:
-                pass
+            self._alsa_call(
+                SequencerClientBase.event_output_direct,
+                event,
+                port=self._out,
+            )
+        self._drain()
 
     def _drop(self, player, channels):
         if player is None:
@@ -431,7 +468,9 @@ class Engine:
             self._channel(channel),
             max(0, min(127, int(program))),
         )
-        self._client.event_output_direct(event, port=self._out)
+        self._alsa_call(
+            SequencerClientBase.event_output_direct, event, port=self._out
+        )
         return True
 
     def _op_notes_off(self, channels):
@@ -485,18 +524,29 @@ class Engine:
         }
 
     def _capture_pending(self):
-        event = self._client.event_input(timeout=_POLL_SEC)
-        while event is not None:
-            self._capture(event)
-            if not self._client.event_input_pending(True):
-                break
-            event = self._client.event_input(timeout=_POLL_SEC)
+        # Base event_input raises EAGAIN instead of polling forever.
+        for _ in range(_CAPTURE_BATCH):
+            try:
+                if not self._client.event_input_pending(True):
+                    return
+                event = SequencerClientBase.event_input(self._client)
+            except ALSAError:
+                return
+            except Exception:
+                return
+            if event is None:
+                return
+            try:
+                self._capture(event)
+            except Exception:
+                continue
 
     def _capture(self, event):
-        if event.time is None:
+        when = getattr(event, 'time', None)
+        if when is None or not hasattr(when, 'seconds'):
             when = self._clock_ns()
         else:
-            when = _ns(event.time)
+            when = _ns(when)
         tick = ns_to_ticks(when - self._record_origin, self._record_bpm, self._record_ppq)
         message = _capture_message(event, tick)
         if message is not None:
