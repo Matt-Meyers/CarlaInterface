@@ -6,8 +6,10 @@ from pathlib import Path
 
 from carla_interface.services.midi.catalog import scan_drum_catalog
 from carla_interface.services.midi.pattern import (
+    MidiPattern,
     choose_bpm,
     events_in_range,
+    extend_loop_to_bar,
     filename_bpm,
     linked_drum_pattern,
     load_pattern,
@@ -42,6 +44,54 @@ class PadTests(unittest.TestCase):
         self.assertEqual(pad_ticks(960, 480), 960)
         self.assertEqual(pad_ticks(0, 480), 480)
         self.assertEqual(pad_ticks(100, 0), 100)
+
+
+class BarTests(unittest.TestCase):
+    def test_short_export_grows_to_the_next_bar(self):
+        # Same shape as the electro files: PPQ 960, end marker on the
+        # last note-off, just short of 8 bars (8 * 3840 = 30720).
+        pattern = MidiPattern(
+            ((0, 0x99, b'\x24\x7f'), (30480, 0x99, b'\x2a\x40'), (30520, 0x89, b'\x2a\x00')),
+            960,
+            105,
+            30521,
+        )
+        aligned = extend_loop_to_bar(pattern)
+        self.assertEqual(aligned.loop_ticks, 30720)
+        self.assertEqual(aligned.events, pattern.events)
+
+    def test_exact_bar_is_unchanged(self):
+        pattern = MidiPattern(((0, 0x99, b'\x24\x40'),), 480, 120, 7680)
+        self.assertIs(extend_loop_to_bar(pattern), pattern)
+
+    def test_note_off_on_the_bar_line_stays_in_that_bar(self):
+        pattern = MidiPattern(
+            ((0, 0x99, b'\x24\x7f'), (3840, 0x89, b'\x24\x00')),
+            960,
+            120,
+            3841,
+        )
+        aligned = extend_loop_to_bar(pattern)
+        self.assertEqual(aligned.loop_ticks, 3840)
+        self.assertEqual(aligned.events[0], (0, 0x89, b'\x24\x00'))
+        self.assertEqual(aligned.events[1], (0, 0x99, b'\x24\x7f'))
+
+    def test_load_aligns_drums_only(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / '105 BPM - Basic Electronica.mid'
+            write_smf(
+                path,
+                [(0, 0x90, b'\x24\x40'), (30480, 0x90, b'\x2a\x40')],
+                960,
+                120,
+                30520,
+            )
+            drums = load_pattern(path, use_filename_bpm=True, align_bars=True)
+            take = load_pattern(path)
+            self.assertEqual(drums.loop_ticks, 30720)
+            self.assertEqual(drums.bpm, 105)
+            self.assertEqual(take.loop_ticks, 30520)
+            self.assertEqual(take.bpm, 120)
 
 
 class RangeTests(unittest.TestCase):

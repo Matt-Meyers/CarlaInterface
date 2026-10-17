@@ -393,6 +393,7 @@ class Engine:
             channel=self._channel(channel),
             bpm=bpm,
             use_filename_bpm=bpm is None,
+            align_bars=True,
         )
         self._stop_drums(True)
         self._drums = self._arm(pattern, self._channel(channel))
@@ -412,6 +413,7 @@ class Engine:
             drum_path,
             channel=self._channel(drum_channel),
             bpm=bpm,
+            align_bars=True,
         )
         take, drums = pair_patterns(take, drums, phase_ticks)
         self._stop_take(True)

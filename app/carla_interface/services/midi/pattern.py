@@ -83,11 +83,46 @@ def horizon_ticks(bpm, ppq, seconds=1.0):
     return max(1, int(bpm * ppq * float(seconds) / 60.0))
 
 
-def load_pattern(path, channel=None, bpm=None, use_filename_bpm=False):
+def extend_loop_to_bar(pattern, beats_per_bar=4):
+    """Round a drum loop up to a whole 4/4 bar. An exact bar is unchanged.
+
+    Exported loops often end on the last note-off, a few ticks after the
+    last hit, instead of on the next downbeat. Repeating at that tick
+    starts the next cycle early. A file only a tick or two past a bar
+    still belongs to that bar: a note-off on the line is played with the
+    downbeat, ahead of the note-ons already there.
+    """
+    bar = int(pattern.ppq) * int(beats_per_bar)
+    loop = int(pattern.loop_ticks)
+    if bar <= 0 or loop <= 0:
+        return pattern
+    extra = loop % bar
+    if extra == 0:
+        return pattern
+    if extra <= 2:
+        loop -= extra
+        head = []
+        body = []
+        for tick, status, data in pattern.events:
+            tick = int(tick)
+            if tick < loop:
+                body.append((tick, status, data))
+            elif tick == loop and (status & 0xF0) in (0x80, 0xB0):
+                head.append((0, status, data))
+        return MidiPattern(tuple(head + body), pattern.ppq, pattern.bpm, loop)
+    return MidiPattern(
+        pattern.events, pattern.ppq, pattern.bpm, loop + (bar - extra)
+    )
+
+
+def load_pattern(path, channel=None, bpm=None, use_filename_bpm=False,
+                 align_bars=False):
     """Load a MIDI file. channel is 0-based; None keeps each event's channel.
 
     bpm forces the playback tempo. use_filename_bpm lets a drum file name
-    override the tempo written in the file.
+    override the tempo written in the file. align_bars is for drum loops,
+    whose files often end on the last note-off rather than the downbeat.
+    Takes leave it off so a performance is not stretched to a bar.
     """
     parsed = parse_smf(Path(path).read_bytes())
     events = parsed.events
@@ -99,7 +134,10 @@ def load_pattern(path, channel=None, bpm=None, use_filename_bpm=False):
         path if use_filename_bpm else None,
         bpm,
     )
-    return MidiPattern(events, parsed.ppq, chosen, parsed.loop_ticks)
+    pattern = MidiPattern(events, parsed.ppq, chosen, parsed.loop_ticks)
+    if align_bars:
+        pattern = extend_loop_to_bar(pattern)
+    return pattern
 
 
 def rescale_pattern(pattern, ppq):
