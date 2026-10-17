@@ -8,7 +8,7 @@ Now that I've decided to update this application with new features (like Midi Re
 
 # Carla Interface
 
-Touchscreen PyQt6 front-end for a fixed [Carla](https://kx.studio/Applications:Carla) rack: Patch-select buttons, keyboard split, octave shift, and MIDI record/playback. It talks to Carla over OSC (`oscsend`) and sends MIDI program changes through ALSA (`aplaymidi`).
+Touchscreen PyQt6 front-end for a fixed [Carla](https://kx.studio/Applications:Carla) rack: Patch-select buttons, keyboard split, octave shift, drum loops, and MIDI record/playback. It talks to Carla over OSC (`oscsend`) and sends MIDI through ALSA (`alsa-midi`).
 
 ![Carla Interface](docs/screenshot.png)
 
@@ -21,7 +21,7 @@ The Carla (.carxp) and main.py example in this repo are specific to my setup and
 System package (Linux):
 
 ```bash
-sudo apt install liblo-tools alsa-utils   # oscsend, aplaymidi, arecordmidi
+sudo apt install liblo-tools   # oscsend. MIDI uses libasound2, usually already installed.
 ```
 
 App venv (from `app/`):
@@ -38,7 +38,7 @@ Edit [`app/main.py`](app/main.py) to change patches, categories, and Carla rack 
 ## Runtime notes
 
 - OSC: `oscsend` to `localhost:22752` (Carla’s OSC port).
-- MIDI: `aplaymidi` to ALSA `Midi Through Port-0` (bridged into Carla by a2jmidid). Pigments program changes use MIDI channels 2 (main) and 3 (split); channel 1 is the keyboard.
+- MIDI: `alsa-midi` to ALSA `Midi Through Port-0` (bridged into Carla by a2jmidid). Pigments program changes use MIDI channels 2 (main) and 3 (split); channel 1 is the keyboard; channel 16 is take playback; channel 10 is drum loops. After `deploy.ps1`, install the new package in the piano-PC venv (`pip install -r requirements.txt`). The script does not install Python packages.
 - `app/assets/sendosc.exe` is an unused Windows leftover; the app is Linux-only.
 - XFCE autostart runs [`os/home/startup_scripts/audio/carlaInterface.sh`](os/home/startup_scripts/audio/carlaInterface.sh), which starts `~/CarlaInterface/main.py` with `~/CarlaInterface/venv`. [`deploy.ps1`](deploy.ps1) copies `app/` to that path and `os/home/` onto the user home (`--app-only` skips the overlay).
 

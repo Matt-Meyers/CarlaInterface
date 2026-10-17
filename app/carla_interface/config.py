@@ -11,12 +11,13 @@ class AppConfig:
 
     osc_host: str = 'localhost'
     osc_port: str = '22752'                 # Carla OSC UDP port
-    midi_port: str = 'Midi Through Port-0'  # ALSA sequencer port (aplaymidi)
+    midi_port: str = 'Midi Through Port-0'  # ALSA port bridged into Carla
     # 1-based. Channel 1 is the keyboard; 16 is reserved for playback.
     midi_pc_main_channel: int = 2           # MAIN Pigments midichanfilter
     midi_pc_split_channel: int = 3          # SPLIT Pigments midichanfilter
     midi_play_channel: int = 16             # original-voice accompaniment
-    midi_record_dir: Path = Path.home() / 'midi'  # arecordmidi save folder
+    midi_drum_channel: int = 10             # MIDI Ch Filter DRUMS passes only this
+    midi_record_dir: Path = Path.home() / 'midi'  # recorded take folder
     midi_record_name_chars: int = 20        # voice slug length in .mid names
     ch_filter_split_std_idx: int = 18       # midichanfilter, split non-Pigments
     ch_filter_split_pigments_idx: int = 19  # midichanfilter, split Pigments

@@ -1,15 +1,15 @@
-"""MIDI program changes via ALSA, SMF capture, and looped playback.
+"""MIDI program changes, SMF capture, and looped playback.
 
-Program changes are used for plugins that do not expose Carla presets
-(e.g. Pigments). They go to an ALSA sequencer port (Midi Through) with
-`aplaymidi` so JUCE/sendmidi never opens JACK. Main vs split Pigments
-use different MIDI channels so Carla midichanfilter can isolate them.
-Playback remaps a take onto a dedicated channel (16 for original-voice).
-Recording uses `arecordmidi` and skips Through, so a loop is not captured.
-Missing binaries no-op so a Windows host can still preview the UI.
+Program changes go to plugins that do not expose Carla presets (Pigments).
+Takes, drum loops, and recording share one ALSA sequencer client
+(`alsa-midi`) aimed at Midi Through, which is bridged into Carla. Main vs
+split Pigments use different MIDI channels so midichanfilter can isolate
+them. A take is remapped onto one channel (16 for original-voice). Recording
+subscribes to hardware ports and skips Midi Through, so a loop is not
+captured. If alsa-midi cannot open a sequencer, calls no-op and the UI
+still previews.
 """
 
-from carla_interface.services.midi.ports import list_record_ports, resolve_play_port
 from carla_interface.services.midi.service import MidiService
 from carla_interface.services.midi.smf import remap_smf_channel
 from carla_interface.services.midi.takes import (
@@ -33,10 +33,8 @@ __all__ = [
     'has_midi_takes',
     'latest_midi_path',
     'list_midi_takes',
-    'list_record_ports',
     'read_sidecar',
     'remap_smf_channel',
-    'resolve_play_port',
     'sidecar_path',
     'take_detail',
     'take_title',

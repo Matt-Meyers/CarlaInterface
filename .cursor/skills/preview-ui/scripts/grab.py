@@ -26,6 +26,11 @@ from PyQt6.QtCore import QTimer  # noqa: E402
 from PyQt6.QtWidgets import QApplication, QWidget  # noqa: E402
 
 OUT = Path(os.environ.get('TEMP', tempfile.gettempdir())) / 'carla_interface_preview.png'
+# Optional: `grab.py Drums` shows that tab before the shot.
+# Pop it so main.py's argument parser does not see the tab name.
+_TAB = None
+if len(sys.argv) > 1 and not sys.argv[1].startswith('-'):
+    _TAB = sys.argv.pop(1)
 
 
 def _preview_run(app):
@@ -38,6 +43,15 @@ def _preview_run(app):
             print('No visible top-level widget', file=sys.stderr)
             app.exit(1)
             return
+        if _TAB:
+            from PyQt6.QtWidgets import QTabWidget
+            tabs = widget.findChild(QTabWidget)
+            if tabs is not None:
+                for index in range(tabs.count()):
+                    if tabs.tabText(index) == _TAB:
+                        tabs.setCurrentIndex(index)
+                        break
+            app.processEvents()
         widget.grab().save(str(OUT))
         print(OUT)
         app.quit()

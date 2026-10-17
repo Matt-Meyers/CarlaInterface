@@ -230,6 +230,54 @@ class OctaveSpinBox(TouchStepper):
     """Octave offset stepper; same no-focus behavior as NoteSpinBox."""
 
 
+class ChoiceStepper(TouchStepper):
+    """Stepper whose center label is one of a list of strings."""
+
+    def __init__(self):
+        self._items = []
+        self._full_text = ''
+        super().__init__()
+
+    def set_items(self, items):
+        self._items = [str(item) for item in items]
+        if not self._items:
+            self.setMinimum(0)
+            self.setMaximum(0)
+            self.setEnabled(False)
+            self._refresh_label()
+            return
+        self.setEnabled(True)
+        self.setMinimum(0)
+        self.setMaximum(len(self._items) - 1)
+        self._refresh_label()
+
+    def textFromValue(self, value):
+        if not self._items:
+            return ''
+        index = max(0, min(int(value), len(self._items) - 1))
+        return self._items[index]
+
+    def _refresh_label(self):
+        self._full_text = self.textFromValue(self._value)
+        self._apply_elide()
+
+    def _apply_elide(self):
+        text = self._full_text
+        width = self._label.width()
+        if width < 8:
+            self._label.setText(text)
+            return
+        self._label.setText(
+            self._label.fontMetrics().elidedText(
+                text, Qt.TextElideMode.ElideRight, max(1, width - 4)
+            )
+        )
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self._apply_elide()
+
+
 class TouchTabWidget(QTabWidget):
     """Category tabs stretched to the full window width."""
 

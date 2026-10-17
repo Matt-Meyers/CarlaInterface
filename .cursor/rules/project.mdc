@@ -21,7 +21,7 @@ os/                              piano-PC overlay — do not touch unless asked
 
 Avoid giant god files; split by responsibility when a file grows unwieldy.
 
-Ship Linux subprocesses only (`oscsend`, `aplaymidi`, `arecordmidi`). Preview on Windows is fine; do not add `sys.platform` branches or revive `sendosc.exe` / `sendmidi`.
+Linux MIDI goes through the `alsa-midi` package (`libasound`). `oscsend` stays a subprocess. Do not add a Windows MIDI backend or revive `sendosc.exe` / `sendmidi`. If `alsa-midi` cannot be imported or cannot open a sequencer, MIDI calls no-op so the UI still previews. Do not add `sys.platform` branches.
 
 # Agent UI preview
 

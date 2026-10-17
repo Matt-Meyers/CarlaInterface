@@ -110,6 +110,11 @@ QTabBar::tab:hover {
     color: #666666;
 }
 
+#TouchStepper[large="true"] QLabel
+{
+    font-size: 16pt;
+}
+
 #TakesBrowser
 {
     background-color: #232323;

@@ -6,6 +6,7 @@ from PyQt6.QtWidgets import QApplication
 from carla_interface import (
     AppConfig,
     CarlaInterface,
+    Drums,
     Patch,
     apply_config_args,
     parse_args,
@@ -94,9 +95,18 @@ if __name__ == '__main__':
 
     patches.append(patch6)
 
+    # Drum kits sit behind MIDI Ch Filter DRUMS (rack 20), which passes
+    # channel 10 only, so the keybed does not play them. Loop files live in
+    # ~/drum_midi/<category>/*.mid — one folder level, nothing nested.
+    drums = Drums(Path.home() / 'drum_midi', rows=1)
+    drums.add('Gogodze (Rock)', 21)
+    drums.add('Virtuosity (Jazz)', 22)
+    drums.add('Clubbanger (Electro)', 23)
+    drums.add('Decimate (Electro)', 24)
+
     app = QApplication(['Carla Interface'])
     carla_interface = CarlaInterface(
-        patches, categories, config, windowed=args.windowed
+        patches, categories, config, drums, windowed=args.windowed
     )
     carla_interface.show_app()
     sys.exit(run_app(app))

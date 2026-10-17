@@ -24,6 +24,6 @@ This is a PyQt6 kiosk, not a browser app. After UI or CSS changes, screenshot an
 
 4. Read `%TEMP%\carla_interface_preview.png` with the Read tool.
 
-5. `oscsend` / `aplaymidi` / `arecordmidi` already no-op on failure — Carla is not required.
+5. `oscsend` no-ops when it is missing. `alsa-midi` no-ops when it cannot open a sequencer — Carla is not required. Preview does not need ALSA.
 
 Human launch from `app/`: `.\.venv\Scripts\python.exe main.py`. Ctrl+C quits.

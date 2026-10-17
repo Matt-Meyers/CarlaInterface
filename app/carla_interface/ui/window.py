@@ -16,8 +16,10 @@ from PyQt6.QtWidgets import (
 
 from carla_interface.services.controller import PatchController
 from carla_interface.services.midi import MidiService
+from carla_interface.services.midi.catalog import scan_drum_catalog
 from carla_interface.services.osc import CarlaOsc
 from carla_interface.ui import palettes
+from carla_interface.ui.drums_page import DrumsPage
 from carla_interface.ui.takes_browser import TakesBrowser
 from carla_interface.ui.widgets import (
     NoteSpinBox,
@@ -54,17 +56,19 @@ class CarlaInterface(QWidget):
     updates button styles and which grid is visible.
 
     Keys 1-9 and 0 select slots on the current tab; left/right change tabs;
-    up/down step through that tab's slots. While the take browser is open,
-    those keys select a cell or change pages instead.
+    up/down step through that tab's slots. The Drums tab uses the same keys
+    for kits. While the take browser is open, those keys select a cell or
+    change pages instead.
     """
 
-    def __init__(self, patches, categories, config, windowed=False):
+    def __init__(self, patches, categories, config, drums=None, windowed=False):
         # GTK/XFCE styles add 3D chrome on QPalette buttons; Fusion + CSS stay flat.
         QApplication.setStyle('Fusion')
         super().__init__()
         self.patches = patches
         self.categories = categories
         self.config = config
+        self.drums = drums
         self._windowed = windowed
         self.controller = PatchController(
             patches,
@@ -74,6 +78,7 @@ class CarlaInterface(QWidget):
                 config.midi_port,
                 config.midi_record_dir,
             ),
+            drums,
         )
 
         # stylesheet.css uses url(icons:up_arrow_sml.png) etc.
@@ -214,6 +219,24 @@ class CarlaInterface(QWidget):
             stack_layout.addWidget(split_grid_container)  # index 1
             self.tab_container.addTab(stack_container, cat)
 
+        self._drums_tab = None
+        self._drum_sel = -1
+        self._drum_bank = []
+        self.drums_page = None
+        if drums is not None:
+            self.drums_page = DrumsPage(
+                drums, config.cols, scan_drum_catalog(drums.midi_dir)
+            )
+            self.drums_page.kitClicked.connect(self._on_kit_clicked)
+            self.drums_page.playClicked.connect(self._on_drum_play)
+            self.drums_page.linkClicked.connect(self._on_drum_link)
+            self.drums_page.fileSelected.connect(self._on_drum_file)
+            self._drum_bank = self.drums_page.bank
+            self._drums_tab = self.tab_container.addTab(self.drums_page, 'Drums')
+            set_style_property(self.drums_page.category, 'large', True)
+            set_style_property(self.drums_page.file, 'large', True)
+            self._sync_drums_ui()
+
         # Patch grids stay mounted; a hold on Play shows the take browser here.
         self._takes_open = False
         self.takes_browser = TakesBrowser()
@@ -252,6 +275,8 @@ class CarlaInterface(QWidget):
             return
         if self.controller.start_playback():
             self._set_playing_ui(True)
+        else:
+            self._sync_drums_ui()
 
     def _on_play_held(self):
         if self._takes_open:
@@ -287,6 +312,7 @@ class CarlaInterface(QWidget):
             self._set_playing_ui(self.controller.is_playing)
         else:
             self._refresh_play_enabled()
+        self._sync_drums_ui()
 
     def _sync_header_locks(self):
         # Split stays put while a loop is running, and while the grids are covered.
@@ -300,6 +326,7 @@ class CarlaInterface(QWidget):
         self._sync_header_locks()
         self._apply_split_ui(self.controller.split_enabled)
         self._refresh_play_enabled()
+        self._sync_drums_ui()
 
     def _refresh_play_enabled(self):
         self.play_btn.setEnabled(
@@ -309,25 +336,27 @@ class CarlaInterface(QWidget):
         self.play_btn.set_hold_enabled(self.controller.has_midi_takes())
 
     def _apply_split_ui(self, enabled):
-        curr_tab = self.tab_container.currentIndex()
         set_style_property(self.splitter_btn, 'altActive', enabled)
-        self.stack_layouts[curr_tab].setCurrentIndex(1 if enabled else 0)
+        self._show_bank_for_tab(self.tab_container.currentIndex())
+        # Low and high keyboards keep separate octave offsets.
+        self.octave_box.setValue(self.controller.octave_value)
+
+    def _show_bank_for_tab(self, tab):
+        if tab < 0 or tab >= len(self.stack_layouts):
+            return
+        enabled = self.controller.split_enabled
+        self.stack_layouts[tab].setCurrentIndex(1 if enabled else 0)
         if enabled:
-            sel = self.split_sel_by_tab[curr_tab]
-            entries = self.split_bank_by_tab[curr_tab]
+            sel = self.split_sel_by_tab[tab]
+            entries = self.split_bank_by_tab[tab]
             self._reset_button_styles(self.split_btns)
             if 0 <= sel < len(entries):
                 entries[sel][0].set_active(True)
         else:
             self._reset_button_styles(self.split_btns)
-        # Low and high keyboards keep separate octave offsets.
-        self.octave_box.setValue(self.controller.octave_value)
 
     def closeEvent(self, event):
-        if self.controller.is_playing:
-            self.controller.stop_playback()
-        if self.controller.is_recording:
-            self.controller.stop_recording()
+        self.controller.close()
         super().closeEvent(event)
 
     def _on_splitter_clicked(self):
@@ -337,10 +366,7 @@ class CarlaInterface(QWidget):
         self._apply_split_ui(enabled)
 
     def _on_tab_changed(self):
-        # New tab's stack should match current split/main mode.
-        curr_tab = self.tab_container.currentIndex()
-        stack_index = 1 if self.controller.split_enabled else 0
-        self.stack_layouts[curr_tab].setCurrentIndex(stack_index)
+        self._show_bank_for_tab(self.tab_container.currentIndex())
 
     def _on_main_clicked(self, btn, preset):
         self._reset_button_styles(self.main_btns)
@@ -356,6 +382,53 @@ class CarlaInterface(QWidget):
         btn.set_active(True)
         self._remember_selection(
             self.split_bank_by_tab, self.split_sel_by_tab, btn
+        )
+
+    def _on_kit_clicked(self, kit):
+        for btn, candidate in self._drum_bank:
+            btn.set_active(False)
+        self.controller.select_kit(kit)
+        for index, (btn, candidate) in enumerate(self._drum_bank):
+            if candidate is kit:
+                btn.set_active(True)
+                self._drum_sel = index
+                return
+
+    def _on_drum_play(self):
+        if self.controller.drums_playing:
+            self.controller.stop_drums()
+        else:
+            self.controller.start_drums(self.drums_page.selected_path())
+        self._sync_drums_ui()
+
+    def _on_drum_link(self):
+        self.controller.set_drums_link(not self.controller.drums_link)
+        self._sync_drums_ui()
+
+    def _on_drum_file(self, path):
+        self.controller.set_drum_file(path)
+        self._sync_drums_ui()
+
+    def _sync_drums_ui(self):
+        if self.drums_page is None:
+            return
+        page = self.drums_page
+        page.set_playing(self.controller.drums_playing)
+        page.set_linked(self.controller.drums_link)
+        path = self.controller.drum_path
+        if path is not None:
+            page.show_path(path)
+        page.set_files_locked(self.controller.drums_files_locked)
+        if self.controller.curr_kit is not None:
+            page.highlight(self.controller.curr_kit)
+        page.set_play_enabled(
+            self.controller.drums_playing or page.selected_path() is not None
+        )
+
+    def _is_drums_tab(self):
+        return (
+            self._drums_tab is not None
+            and self.tab_container.currentIndex() == self._drums_tab
         )
 
     def showEvent(self, event):
@@ -427,6 +500,11 @@ class CarlaInterface(QWidget):
         return self.main_bank_by_tab, self.main_sel_by_tab, self._on_main_clicked
 
     def _activate_slot(self, index):
+        if self._is_drums_tab():
+            if 0 <= index < len(self._drum_bank):
+                _btn, kit = self._drum_bank[index]
+                self._on_kit_clicked(kit)
+            return
         banks, _sel, handler = self._visible_bank()
         entries = banks[self.tab_container.currentIndex()]
         if 0 <= index < len(entries):
@@ -434,6 +512,18 @@ class CarlaInterface(QWidget):
             handler(btn, preset)
 
     def _step_slot(self, delta):
+        if self._is_drums_tab():
+            count = len(self._drum_bank)
+            if count == 0:
+                return
+            current = self._drum_sel
+            if current < 0:
+                index = 0 if delta > 0 else count - 1
+            else:
+                index = (current + delta) % count
+            _btn, kit = self._drum_bank[index]
+            self._on_kit_clicked(kit)
+            return
         banks, sel_by_tab, handler = self._visible_bank()
         tab = self.tab_container.currentIndex()
         entries = banks[tab]

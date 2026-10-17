@@ -15,6 +15,7 @@ from carla_interface.services.midi import (
     voice_slug,
     write_sidecar,
 )
+from carla_interface.services.midi.takes import _TEMP_NAME
 
 
 def _voice_record(preset):
@@ -34,16 +35,17 @@ def _voice_record(preset):
 
 
 class PatchController:
-    """Preset selection, split, octave, MIDI record, and playback — OSC/MIDI I/O."""
+    """Preset selection, split, octave, drums, MIDI record, and playback."""
 
     # Pigments needs a short gap after set_active before a MIDI program change.
     MIDI_PC_DELAY_MS = 125
 
-    def __init__(self, patches, config, osc, midi):
+    def __init__(self, patches, config, osc, midi, drums=None):
         self.patches = patches
         self.config = config
         self.osc = osc
         self.midi = midi
+        self.drums = drums
         self.split_enabled = False
         self.split_key_idx = config.split_key_idx
         self.octave_lo = 0
@@ -51,6 +53,13 @@ class PatchController:
         self.curr_main_carla_idx = 0
         self.curr_main_preset = None
         self.curr_split_preset = None
+        self.curr_kit = None
+        self._drum_path = None
+        self._drums_playing = False
+        self._drums_link = False
+        # True when this take playback started the drum queue in phase.
+        self._pair_active = False
+        self._record_drums = None
         # Bumped to ignore QTimer callbacks from a previous MIDI program change.
         self._midi_seq = 0
         self._recording = False
@@ -77,6 +86,23 @@ class PatchController:
     @property
     def is_playing(self):
         return self._playing
+
+    @property
+    def drums_playing(self):
+        return self._drums_playing
+
+    @property
+    def drums_link(self):
+        return self._drums_link
+
+    @property
+    def drums_files_locked(self):
+        # The loop steppers stay put while a linked take is driving them.
+        return self._pair_active
+
+    @property
+    def drum_path(self):
+        return self._drum_path
 
     def has_midi_takes(self):
         return has_midi_takes(self.config.midi_record_dir)
@@ -120,6 +146,43 @@ class PatchController:
         self.curr_split_preset = preset
         self._apply_preset(preset, carla_idx, for_split=True)
 
+    def select_kit(self, kit):
+        # Kits are outside both patch banks, so a piano change does not clear them.
+        if self.drums is None:
+            return
+        for other in self.drums.kits:
+            self.osc.set_active(other.carla_idx, False)
+        self.osc.set_active(kit.carla_idx, True)
+        self.curr_kit = kit
+
+    def set_drums_link(self, enabled):
+        # Applies on the next header Play. A take already running stays as it is.
+        self._drums_link = bool(enabled)
+
+    def start_drums(self, path):
+        if self.drums is None or path is None:
+            return False
+        if not self.midi.start_drums(path, self.config.midi_drum_channel):
+            return False
+        self._drum_path = Path(path)
+        self._drums_playing = True
+        self._pair_active = False
+        return True
+
+    def stop_drums(self):
+        self.midi.stop_drums()
+        self._drums_playing = False
+        self._pair_active = False
+
+    def set_drum_file(self, path):
+        if path is None:
+            return
+        path = Path(path)
+        self._drum_path = path
+        if self._drums_playing and not self._pair_active:
+            if not self.midi.start_drums(path, self.config.midi_drum_channel):
+                self._drums_playing = False
+
     def start_recording(self):
         if self._recording:
             return False
@@ -134,18 +197,30 @@ class PatchController:
         if not self.midi.start_recording():
             return False
         self._record_started_at = time.monotonic()
+        # Phase is the drum queue tick at this moment, not the first note.
+        self._record_drums = self._capture_drum_stamp()
         self._recording = True
         return True
 
     def stop_recording(self):
         if not self._recording:
             return None
-        elapsed = time.monotonic() - self._record_started_at
+        wall = time.monotonic() - self._record_started_at
+        stamp = self._record_drums
         self._recording = False
+        self._record_drums = None
         main_name = self._record_main['name'] if self._record_main else 'Untitled'
         split_name = (
             self._record_split['name'] if self._record_split else 'Untitled'
         )
+        pad = stamp['loop_ticks'] if stamp else None
+        temp = self.config.midi_record_dir / _TEMP_NAME
+        saved = self.midi.stop_recording(temp, pad_loop_ticks=pad)
+        if saved is None:
+            return None
+        # A take recorded over drums is named for the padded loop, so the
+        # file the browser shows is the length Link will actually repeat.
+        elapsed = self.midi.last_record_seconds if stamp else wall
         stem = (
             voice_slug(
                 main_name,
@@ -157,20 +232,22 @@ class PatchController:
             + format_duration(elapsed)
         )
         dest = unique_midi_path(self.config.midi_record_dir, stem)
-        saved = self.midi.stop_recording(dest)
-        if saved is not None:
-            write_sidecar(
-                saved,
-                {
-                    'version': 1,
-                    'split_enabled': self._record_split_enabled,
-                    'main': self._record_main,
-                    'split': self._record_split,
-                },
-            )
-            # The take just saved is the newest file Play should use.
-            self._pinned_take = None
-        return saved
+        try:
+            saved.replace(dest)
+        except OSError:
+            return None
+        payload = {
+            'version': 1,
+            'split_enabled': self._record_split_enabled,
+            'main': self._record_main,
+            'split': self._record_split,
+        }
+        if stamp:
+            payload['drums'] = stamp
+        write_sidecar(dest, payload)
+        # The take just saved is the newest file Play should use.
+        self._pinned_take = None
+        return dest
 
     def select_playback_take(self, path):
         """Pin a take. None means newest. A running loop switches in place.
@@ -217,6 +294,10 @@ class PatchController:
         self._playing = False
         self._play_seq += 1
         self.midi.stop_loop()
+        if self._pair_active:
+            self.midi.stop_drums()
+            self._pair_active = False
+            self._drums_playing = False
         self._release_accompaniment()
         if self._play_restore_split:
             self.set_split_enabled(True)
@@ -251,6 +332,85 @@ class PatchController:
         for patch in self.patches:
             self.osc.set_active(patch.carla_idx + offset, False)
 
+    def close(self):
+        if self.is_playing:
+            self.stop_playback()
+        if self.is_recording:
+            self.stop_recording()
+        self.midi.close()
+
+    def _capture_drum_stamp(self):
+        mark = self.midi.record_mark
+        if not mark or self.drums is None or self._drum_path is None:
+            return None
+        try:
+            rel = (
+                Path(self._drum_path)
+                .resolve()
+                .relative_to(Path(self.drums.midi_dir).resolve())
+                .as_posix()
+            )
+        except (OSError, ValueError):
+            return None
+        return {
+            'file': rel,
+            'bpm': mark['bpm'],
+            'ppq': mark['ppq'],
+            'phase_ticks': mark['phase_ticks'],
+            'loop_ticks': mark['loop_ticks'],
+            'kit': self.curr_kit.carla_idx if self.curr_kit is not None else None,
+        }
+
+    def _select_kit_by_index(self, carla_idx):
+        if self.drums is None or carla_idx is None:
+            return
+        for kit in self.drums.kits:
+            if kit.carla_idx == carla_idx:
+                self.select_kit(kit)
+                return
+
+    def _pair_plan(self, take_path):
+        """Stamped drum loop for this take, when Link is on and the file exists."""
+        if not self._drums_link or self.drums is None:
+            return None
+        sidecar = read_sidecar(take_path)
+        if not sidecar:
+            return None
+        stamp = sidecar.get('drums')
+        if not isinstance(stamp, dict) or not stamp.get('file'):
+            return None
+        drum_path = Path(self.drums.midi_dir) / stamp['file']
+        if not drum_path.is_file():
+            return None
+        return {
+            'path': drum_path,
+            'phase_ticks': int(stamp.get('phase_ticks') or 0),
+            'bpm': stamp.get('bpm') or 120,
+            'kit': stamp.get('kit'),
+        }
+
+    def _start_transport(self, path, channel, plan):
+        if plan is None:
+            if self._pair_active:
+                self.midi.stop_drums()
+                self._pair_active = False
+                self._drums_playing = False
+            return self.midi.start_loop(path, channel)
+        if not self.midi.start_linked(
+            path,
+            channel,
+            plan['path'],
+            self.config.midi_drum_channel,
+            plan['phase_ticks'],
+            plan['bpm'],
+        ):
+            return False
+        self._pair_active = True
+        self._drums_playing = True
+        self._drum_path = plan['path']
+        self._select_kit_by_index(plan.get('kit'))
+        return True
+
     def _preset_for_take(self, path):
         sidecar = read_sidecar(path)
         if sidecar is None:
@@ -260,9 +420,10 @@ class PatchController:
     def _arm_loop(self, path, preset):
         self._play_seq += 1
         seq = self._play_seq
+        plan = self._pair_plan(path)
         if preset is None:
             self._play_original = False
-            if not self.midi.start_loop(path, 1):
+            if not self._start_transport(path, 1, plan):
                 self.stop_playback()
                 return False
             return True
@@ -274,11 +435,11 @@ class PatchController:
         if delay:
             QTimer.singleShot(
                 delay,
-                lambda seq=seq, path=path, channel=channel: (
-                    self._start_loop_if_current(seq, path, channel)
+                lambda seq=seq, path=path, channel=channel, plan=plan: (
+                    self._start_transport_if_current(seq, path, channel, plan)
                 ),
             )
-        elif not self.midi.start_loop(path, channel):
+        elif not self._start_transport(path, channel, plan):
             self.stop_playback()
             return False
         return True
@@ -323,10 +484,10 @@ class PatchController:
             self.osc.set_parameter(self.config.split_hi_idx, 2, 0)
             self.osc.set_parameter(self.config.octave_hi_idx, 0, 0)
 
-    def _start_loop_if_current(self, seq, path, channel):
+    def _start_transport_if_current(self, seq, path, channel, plan):
         if seq != self._play_seq or not self._playing:
             return
-        if not self.midi.start_loop(path, channel):
+        if not self._start_transport(path, channel, plan):
             self.stop_playback()
 
     def _apply_preset(self, preset, carla_idx, for_split):
